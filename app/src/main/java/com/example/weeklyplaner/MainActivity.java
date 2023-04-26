@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, Add.class);
         startActivity(intent);
     }
-
+//hii
     public void openSort(){
         Intent intent = new Intent(this, Sort.class);
         startActivity(intent);
