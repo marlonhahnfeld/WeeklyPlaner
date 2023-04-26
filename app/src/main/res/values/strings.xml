@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">WeeklyPlaner</string>
+    <string name="montag">Montag</string>
+    <string name="heute">Heute</string>
+    <string name="mo_so">Mo-So</string>
+    <string name="termin1">Termin1</string>
+    <string name="dienstag">Dienstag</string>
+    <string name="mittwoch">Mittwoch</string>
+    <string name="donnerstag">Donnerstag</string>
+    <string name="freitag">Freitag</string>
+    <string name="samstag">Samstag</string>
+    <string name="sonntag">Sonntag</string>
+    <string name="back">Back</string>
+    <string name="add">ADD</string>
+    <string name="sort">Sort</string>
+    <string name="montag1">Montag</string>
+</resources>
