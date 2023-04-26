@@ -17,7 +17,7 @@ public class Add extends AppCompatActivity {
         setContentView(R.layout.activity_add);
         imageButton = findViewById(R.id.imageButton);
         imageButton.setOnClickListener(v -> openBack());
-    }//hai
+    }//ha
     public void openBack(){
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
