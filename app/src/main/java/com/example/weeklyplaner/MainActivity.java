@@ -1,6 +1,5 @@
 package com.example.weeklyplaner;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -10,38 +9,41 @@ import android.widget.Button;
 import android.widget.ImageButton;
 
 
-public class MainActivity extends AppCompatActivity {
-    private Button button;
-    private ImageButton imageButton;
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+    private Button button_for_days;
+    private ImageButton addButton;
+    private ImageButton filterButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        button = findViewById(R.id.MoSoButton);
-        button.setOnClickListener(v -> openMoSo());
+        button_for_days = findViewById(R.id.MoSoButton);
+        button_for_days.setOnClickListener(this);
 
-        imageButton = findViewById(R.id.AddButton);
-        imageButton.setOnClickListener(v -> openAdd());
+        addButton = findViewById(R.id.AddButton);
+        addButton.setOnClickListener(this);
 
-        imageButton = findViewById(R.id.SortButton);
-        imageButton.setOnClickListener(v -> openSort());
+        filterButton = findViewById(R.id.SortButton);
+        filterButton.setOnClickListener(this);
+
     }
 
-    public void openMoSo(){
-        Intent intent = new Intent(this, MoSo.class);
-        startActivity(intent);
-    }
+    @Override
+    public void onClick(View v) {
+        Intent intent;
+        int id = v.getId();
 
-    public void openAdd(){
-        Intent intent = new Intent(this, Add.class);
-        startActivity(intent);
+        if (id == R.id.MoSoButton) {
+            intent = new Intent(this, MoSo.class);
+            startActivity(intent);
+        } else if (id == R.id.AddButton) {
+            intent = new Intent(this, Add.class);
+            startActivity(intent);
+        } else if (id == R.id.SortButton) {
+            intent = new Intent(this, Sort.class);
+            startActivity(intent);
+        }
     }
-//hii
-    public void openSort(){
-        Intent intent = new Intent(this, Sort.class);
-        startActivity(intent);
-    }
-
 }
