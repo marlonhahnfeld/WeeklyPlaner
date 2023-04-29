@@ -1,14 +1,14 @@
 package com.example.weeklyplaner;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 
-public class MoSo extends AppCompatActivity {
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MoSo extends AppCompatActivity implements View.OnClickListener {
     private ImageButton imageButton;
     private Button button1;
     private Button button2;
@@ -25,7 +25,7 @@ public class MoSo extends AppCompatActivity {
         setContentView(R.layout.activity_mo_so);
 
         imageButton = findViewById(R.id.SortButton);
-        imageButton.setOnClickListener(v -> openBack());
+        imageButton.setOnClickListener(this);
 
         button1 = findViewById(R.id.Montag);
         button2 = findViewById(R.id.Dienstag);
@@ -35,23 +35,28 @@ public class MoSo extends AppCompatActivity {
         button6 = findViewById(R.id.Samstag);
         button7 = findViewById(R.id.Sonntag);
 
-        button1.setOnClickListener(v -> openSpecificDay());
-        button2.setOnClickListener(v -> openSpecificDay());
-        button3.setOnClickListener(v -> openSpecificDay());
-        button4.setOnClickListener(v -> openSpecificDay());
-        button5.setOnClickListener(v -> openSpecificDay());
-        button6.setOnClickListener(v -> openSpecificDay());
-        button7.setOnClickListener(v -> openSpecificDay());
+        button1.setOnClickListener(this);
+        button2.setOnClickListener(this);
+        button3.setOnClickListener(this);
+        button4.setOnClickListener(this);
+        button5.setOnClickListener(this);
+        button6.setOnClickListener(this);
+        button7.setOnClickListener(this);
     }
 
-    public void openBack(){
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-    }
+    @Override
+    public void onClick(View v) {
+        Intent intent;
+        int id = v.getId();
 
-    public void openSpecificDay(){
-        Intent intent = new Intent(this, SpecificDay.class);
-        startActivity(intent);
+        if (id == R.id.Montag || id == R.id.Dienstag || id == R.id.Mittwoch ||
+                id == R.id.Donnerstag || id == R.id.Freitag || id == R.id.Samstag ||
+                id == R.id.Sonntag) {
+            intent = new Intent(this, SpecificDay.class);
+            startActivity(intent);
+        } else if (id == R.id.SortButton) {
+            intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        }
     }
-
 }

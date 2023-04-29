@@ -1,24 +1,32 @@
 package com.example.weeklyplaner;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 
-public class Sort extends AppCompatActivity {
-private ImageButton imageButton;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class Sort extends AppCompatActivity implements View.OnClickListener {
+    private ImageButton imageButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sort);
+
         imageButton = findViewById(R.id.SortButton);
-        imageButton.setOnClickListener(v -> openBack());
+        imageButton.setOnClickListener(this);
     }
 
-    public void openBack(){
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+    @Override
+    public void onClick(View v) {
+        Intent intent;
+        int id = v.getId();
+
+        if (id == R.id.SortButton) {
+            intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        }
     }
 }
