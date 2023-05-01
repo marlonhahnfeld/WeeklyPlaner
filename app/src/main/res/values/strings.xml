@@ -14,4 +14,18 @@
     <string name="add">ADD</string>
     <string name="sort">Sort</string>
     <string name="montag1">Montag</string>
+    <string name="sort_funktion_impl">Sort-Funktion Impl.</string>
+    <string name="terminname">Terminname</string>
+    <string name="wann">Wann?</string>
+    <string name="beschreibung">Beschreibung</string>
+    <string name="priorit_t">Priorität</string>
+    <string name="speichern">Speichern</string>
+
+    <string-array name="numbers">
+        <item>Priorität 1</item>
+        <item>Priorität 2</item>
+        <item>Priorität 3</item>
+        <item>Priorität 4</item>
+        <item>Priorität 5</item>
+    </string-array>
 </resources>

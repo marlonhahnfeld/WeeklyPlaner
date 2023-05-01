@@ -6,9 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-
+<!-- TODO: Vorherigen Button merken und hier verwenden -->
     <Button
-        android:id="@+id/button"
+        android:id="@+id/HeutigerButton"
         android:layout_width="253dp"
         android:layout_height="73dp"
         android:layout_centerHorizontal="true"
@@ -35,7 +35,7 @@
         android:id="@+id/Termin1"
         android:layout_width="171dp"
         android:layout_height="68dp"
-        android:layout_below="@id/button"
+        android:layout_below="@id/HeutigerButton"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:backgroundTint="@color/black"

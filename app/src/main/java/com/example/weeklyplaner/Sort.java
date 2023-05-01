@@ -8,15 +8,19 @@ import android.widget.ImageButton;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class Sort extends AppCompatActivity implements View.OnClickListener {
-    private ImageButton imageButton;
+    private ImageButton BackButton;
+    private ImageButton addButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sort);
 
-        imageButton = findViewById(R.id.SortButton);
-        imageButton.setOnClickListener(this);
+        BackButton = findViewById(R.id.SortButton);
+        BackButton.setOnClickListener(this);
+        addButton = findViewById(R.id.AddButton);
+        addButton.setOnClickListener(this);
+
     }
 
     @Override
@@ -25,7 +29,9 @@ public class Sort extends AppCompatActivity implements View.OnClickListener {
         int id = v.getId();
 
         if (id == R.id.SortButton) {
-            intent = new Intent(this, MainActivity.class);
+            onBackPressed();
+        } else if (id == R.id.AddButton) {
+            intent = new Intent(this, Add.class);
             startActivity(intent);
         }
     }

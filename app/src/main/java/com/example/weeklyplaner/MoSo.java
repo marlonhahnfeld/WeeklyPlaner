@@ -5,11 +5,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-
 import androidx.appcompat.app.AppCompatActivity;
+import com.example.weeklyplaner.SpecificDay.*;
 
 public class MoSo extends AppCompatActivity implements View.OnClickListener {
-    private ImageButton imageButton;
+    private ImageButton BackButton;
     private Button button1;
     private Button button2;
     private Button button3;
@@ -24,8 +24,8 @@ public class MoSo extends AppCompatActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mo_so);
 
-        imageButton = findViewById(R.id.SortButton);
-        imageButton.setOnClickListener(this);
+        BackButton = findViewById(R.id.SortButton);
+        BackButton.setOnClickListener(this);
 
         button1 = findViewById(R.id.Montag);
         button2 = findViewById(R.id.Dienstag);
@@ -42,6 +42,7 @@ public class MoSo extends AppCompatActivity implements View.OnClickListener {
         button5.setOnClickListener(this);
         button6.setOnClickListener(this);
         button7.setOnClickListener(this);
+
     }
 
     @Override
@@ -55,8 +56,7 @@ public class MoSo extends AppCompatActivity implements View.OnClickListener {
             intent = new Intent(this, SpecificDay.class);
             startActivity(intent);
         } else if (id == R.id.SortButton) {
-            intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
+            onBackPressed();
         }
     }
 }
