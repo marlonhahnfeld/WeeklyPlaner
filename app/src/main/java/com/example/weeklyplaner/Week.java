@@ -6,9 +6,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import androidx.appcompat.app.AppCompatActivity;
-import com.example.weeklyplaner.SpecificDay.*;
 
-public class MoSo extends AppCompatActivity implements View.OnClickListener {
+public class Week extends AppCompatActivity implements View.OnClickListener {
     private ImageButton BackButton;
     private Button button1;
     private Button button2;

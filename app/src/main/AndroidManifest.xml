@@ -22,7 +22,7 @@
             android:name=".Add"
             android:exported="false" />
         <activity
-            android:name=".MoSo"
+            android:name=".Week"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

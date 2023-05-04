@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int id = v.getId();
 
         if (id == R.id.MoSoButton) {
-            intent = new Intent(this, MoSo.class);
+            intent = new Intent(this, Week.class);
             startActivity(intent);
         } else if (id == R.id.AddButton) {
             intent = new Intent(this, Add.class);
