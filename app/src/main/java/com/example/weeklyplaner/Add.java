@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
@@ -15,7 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class  Add extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     private ImageButton BackButton;
-    private ImageButton SaveButton;
+    private Button SaveButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,8 +25,8 @@ public class  Add extends AppCompatActivity implements View.OnClickListener, Ada
 
         BackButton = findViewById(R.id.imageButton);
         BackButton.setOnClickListener(this);
-        //SaveButton = findViewById(R.id.SaveButton);
-        //SaveButton.setOnClickListener(this);
+        SaveButton = findViewById(R.id.SaveButton);
+        SaveButton.setOnClickListener(this);
 
         EditText editText_Terminname = findViewById(R.id.Terminname_edit_text);
         String userInputText_Terminname = editText_Terminname.getText().toString(); // TODO: hier ist der userinput für Terminname gespeichert, eventuell global für klasse machen
@@ -61,10 +62,9 @@ public class  Add extends AppCompatActivity implements View.OnClickListener, Ada
         if (id == R.id.imageButton) {
             onBackPressed();
        }
-//        else if (id == R.id.SaveButton) {
-//             //Todo: gespeicherte Daten verwalten
-               //Todo: Save-Button kollidiert mit etwas -> hier kommentierter Code und in xml kommentierter Code
-//            onBackPressed();
-//        }
+        else if (id == R.id.SaveButton) {
+            //Todo: gespeicherte Daten verwalten
+            onBackPressed();
+       }
     }
-}//
+}

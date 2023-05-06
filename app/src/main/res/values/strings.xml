@@ -23,11 +23,9 @@
     <string name="Registrieren">Registrierung</string>
 
     <string-array name="numbers">
-        <item>PrioritÃ¤t 1</item>
-        <item>PrioritÃ¤t 2</item>
-        <item>PrioritÃ¤t 3</item>
-        <item>PrioritÃ¤t 4</item>
-        <item>PrioritÃ¤t 5</item>
+        <item>Priorität 1</item>
+        <item>Priorität 2</item>
+        <item>Priorität 3</item>
     </string-array>
     <string name="Register">register</string>
     <string name="Button">buttonRegister</string>
