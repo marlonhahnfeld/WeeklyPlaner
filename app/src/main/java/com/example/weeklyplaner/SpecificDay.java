@@ -13,7 +13,7 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
     private ImageButton BackButton;
     private ImageButton filterButton;
     private ImageButton addButton;
-    public static Button HeutigerButton;
+    public Button heutigerButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,10 +29,15 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
         addButton = findViewById(R.id.AddButton);
         addButton.setOnClickListener(this);
 
+        heutigerButton = findViewById(R.id.HeutigerButton);
+
+        String buttonText = getIntent().getStringExtra("button_text");
+        this.heutigerButton.setText(buttonText);
+
     }
     // TODO: setText() bei MoSo würde Text mit richtigen Buttonnamen ändern, funktioniert jedoch aktuell nicht aufgrund Kollidierung (?)
-    public static Button getHeutigerButton(){
-        return HeutigerButton;
+    public Button getHeutigerButton(){
+        return heutigerButton;
     }
 
     @Override

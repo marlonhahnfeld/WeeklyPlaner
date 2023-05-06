@@ -9,13 +9,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class Week extends AppCompatActivity implements View.OnClickListener {
     private ImageButton BackButton;
-    private Button button1;
-    private Button button2;
-    private Button button3;
-    private Button button4;
-    private Button button5;
-    private Button button6;
-    private Button button7;
+    private Button montag;
+    private Button dienstag;
+    private Button mittwoch;
+    private Button donnerstag;
+    private Button freitag;
+    private Button samstag;
+    private Button sonntag;
 
 
     @Override
@@ -26,33 +26,48 @@ public class Week extends AppCompatActivity implements View.OnClickListener {
         BackButton = findViewById(R.id.SortButton);
         BackButton.setOnClickListener(this);
 
-        button1 = findViewById(R.id.Montag);
-        button2 = findViewById(R.id.Dienstag);
-        button3 = findViewById(R.id.Mittwoch);
-        button4 = findViewById(R.id.Donnerstag);
-        button5 = findViewById(R.id.Freitag);
-        button6 = findViewById(R.id.Samstag);
-        button7 = findViewById(R.id.Sonntag);
+        montag = findViewById(R.id.Montag);
+        dienstag = findViewById(R.id.Dienstag);
+        mittwoch = findViewById(R.id.Mittwoch);
+        donnerstag = findViewById(R.id.Donnerstag);
+        freitag = findViewById(R.id.Freitag);
+        samstag = findViewById(R.id.Samstag);
+        sonntag = findViewById(R.id.Sonntag);
 
-        button1.setOnClickListener(this);
-        button2.setOnClickListener(this);
-        button3.setOnClickListener(this);
-        button4.setOnClickListener(this);
-        button5.setOnClickListener(this);
-        button6.setOnClickListener(this);
-        button7.setOnClickListener(this);
+        montag.setOnClickListener(this);
+        dienstag.setOnClickListener(this);
+        mittwoch.setOnClickListener(this);
+        donnerstag.setOnClickListener(this);
+        freitag.setOnClickListener(this);
+        samstag.setOnClickListener(this);
+        sonntag.setOnClickListener(this);
 
     }
-
     @Override
     public void onClick(View v) {
         Intent intent;
         int id = v.getId();
 
+
         if (id == R.id.Montag || id == R.id.Dienstag || id == R.id.Mittwoch ||
                 id == R.id.Donnerstag || id == R.id.Freitag || id == R.id.Samstag ||
                 id == R.id.Sonntag) {
             intent = new Intent(this, SpecificDay.class);
+            if (id == R.id.Montag) {
+                intent.putExtra("button_text", montag.getText());
+            } else if (id == R.id.Dienstag) {
+                intent.putExtra("button_text", dienstag.getText());
+            } else if (id == R.id.Mittwoch) {
+                intent.putExtra("button_text", mittwoch.getText());
+            } else if (id == R.id.Donnerstag) {
+                intent.putExtra("button_text", donnerstag.getText());
+            } else if (id == R.id.Freitag) {
+                intent.putExtra("button_text", freitag.getText());
+            } else if (id == R.id.Samstag) {
+                intent.putExtra("button_text", samstag.getText());
+            } else if (id == R.id.Sonntag) {
+                intent.putExtra("button_text", sonntag.getText());
+            }
             startActivity(intent);
         } else if (id == R.id.SortButton) {
             onBackPressed();

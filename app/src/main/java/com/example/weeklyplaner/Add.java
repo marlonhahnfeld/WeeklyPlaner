@@ -41,7 +41,7 @@ public class  Add extends AppCompatActivity implements View.OnClickListener, Ada
         spinner_PrioListe.setOnItemSelectedListener(this);
     }
 
-// TODO: Spinner-Methoden (PrioListe) noch auskapseln in Utils, OnClick-Methoden
+// TODO: Spinner-Methoden (PrioListe) noch auskapseln into Utils, OnClick-Methoden
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String text = parent.getItemAtPosition(position).toString();
