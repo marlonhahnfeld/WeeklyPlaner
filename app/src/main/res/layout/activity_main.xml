@@ -26,11 +26,10 @@
         android:layout_height="48dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="22dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="22dp"
         android:backgroundTint="@color/black"
-        android:text="@string/mo_so"
-        />
+        android:text="@string/mo_so" />
 
     <Button
         android:id="@+id/Termin1"
@@ -51,21 +50,6 @@
         android:layout_marginBottom="87dp"
         android:contentDescription="@string/add"
         app:srcCompat="@android:drawable/ic_menu_add"
-        android:backgroundTint="#00F8F5F5"
-        app:tint="#000000"/>
-
-    <ImageButton
-        android:id="@+id/SortButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginStart="333dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="22dp"
-        app:srcCompat="@android:drawable/ic_menu_sort_by_size"
-        android:contentDescription="@string/sort"
         android:backgroundTint="#00F8F5F5"
         app:tint="#000000"/>
 
