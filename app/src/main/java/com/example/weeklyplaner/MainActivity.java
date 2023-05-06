@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -19,6 +20,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+
 
         button_for_days = findViewById(R.id.MoSoButton);
         button_for_days.setOnClickListener(this);

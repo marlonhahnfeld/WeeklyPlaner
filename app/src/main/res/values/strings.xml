@@ -34,5 +34,5 @@
     <string name="Anmeldename_edit_text">Anmeldename</string>
     <string name="PasswortEingabe_edit_text">Passworteingabe</string>
     <string name="senden">senden</string>
-    <string name="noch_keinen_account_dann_registriere_dich_jetzt_hier">Noch keinen Account? Dann registriere dich jetzt hier</string>
+    <string name="noch_keinen_account_dann_registriere_dich_jetzt_hier"><u>Noch keinen Account? Dann registriere dich jetzt hier</u></string>
 </resources>
