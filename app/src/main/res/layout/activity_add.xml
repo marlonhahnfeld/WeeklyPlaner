@@ -2,10 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/AddActivityLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:id="@+id/AddActivityLayout">
 
 
     <EditText
@@ -18,9 +18,11 @@
         android:layout_centerInParent="true"
         android:layout_marginTop="369dp"
         android:layout_marginEnd="61dp"
-        android:background="#C3B1B1"
+        android:background="#ffffff"
+        android:elevation="20dp"
         android:gravity="start"
-        android:hint="  Beschreibung oder Todolist?\n  - Briefkasten checken \n  - Arzttermin 16:30 Uhr\n    .........." />
+        android:hint="  Beschreibung oder Todolist?\n  - Briefkasten checken \n  - Arzttermin 16:30 Uhr\n    .........."
+        android:padding="10dp" />
 
     <ImageButton
         android:id="@+id/imageButton"
@@ -82,9 +84,12 @@
         android:layout_centerHorizontal="true"
         android:layout_marginStart="62dp"
         android:layout_marginTop="148dp"
-        android:background="#C3B1B1"
+        android:hint="  wie heißt Ihr neuer Termin?"
+        android:background="#ffffff"
+        android:elevation="10dp"
         android:gravity="start"
-        android:hint="  wie heißt Ihr neuer Termin?" />
+        android:padding="5dp" />
+    />
 
     <!-- TODO: Button impl -->
     <ImageButton
