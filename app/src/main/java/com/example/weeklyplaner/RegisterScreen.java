@@ -36,10 +36,11 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
         backToLoginScreenButton.setOnClickListener(this);
 
         editTextEmail = findViewById(R.id.editTextEmailAddress);
-
         editTextPassword = findViewById(R.id.editTextPassword);
-
         dbStatusTextView = findViewById(R.id.dbStatusTextView);
+
+        email = editTextEmail.getText().toString();
+        password = editTextPassword.getText().toString();
 
 
         // Datenbank Verbindung
@@ -72,7 +73,7 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
     }
 
     public static Connection getDBConnection() throws SQLException {
-        Connection connection = null;
+        Connection connection;
         try {
             Class.forName(DB_DRIVER);
         } catch (ClassNotFoundException e) {
