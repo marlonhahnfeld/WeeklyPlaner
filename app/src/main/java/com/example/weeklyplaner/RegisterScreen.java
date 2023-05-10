@@ -13,6 +13,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+//Todo: Button "Registieren" benutzen, um Werte in Datenbank abzuspeichern
 public class RegisterScreen extends AppCompatActivity implements View.OnClickListener {
 
     private TextView dbStatusTextView;
