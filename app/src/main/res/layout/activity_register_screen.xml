@@ -8,7 +8,7 @@
     tools:context=".RegisterScreen">
 
     <ImageButton
-        android:id="@+id/registerToLoginButton"
+        android:id="@+id/backToLoginScreenButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="1dp"

@@ -84,7 +84,7 @@
         app:layout_constraintVertical_bias="0.883" />
 
     <TextView
-        android:id="@+id/login_to_register_text"
+        android:id="@+id/registerTextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="41dp"
