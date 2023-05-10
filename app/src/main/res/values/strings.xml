@@ -36,4 +36,5 @@
     <string name="senden">senden</string>
     <string name="noch_keinen_account_dann_registriere_dich_jetzt_hier"><u>Noch keinen Account? Dann registriere dich jetzt hier</u></string>
     <string name="login">Login</string>
+    <string name="passwort_eingeben">Passwort eingeben</string>
 </resources>
