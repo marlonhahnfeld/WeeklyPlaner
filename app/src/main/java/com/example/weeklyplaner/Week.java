@@ -55,19 +55,19 @@ public class Week extends AppCompatActivity implements View.OnClickListener {
         button_sonntag.setOnClickListener(this);
 
         if (dayOfWeek == Calendar.MONDAY) {
-            button_montag.setBackgroundColor(Color.MAGENTA);
+            button_montag.setBackgroundColor(Color.parseColor("#7b68ee"));
         } else if (dayOfWeek == Calendar.TUESDAY) {
-            button_dienstag.setBackgroundColor(Color.MAGENTA);
+            button_dienstag.setBackgroundColor(Color.parseColor("#7b68ee"));
         } else if (dayOfWeek == Calendar.WEDNESDAY) {
-            button_mittwoch.setBackgroundColor(Color.MAGENTA);
+            button_mittwoch.setBackgroundColor(Color.parseColor("#7b68ee"));
         } else if (dayOfWeek == Calendar.THURSDAY) {
-            button_donnerstag.setBackgroundColor(Color.MAGENTA);
+            button_donnerstag.setBackgroundColor(Color.parseColor("#7b68ee"));
         } else if (dayOfWeek == Calendar.FRIDAY) {
-            button_freitag.setBackgroundColor(Color.MAGENTA);
+            button_freitag.setBackgroundColor(Color.parseColor("#7b68ee"));
         } else if (dayOfWeek == Calendar.SATURDAY) {
-            button_samstag.setBackgroundColor(Color.MAGENTA);
+            button_samstag.setBackgroundColor(Color.parseColor("#7b68ee"));
         } else if (dayOfWeek == Calendar.SUNDAY) {
-            button_sonntag.setBackgroundColor(Color.MAGENTA);
+            button_sonntag.setBackgroundColor(Color.parseColor("#7b68ee"));
         }
 
     }
