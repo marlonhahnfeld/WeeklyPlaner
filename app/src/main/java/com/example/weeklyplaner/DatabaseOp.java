@@ -47,7 +47,8 @@ public class DatabaseOp {
         try {
             if (connected) {
                 DatabaseMetaData metaData = connection.getMetaData();
-                ResultSet resultSet = metaData.getTables(null, null, "LOGIN", null);
+                ResultSet resultSet = metaData.getTables(null, null,
+                        "LOGIN", null);
                 boolean tableExists = resultSet.next();
                 resultSet.close();
                 return tableExists;
@@ -64,18 +65,19 @@ public class DatabaseOp {
         }
     }
 
-    public static void registerNewUser() {
+    public static void registerNewUser(String email, String passwort) {
         try {
             if (connected) {
                 Statement statement = connection.createStatement();
-                String sqlQuery = "INSERT INTO LOGIN VALUES ('wwm@hh.de', 'fredbob')";
+                String sqlQuery = "INSERT INTO LOGIN VALUES ( '" + email +
+                        "', '" + passwort + "')";
                 statement.execute(sqlQuery);
                 sqlQuery = "SELECT * FROM LOGIN";
                 ResultSet resultSet = statement.executeQuery(sqlQuery);
                 while (resultSet.next()) {
-                    String email = resultSet.getString("email");
+                    String em = resultSet.getString("email");
                     String password = resultSet.getString("passwort");
-                    System.out.println(email + password);
+                    System.out.println(em + " " + password);
                 }
                 resultSet.close();
                 statement.close();

@@ -3,6 +3,8 @@ package com.example.weeklyplaner;
 import static com.example.weeklyplaner.DatabaseOp.*;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -44,9 +46,6 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
         dbStatusTextView = findViewById(R.id.dbStatusTextView);
         dbTestView = findViewById(R.id.textView2);
 
-        email = editTextEmail.getText().toString();
-        password = editTextPassword.getText().toString();
-
         createDatabaseConnection();
         if (isConnected()) {
             dbStatusTextView.setText(R.string.successfullyConnected);
@@ -58,20 +57,23 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
     public void onClick(View v) {
         Intent intent;
         int id = v.getId();
+        boolean min8Letters = false;
 
         if (id == R.id.backToLoginScreenButton) {
             intent = new Intent(this, LoginScreen.class);
             startActivity(intent);
         } else if (id == R.id.registerButton) {
-            registerNewUser();
+            email = editTextEmail.getText().toString();
+            password = editTextPassword.getText().toString();
+            if (email.length() <= 8) {
+                TextView minLetters = findViewById(R.id.textView4);
+                minLetters.setTextColor(Color.RED);
+                min8Letters = true;
+            }
+            if (min8Letters) {
+                registerNewUser(email, password);
+            }
         }
     }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        closeDatabaseConnection();
-    }
-
 
 }
