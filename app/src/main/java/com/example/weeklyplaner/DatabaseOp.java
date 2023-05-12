@@ -43,7 +43,7 @@ public class DatabaseOp {
         }
     }
 
-    public static boolean isTableExists() {
+    public static boolean doesTableExists() {
         try {
             if (connected) {
                 DatabaseMetaData metaData = connection.getMetaData();
@@ -60,7 +60,7 @@ public class DatabaseOp {
     }
 
     public static void createTableIfNotExists() {
-        if (!isTableExists()) {
+        if (!doesTableExists()) {
             createTable();
         }
     }
