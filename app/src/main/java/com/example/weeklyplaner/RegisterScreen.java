@@ -1,5 +1,7 @@
 package com.example.weeklyplaner;
 
+import static com.example.weeklyplaner.DatabaseOp.*;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,11 +12,6 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 
 // Todo: Abspeichern des User-inputs in die Datenbank
 // Todo: RegEx für die Überprüfung des User-inputs
@@ -29,12 +26,6 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
     private EditText editTextPassword;
     private String email;
     private String password;
-    private static final String DB_DRIVER = "org.h2.Driver";
-    private static final String DB_CONNECTION = "jdbc:h2:mem:testdb";
-    private static final String DB_USER = "sa";
-    private static final String DB_PASSWORD = "";
-    private static Statement statement;
-    private static Connection connection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,22 +47,11 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
         email = editTextEmail.getText().toString();
         password = editTextPassword.getText().toString();
 
-        // Creating the Database Connection + The Table
-        try {
-            connection = getDBConnection();
+        createDatabaseConnection();
+        if (isConnected()) {
             dbStatusTextView.setText(R.string.successfullyConnected);
-            createTable();
-        } catch (SQLException e) {
-            dbStatusTextView.setText(String.format("Error: %s", e.getMessage()));
-        } finally {
-            try {
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                dbStatusTextView.setText(String.format("Error: %s", e.getMessage()));
-            }
         }
+        createTableIfNotExists();
     }
 
     @Override
@@ -83,70 +63,15 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
             intent = new Intent(this, LoginScreen.class);
             startActivity(intent);
         } else if (id == R.id.registerButton) {
-            register();
+            registerNewUser();
         }
     }
 
-    public static Connection getDBConnection() throws SQLException {
-        Connection connection;
-        try {
-            Class.forName(DB_DRIVER);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        connection = DriverManager.getConnection(DB_CONNECTION, DB_USER, DB_PASSWORD);
-        return connection;
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        closeDatabaseConnection();
     }
 
-    public void createTable() {
-        try {
-            connection = getDBConnection();
-            statement = connection.createStatement();
-            String sqlQuery = "CREATE TABLE IF NOT EXISTS " +
-                    "LOGIN (email VARCHAR(50), passwort VARCHAR(50));";
-            statement.execute(sqlQuery);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 
-    public void register() {
-        try {
-            connection = getDBConnection();
-            statement = connection.createStatement();
-            String sqlQuery = "INSERT INTO LOGIN VALUES ('wwm@hh.de', 'fredbob')";
-            statement.execute(sqlQuery);
-            sqlQuery = "SELECT * FROM LOGIN";
-            ResultSet resultSet = statement.executeQuery(sqlQuery);
-            while (resultSet.next()) {
-                String email = resultSet.getString("email");
-                String password = resultSet.getString("passwort");
-                System.out.println(email + password);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 }
