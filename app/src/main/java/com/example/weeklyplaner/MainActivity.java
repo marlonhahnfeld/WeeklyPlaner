@@ -21,9 +21,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-
-
         button_for_days = findViewById(R.id.MoSoButton);
         button_for_days.setOnClickListener(this);
 
@@ -32,7 +29,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         filterButton = findViewById(R.id.SortButton);
         filterButton.setOnClickListener(this);
-
     }
 
     @Override

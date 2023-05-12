@@ -30,8 +30,9 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
         addButton.setOnClickListener(this);
 
     }
+
     // TODO: setText() bei MoSo würde Text mit richtigen Buttonnamen ändern, funktioniert jedoch aktuell nicht aufgrund Kollidierung (?)
-    public static Button getHeutigerButton(){
+    public static Button getHeutigerButton() {
         return HeutigerButton;
     }
 
@@ -42,8 +43,7 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
 
         if (id == R.id.BackButton) {
             onBackPressed();
-        }
-        else if (id == R.id.SortButton) {
+        } else if (id == R.id.SortButton) {
             intent = new Intent(this, Sort.class);
             startActivity(intent);
         } else if (id == R.id.AddButton) {

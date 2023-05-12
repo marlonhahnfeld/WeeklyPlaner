@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class  Add extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class Add extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     private ImageButton BackButton;
     private ImageButton SaveButton;
@@ -41,7 +41,7 @@ public class  Add extends AppCompatActivity implements View.OnClickListener, Ada
         spinner_PrioListe.setOnItemSelectedListener(this);
     }
 
-// TODO: Spinner-Methoden (PrioListe) noch auskapseln in Utils, OnClick-Methoden
+    // TODO: Spinner-Methoden (PrioListe) noch auskapseln in Utils, OnClick-Methoden
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         String text = parent.getItemAtPosition(position).toString();
@@ -60,10 +60,10 @@ public class  Add extends AppCompatActivity implements View.OnClickListener, Ada
 
         if (id == R.id.imageButton) {
             onBackPressed();
-       }
+        }
 //        else if (id == R.id.SaveButton) {
 //             //Todo: gespeicherte Daten verwalten
-               //Todo: Save-Button kollidiert mit etwas -> hier kommentierter Code und in xml kommentierter Code
+        //Todo: Save-Button kollidiert mit etwas -> hier kommentierter Code und in xml kommentierter Code
 //            onBackPressed();
 //        }
     }
