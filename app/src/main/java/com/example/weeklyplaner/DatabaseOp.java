@@ -15,6 +15,9 @@ public class DatabaseOp {
     private static Connection connection;
     private static boolean connected;
 
+    /**
+     * Methode um eine Verbindung zur Datenbank zur erstellen
+     */
     public static void createDatabaseConnection() {
         try {
             Class.forName(DB_DRIVER);
@@ -29,12 +32,14 @@ public class DatabaseOp {
         return connected;
     }
 
+    /**
+     * Erstellung für die Tabelle, wo die Nutzerdaten abgespeichert werden
+     */
     public static void createTable() {
         try {
             if (connected) {
                 Statement statement = connection.createStatement();
-                String sqlQuery = "CREATE TABLE IF NOT EXISTS " +
-                        "LOGIN (email VARCHAR(50), passwort VARCHAR(50));";
+                String sqlQuery = "CREATE TABLE IF NOT EXISTS LOGIN (email VARCHAR(50) PRIMARY KEY, passwort VARCHAR(50));";
                 statement.execute(sqlQuery);
                 statement.close();
             }
@@ -43,6 +48,11 @@ public class DatabaseOp {
         }
     }
 
+    /**
+     * Methode zum Überprüfen, ob Tabelle existiert
+     *
+     * @return true, wenn Tabelle existiert
+     */
     public static boolean doesTableExists() {
         try {
             if (connected) {
@@ -59,12 +69,24 @@ public class DatabaseOp {
         return false;
     }
 
+    /**
+     * Methode die createTable aufruft, wenn Table nicht existiert
+     */
     public static void createTableIfNotExists() {
         if (!doesTableExists()) {
             createTable();
         }
     }
 
+    /**
+     * Methode, die einen neuen User registriert
+     * TODO: Hinweis, falls existierende Mail schon benutzt wurde
+     * TODO: Popup, für erfolgreiche Registrierung
+     *
+     * @param email    mit den sich der User registrieren möchte.
+     *                 ! Pro User nur eine E-Mail, da E-Mail Primary Key ist
+     * @param passwort mit den sich der User einloggen möchte später
+     */
     public static void registerNewUser(String email, String passwort) {
         try {
             if (connected) {
@@ -87,6 +109,9 @@ public class DatabaseOp {
         }
     }
 
+    /**
+     * Methode um die Datenbank Verbindung zu trennen
+     */
     public static void closeDatabaseConnection() {
         try {
             if (connected && connection != null) {
@@ -98,5 +123,8 @@ public class DatabaseOp {
         }
     }
 
+    public static Connection getConnection() {
+        return connection;
+    }
 }
 

@@ -17,7 +17,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class RegisterScreen extends AppCompatActivity implements View.OnClickListener {
-    private TextView dbStatusTextView;
     private TextView dbTestView;
     private ImageButton backToLoginScreenButton;
     private Button registerButton;
@@ -42,15 +41,11 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
         editTextPassword2 = findViewById(R.id.editTextPassword2);
-
-        dbStatusTextView = findViewById(R.id.dbStatusTextView);
         dbTestView = findViewById(R.id.textView2);
 
-        createDatabaseConnection();
         if (isConnected()) {
-            dbStatusTextView.setText(R.string.successfullyConnected);
+            System.out.println("Verbunden Registrieren Screen");
         }
-        createTableIfNotExists();
     }
 
     @Override
@@ -74,23 +69,24 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
     }
 
     /**
-     * * Methode, um Input des Users zu überprüfen
+     * Methode um den Input des Users zu überprüfen
      *
-     * @param password -> Passwort des Users
-     * @return true → Wenn Bedingungen eingehalten wurden, ansonsten false
+     * @param email    die der User nutzen möchte
+     * @param password die der User nutzen möchte
+     * @return true, wenn alle Anforderungen eingehalten wurden -> false, wenn nicht
      */
     public boolean checkInput(String email, String password) {
         TextView minLetters = findViewById(R.id.textView4);
-        TextView min1Figure = findViewById(R.id.textView7);
         TextView min1Sign = findViewById(R.id.textView5);
         TextView min1UpperAndLower = findViewById(R.id.textView6);
+        TextView min1Figure = findViewById(R.id.textView7);
 
         boolean length = false;
         boolean containsDigit = false;
         boolean containsSign = false;
         boolean containsUpperAndLower = false;
 
-        Pattern emailPattern = Pattern.compile("^[a-zA-Z0-9]+@[a-zA-Z]+\\.[a-zA-Z]{2,5}$");
+        Pattern emailPattern = Pattern.compile("^[a-zA-Z0-9]+@[a-zA-Z]+\\.[a-zA-Z]{2,6}$");
         Matcher emailMatcher = emailPattern.matcher(email);
         boolean emailMatchFound = emailMatcher.find();
         boolean passwordsMatch = password.equals(editTextPassword2.getText().toString());
@@ -136,14 +132,6 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
             min1UpperAndLower.setTextColor(Color.RED);
         }
 
-        // Überprüfe, ob die E-Mail-Adresse und die Passwort-Bestätigung übereinstimmen
-        boolean emailAndConfirmationMatch = email.equals(editTextEmail.getText().toString());
-
-        // Überprüfe, ob alle Überprüfungskriterien erfüllt sind
-        boolean isValid = emailMatchFound && length && containsDigit && containsSign &&
-                containsUpperAndLower && passwordsMatch && emailAndConfirmationMatch;
-
-        // Markiere die EditText-Felder rot, wenn die Passwortbestätigung fehlschlägt
         if (!passwordsMatch) {
             editTextPassword.setTextColor(Color.RED);
             editTextPassword2.setTextColor(Color.RED);
@@ -152,9 +140,16 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
             editTextPassword2.setTextColor(Color.BLACK);
         }
 
-        return isValid;
+        return emailMatchFound && length && containsDigit && containsSign &&
+                containsUpperAndLower && passwordsMatch;
     }
 
+    /**
+     * Methode um zu überprüfen, ob ein String UpperCase Buchstaben enthält
+     *
+     * @param s der zu übergebenden String
+     * @return true, wenn ein UpperCase Buchstabe gefunden wird
+     */
     public static boolean containsUpperCaseLetter(String s) {
         for (char c : s.toCharArray()) {
             if (Character.isUpperCase(c)) {
@@ -164,6 +159,12 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
         return false;
     }
 
+    /**
+     * Methode um zu überprüfen, ob ein String ein LowerCase Buchstaben enthält
+     *
+     * @param s der zu übergebende String
+     * @return true, wenn ein LowerCase Buchstabe gefunden wird
+     */
     public static boolean containsLowerCaseLetter(String s) {
         for (char c : s.toCharArray()) {
             if (Character.isLowerCase(c)) {
