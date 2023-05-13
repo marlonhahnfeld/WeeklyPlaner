@@ -89,7 +89,7 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
         Pattern emailPattern = Pattern.compile("^[a-zA-Z0-9]+@[a-zA-Z]+\\.[a-zA-Z]{2,6}$");
         Matcher emailMatcher = emailPattern.matcher(email);
         boolean emailMatchFound = emailMatcher.find();
-        boolean passwordsMatch = password.equals(editTextPassword2.getText().toString());
+        boolean passwordsMatch = password.equals(password2);
 
         if (password.length() <= 8) {
             minLetters.setTextColor(Color.RED);
