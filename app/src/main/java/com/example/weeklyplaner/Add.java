@@ -1,6 +1,8 @@
 package com.example.weeklyplaner;
 
 import android.content.Intent;
+import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -8,7 +10,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,9 +25,10 @@ public class  Add extends AppCompatActivity implements View.OnClickListener, Ada
 
     private ImageButton BackButton;
     private Button SaveButton;
-    private Spinner spinner_PrioListe;
+    private Spinner spinner_PrioListe,spinner_wann;
     private int save_counter = 0;
     public static TerminListe TerminListe = new TerminListe();
+    private TextView montag,dienstag,mittwoch,donnerstag,freitag,samstag,sonntag;
 
 
     @Override
@@ -36,6 +42,15 @@ public class  Add extends AppCompatActivity implements View.OnClickListener, Ada
         SaveButton.setOnClickListener(this);
 
 
+
+       // Wochentage drop down menu
+        spinner_PrioListe = findViewById(R.id.TagesSpinner);
+        ArrayAdapter<CharSequence> adapter_TagesSpinner = ArrayAdapter.createFromResource(this,
+                R.array.wochentage, android.R.layout.simple_spinner_item);
+        adapter_TagesSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner_PrioListe.setAdapter(adapter_TagesSpinner);
+        spinner_PrioListe.setOnItemSelectedListener(this);
+
         // Spinner noch das Android Icon wegnehmen bei Betätigung
         spinner_PrioListe = findViewById(R.id.PrioListe);
         ArrayAdapter<CharSequence> adapter_PrioListe = ArrayAdapter.createFromResource(this,
@@ -47,7 +62,6 @@ public class  Add extends AppCompatActivity implements View.OnClickListener, Ada
        // SaveButton.setText(prompt);
         //spinner_PrioListe.setPointerIcon(android.R.drawable.ic_menu_sort_by_size);
       //@android:drawable/ic_menu_sort_by_size
-
 
 
     }
@@ -74,6 +88,28 @@ public class  Add extends AppCompatActivity implements View.OnClickListener, Ada
         if (id == R.id.imageButton) {
             onBackPressed();
        }
+//        else if (id == R.id.MontagView) {
+//            if flag-> woher kommt flag -> ändere text
+//            montag.setPaintFlags(montag.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+//        }
+//        else if (id == R.id.DienstagView) {
+//            dienstag.setPaintFlags(dienstag.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+//        }
+//        else if (id == R.id.MittwochView) {
+//            mittwoch.setPaintFlags(mittwoch.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+//        }
+//        else if (id == R.id.DienstagView) {
+//            donnerstag.setPaintFlags(donnerstag.getPaintFlags() &(Paint.UNDERLINE_TEXT_FLAG));
+//        } else if (id == R.id.FreitagView) {
+//            freitag.setPaintFlags(freitag.getPaintFlags() &(Paint.UNDERLINE_TEXT_FLAG));
+//        }
+//        else if (id == R.id.SamstagView) {
+//            samstag.setPaintFlags(samstag.getPaintFlags() &(Paint.UNDERLINE_TEXT_FLAG));
+//        }
+//        else if (id == R.id.SonntagView) {
+//            sonntag.setPaintFlags(sonntag.getPaintFlags() &(Paint.UNDERLINE_TEXT_FLAG));
+//        }
+
         else if (id == R.id.SaveButton) {
             // gespeicherte Daten verwalten & Terminliste mit Termin anlegen
             intent = new Intent(this, MainActivity.class);
