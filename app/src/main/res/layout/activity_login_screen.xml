@@ -12,7 +12,7 @@
         android:id="@+id/text_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Passwort"
+        android:text="@string/passwort"
         android:textSize="28sp"
         app:layout_constraintBottom_toTopOf="@+id/editTextPassword"
         app:layout_constraintEnd_toEndOf="parent"
@@ -28,15 +28,17 @@
         android:layout_marginStart="100dp"
         android:layout_marginEnd="51dp"
         android:layout_marginBottom="13dp"
+        android:autofillHints="example@hotmail.de"
         android:ems="10"
-        android:hint="max.mustermann@x.de"
+        android:hint="@string/exampleMailHint"
         android:inputType="textEmailAddress"
         app:layout_constraintBottom_toTopOf="@+id/text_password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.032"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.931" />
+        app:layout_constraintVertical_bias="0.931"
+        tools:ignore="TextContrastCheck" />
 
     <TextView
         android:id="@+id/text_email"
@@ -44,9 +46,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="312dp"
         android:layout_marginBottom="261dp"
-        android:text="E-mail"
+        android:text="@string/e_mail"
         android:textSize="28sp"
-        app:layout_constraintBottom_toTopOf="@+id/textView4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.302"
         app:layout_constraintStart_toStartOf="parent"
@@ -57,15 +58,17 @@
         android:id="@+id/editTextPassword"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
+        android:autofillHints="Passwort"
         android:ems="10"
-        android:hint="Passwort123456789"
+        android:hint="@string/passwort"
         android:inputType="textPassword"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.68" />
+        app:layout_constraintVertical_bias="0.68"
+        tools:ignore="TextContrastCheck,DuplicateSpeakableTextCheck" />
 
     <Button
         android:id="@+id/button_login_screen"
@@ -80,7 +83,8 @@
         app:layout_constraintHorizontal_bias="0.857"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.883" />
+        app:layout_constraintVertical_bias="0.883"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <TextView
         android:id="@+id/registerTextButton"
@@ -90,16 +94,17 @@
         android:layout_marginTop="73dp"
         android:layout_marginEnd="38dp"
         android:clickable="true"
-        android:text="@string/noch_keinen_account_dann_registriere_dich_jetzt_hier"
+        android:text="@string/registriereDichJetzt"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.76" />
+        app:layout_constraintVertical_bias="0.76"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/logoView"
         android:layout_width="188dp"
         android:layout_height="191dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -108,6 +113,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.107"
-        app:srcCompat="@drawable/microsoftteams_image" />
+        app:srcCompat="@drawable/microsoftteams_image"
+        android:contentDescription="@string/logo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

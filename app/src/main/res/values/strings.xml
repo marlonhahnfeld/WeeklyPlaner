@@ -34,7 +34,7 @@
     <string name="Anmeldename_edit_text">Anmeldename</string>
     <string name="PasswortEingabe_edit_text">Passworteingabe</string>
     <string name="senden">senden</string>
-    <string name="noch_keinen_account_dann_registriere_dich_jetzt_hier"><u>Noch keinen Account? Dann registriere dich jetzt hier</u></string>
+    <string name="registriereDichJetzt"><u>Noch keinen Account? Dann registriere dich jetzt hier!</u></string>
     <string name="login">Login</string>
     <string name="passwort_eingeben">Passwort eingeben</string>
     <string name="e_mail">E-Mail</string>
@@ -46,4 +46,6 @@
     <string name="mindestens_ein_zeichen_enthalten">Mindestens ein Zeichen enthalten</string>
     <string name="mindestens_ein_gro_und_kleinbuchstabe">Mindestens ein Groß und Kleinbuchstabe</string>
     <string name="successfullyConnected">You are successfully connected to your Database</string>
+    <string name="exampleMailHint">example@hotmail.de</string>
+    <string name="logo">Logo</string>
 </resources>
