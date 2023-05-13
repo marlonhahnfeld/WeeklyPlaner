@@ -2,26 +2,19 @@ package com.example.weeklyplaner;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import java.sql.Date;
-import java.time.DayOfWeek;
-import java.time.LocalDate;
+import java.util.ArrayList;
 
 import items.Termin;
 import items.TerminListe;
@@ -30,6 +23,8 @@ import items.TerminListe;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
     private Button button_for_days;
     private ImageButton addButton;
+    private RecyclerView recyclerView;
+    public static ArrayList<Termin> heute_terminliste = new ArrayList<>();
 
 
     @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
@@ -43,6 +38,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         addButton = findViewById(R.id.AddButton);
         addButton.setOnClickListener(this);
+
+        Log.v("HIERERERERER", "ARE WEEEEEEEEEEEEEEEEEEEEEEE");
+        //here
+
+       // setUpTermine();
+        recyclerView = findViewById(R.id.TerminlisteRecyclerView);
+        Termin_RecyclerView_Adapter adapter = new Termin_RecyclerView_Adapter(this, heute_terminliste);
+        recyclerView.setAdapter(adapter);
+       // recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
 
        // LocalDate currentDate = LocalDate.now();
@@ -63,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             this.addContentView(newButton, params);
         }
         }
+
 //        Button myButton = new Button(context);
 //        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
 //                RelativeLayout.LayoutParams.WRAP_CONTENT,
@@ -96,6 +102,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             intent = new Intent(this, Add.class);
             startActivity(intent);
         }
+    }
+
+    private void setUpTermine(){
+        heute_terminliste.add(new Termin("Termin2", "hallo2","2",2));
+        heute_terminliste.add(new Termin("Termin3", "hallo3","3",3));
+        heute_terminliste.add(new Termin("Termin1", "hallo1","1",1));
     }
 
 }

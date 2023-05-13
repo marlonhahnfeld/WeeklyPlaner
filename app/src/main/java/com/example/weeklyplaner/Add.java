@@ -13,8 +13,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.ArrayList;
-
 import items.Termin;
 import items.TerminListe;
 
@@ -24,6 +22,8 @@ public class  Add extends AppCompatActivity implements View.OnClickListener, Ada
     private Button SaveButton;
     private Spinner spinner_PrioListe;
     private int save_counter = 0;
+    public static TerminListe TerminListe = new TerminListe();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +75,7 @@ public class  Add extends AppCompatActivity implements View.OnClickListener, Ada
             onBackPressed();
        }
         else if (id == R.id.SaveButton) {
-            //Todo: gespeicherte Daten verwalten
+            // gespeicherte Daten verwalten & Terminliste mit Termin anlegen
             intent = new Intent(this, MainActivity.class);
             EditText editText_Terminname = findViewById(R.id.Terminname_edit_text);
             String userInputText_Terminname = editText_Terminname.getText().toString(); // TODO: hier ist der userinput für Terminname gespeichert, eventuell global für klasse machen
@@ -84,13 +84,13 @@ public class  Add extends AppCompatActivity implements View.OnClickListener, Ada
             String userInput_SpinnerPrio = String.valueOf(spinner_PrioListe.getSelectedItem());
             Termin termin = new Termin(userInputText_Terminname, userInputText_Beschreibung, userInput_SpinnerPrio, save_counter);
             save_counter++;
-            TerminListe termine = new TerminListe();
-            termine.addTermin(termin);
+            MainActivity.heute_terminliste.add(termin);
+
            // String prompt = new String(termin.getTerminname()+termin.getBeschreibung()+termin.getPrio());
            // SaveButton.setText(prompt);
-            intent.putExtra("buttonCount", save_counter);
-            intent.putExtra("terminliste", termine);
-            intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+           // intent.putExtra("buttonCount", save_counter);
+           // intent.putExtra("terminliste", termine);
+           // intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
             startActivity(intent);
             //onBackPressed();

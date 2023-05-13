@@ -21,7 +21,7 @@ public class Week extends AppCompatActivity implements View.OnClickListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mo_so);
+        setContentView(R.layout.activity_week);
 
         BackButton = findViewById(R.id.SortButton);
         BackButton.setOnClickListener(this);

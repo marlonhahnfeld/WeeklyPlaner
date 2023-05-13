@@ -3,14 +3,16 @@ package items;
 import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.IntFunction;
 
 public class TerminListe extends ArrayList<Termin> {
-    private ArrayList<Termin> terminListe;
+    private List<Termin> termine;
 
     public TerminListe() {
-
+        this.termine = termine;
+        termine = new ArrayList<>();
     }
 
     public void addTermin(Termin termin) {
@@ -18,17 +20,17 @@ public class TerminListe extends ArrayList<Termin> {
     }
 
     public void removeTermin(Termin termin) {
-        terminListe.remove(termin);
+        termine.remove(termin);
     }
 
-    public ArrayList<Termin> getTerminListe() {
-        return terminListe;
+    public List<Termin> getTerminListe() {
+        return termine;
     }
 
     public Termin getLastTermin() {
-        int size = terminListe.size();
+        int size = termine.size();
         if (size > 0) {
-            return terminListe.get(size - 1);
+            return termine.get(size - 1);
         } else {
             return null;
         }
