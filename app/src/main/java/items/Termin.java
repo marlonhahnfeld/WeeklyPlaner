@@ -10,11 +10,14 @@ public class Termin {
     public String prio;
     public int id = 0;
 
-    public Termin(String terminname, String beschreibung, String prio, int id){
+    public String tag;
+
+    public Termin(String terminname, String beschreibung, String prio, int id, String Tag){
         this.terminname = terminname;
         this.prio = prio;
         this.beschreibung = beschreibung;
         this.id = id+1;
+        this.tag = Tag;
     }
 
     public String getTerminname() {

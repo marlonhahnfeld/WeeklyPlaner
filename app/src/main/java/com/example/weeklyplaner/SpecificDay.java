@@ -7,6 +7,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class SpecificDay extends AppCompatActivity implements View.OnClickListener {
     // this BackButton can have multiple targets, make it more flexible my remembering previous Layout
@@ -14,7 +16,9 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
     private ImageButton filterButton;
     private ImageButton addButton;
     public Button heutigerButton;
+    static boolean refresh_needed = false;
 
+    public RecyclerView specificDay_TerminListe_RecyclerView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,8 +35,56 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
 
         heutigerButton = findViewById(R.id.HeutigerButton);
 
+
+
         String buttonText = getIntent().getStringExtra("button_text");
         this.heutigerButton.setText(buttonText);
+        //
+        if (heutigerButton.getText().equals("Montag")) {
+            specificDay_TerminListe_RecyclerView = findViewById(R.id.TerminlisteRecyclerView);
+            Termin_RecyclerView_Adapter adapter = new Termin_RecyclerView_Adapter(this, MainActivity.montag_terminliste);
+            specificDay_TerminListe_RecyclerView.setAdapter(adapter);
+            // recyclerView.setHasFixedSize(true);
+            specificDay_TerminListe_RecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        } else if (heutigerButton.getText().equals("Dienstag")) {
+            specificDay_TerminListe_RecyclerView = findViewById(R.id.TerminlisteRecyclerView);
+            Termin_RecyclerView_Adapter adapter = new Termin_RecyclerView_Adapter(this, MainActivity.dienstag_terminliste);
+            specificDay_TerminListe_RecyclerView.setAdapter(adapter);
+            // recyclerView.setHasFixedSize(true);
+            specificDay_TerminListe_RecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        } else if (heutigerButton.getText().equals("Mittwoch")) {
+            specificDay_TerminListe_RecyclerView = findViewById(R.id.TerminlisteRecyclerView);
+            Termin_RecyclerView_Adapter adapter = new Termin_RecyclerView_Adapter(this, MainActivity.mittwoch_terminliste);
+            specificDay_TerminListe_RecyclerView.setAdapter(adapter);
+            // recyclerView.setHasFixedSize(true);
+            specificDay_TerminListe_RecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        } else if (heutigerButton.getText().equals("Donnerstag")) {
+            specificDay_TerminListe_RecyclerView = findViewById(R.id.TerminlisteRecyclerView);
+            Termin_RecyclerView_Adapter adapter = new Termin_RecyclerView_Adapter(this, MainActivity.donnerstag_terminliste);
+            specificDay_TerminListe_RecyclerView.setAdapter(adapter);
+            // recyclerView.setHasFixedSize(true);
+            specificDay_TerminListe_RecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        } else if (heutigerButton.getText().equals("Freitag")) {
+            specificDay_TerminListe_RecyclerView = findViewById(R.id.TerminlisteRecyclerView);
+            Termin_RecyclerView_Adapter adapter = new Termin_RecyclerView_Adapter(this, MainActivity.freitag_terminliste);
+            specificDay_TerminListe_RecyclerView.setAdapter(adapter);
+            // recyclerView.setHasFixedSize(true);
+            specificDay_TerminListe_RecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        } else if (heutigerButton.getText().equals("Samstag")) {
+            specificDay_TerminListe_RecyclerView = findViewById(R.id.TerminlisteRecyclerView);
+            Termin_RecyclerView_Adapter adapter = new Termin_RecyclerView_Adapter(this, MainActivity.samstag_terminliste);
+            specificDay_TerminListe_RecyclerView.setAdapter(adapter);
+            // recyclerView.setHasFixedSize(true);
+            specificDay_TerminListe_RecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        } else if (heutigerButton.getText().equals("Sonntag")) {
+            specificDay_TerminListe_RecyclerView = findViewById(R.id.TerminlisteRecyclerView);
+            Termin_RecyclerView_Adapter adapter = new Termin_RecyclerView_Adapter(this, MainActivity.sonntag_terminliste);
+            specificDay_TerminListe_RecyclerView.setAdapter(adapter);
+            // recyclerView.setHasFixedSize(true);
+            specificDay_TerminListe_RecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        }
+
+
 
     }
     // TODO: setText() bei MoSo würde Text mit richtigen Buttonnamen ändern, funktioniert jedoch aktuell nicht aufgrund Kollidierung (?)

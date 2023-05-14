@@ -44,12 +44,12 @@ public class  Add extends AppCompatActivity implements View.OnClickListener, Ada
 
 
        // Wochentage drop down menu
-        spinner_PrioListe = findViewById(R.id.TagesSpinner);
+        spinner_wann = findViewById(R.id.TagesSpinner);
         ArrayAdapter<CharSequence> adapter_TagesSpinner = ArrayAdapter.createFromResource(this,
                 R.array.wochentage, android.R.layout.simple_spinner_item);
         adapter_TagesSpinner.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner_PrioListe.setAdapter(adapter_TagesSpinner);
-        spinner_PrioListe.setOnItemSelectedListener(this);
+        spinner_wann.setAdapter(adapter_TagesSpinner);
+        spinner_wann.setOnItemSelectedListener(this);
 
         // Spinner noch das Android Icon wegnehmen bei Betätigung
         spinner_PrioListe = findViewById(R.id.PrioListe);
@@ -82,45 +82,50 @@ public class  Add extends AppCompatActivity implements View.OnClickListener, Ada
 
     @Override
     public void onClick(View v) {
-        Intent intent;
+       // Intent intent;
         int id = v.getId();
 
         if (id == R.id.imageButton) {
             onBackPressed();
        }
-//        else if (id == R.id.MontagView) {
-//            if flag-> woher kommt flag -> ändere text
-//            montag.setPaintFlags(montag.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-//        }
-//        else if (id == R.id.DienstagView) {
-//            dienstag.setPaintFlags(dienstag.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-//        }
-//        else if (id == R.id.MittwochView) {
-//            mittwoch.setPaintFlags(mittwoch.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-//        }
-//        else if (id == R.id.DienstagView) {
-//            donnerstag.setPaintFlags(donnerstag.getPaintFlags() &(Paint.UNDERLINE_TEXT_FLAG));
-//        } else if (id == R.id.FreitagView) {
-//            freitag.setPaintFlags(freitag.getPaintFlags() &(Paint.UNDERLINE_TEXT_FLAG));
-//        }
-//        else if (id == R.id.SamstagView) {
-//            samstag.setPaintFlags(samstag.getPaintFlags() &(Paint.UNDERLINE_TEXT_FLAG));
-//        }
-//        else if (id == R.id.SonntagView) {
-//            sonntag.setPaintFlags(sonntag.getPaintFlags() &(Paint.UNDERLINE_TEXT_FLAG));
-//        }
+
 
         else if (id == R.id.SaveButton) {
             // gespeicherte Daten verwalten & Terminliste mit Termin anlegen
-            intent = new Intent(this, MainActivity.class);
+            //intent = new Intent(this, MainActivity.class);
             EditText editText_Terminname = findViewById(R.id.Terminname_edit_text);
             String userInputText_Terminname = editText_Terminname.getText().toString(); // TODO: hier ist der userinput für Terminname gespeichert, eventuell global für klasse machen
             EditText editText_Beschreibung = findViewById(R.id.Beschreibung_edit_text);
             String userInputText_Beschreibung = editText_Beschreibung.getText().toString(); // TODO: hier ist der userinput für Beschreibung gespeichert, eventuell global für klasse machen
             String userInput_SpinnerPrio = String.valueOf(spinner_PrioListe.getSelectedItem());
-            Termin termin = new Termin(userInputText_Terminname, userInputText_Beschreibung, userInput_SpinnerPrio, save_counter);
+            String userInput_Wochentag = String.valueOf(spinner_wann.getSelectedItem());
+
+
+
+//TODO BEIM ERZEUGEN VON TERMIN INNERHALB SPECIFICDAY WIRD NICHT AKTUALISIERT
+            Termin termin = new Termin(userInputText_Terminname, userInputText_Beschreibung, userInput_SpinnerPrio, save_counter, userInput_Wochentag);
             save_counter++;
-            MainActivity.heute_terminliste.add(termin);
+            //MainActivity.heute_terminliste.add(termin);
+
+            if(userInput_Wochentag.equals("Montag")){
+                MainActivity.montag_terminliste.add(termin);
+            }else if(userInput_Wochentag.equals("Dienstag")){
+                MainActivity.dienstag_terminliste.add(termin);
+            }else if(userInput_Wochentag.equals("Mittwoch")){
+                MainActivity.mittwoch_terminliste.add(termin);
+            }else if(userInput_Wochentag.equals("Donnerstag")){
+                MainActivity.donnerstag_terminliste.add(termin);
+            }else if (termin.tag.equals("Freitag")){
+                MainActivity.freitag_terminliste.add(termin);
+            }else if (termin.tag.equals("Samstag")){
+                MainActivity.samstag_terminliste.add(termin);
+            }else {
+                MainActivity.sonntag_terminliste.add(termin);
+            }
+
+
+
+
 
            // String prompt = new String(termin.getTerminname()+termin.getBeschreibung()+termin.getPrio());
            // SaveButton.setText(prompt);
@@ -128,8 +133,8 @@ public class  Add extends AppCompatActivity implements View.OnClickListener, Ada
            // intent.putExtra("terminliste", termine);
            // intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
-            startActivity(intent);
-            //onBackPressed();
+            //startActivity(intent);
+            onBackPressed();
        }
     }
 }

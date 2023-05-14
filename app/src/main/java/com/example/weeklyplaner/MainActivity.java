@@ -26,6 +26,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private RecyclerView recyclerView;
     public static ArrayList<Termin> heute_terminliste = new ArrayList<>();
 
+    public static ArrayList<Termin> montag_terminliste = new ArrayList<>();
+    public static ArrayList<Termin> dienstag_terminliste = new ArrayList<>();
+    public static ArrayList<Termin> mittwoch_terminliste = new ArrayList<>();
+    public static ArrayList<Termin> donnerstag_terminliste = new ArrayList<>();
+    public static ArrayList<Termin> freitag_terminliste = new ArrayList<>();
+    public static ArrayList<Termin> samstag_terminliste = new ArrayList<>();
+    public static ArrayList<Termin> sonntag_terminliste = new ArrayList<>();
+
 
     @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
     @Override
@@ -39,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         addButton = findViewById(R.id.AddButton);
         addButton.setOnClickListener(this);
 
-        Log.v("HIERERERERER", "ARE WEEEEEEEEEEEEEEEEEEEEEEE");
+       // Log.v("HIERERERERER", "ARE WEEEEEEEEEEEEEEEEEEEEEEE");
         //here
 
        // setUpTermine();
@@ -104,10 +112,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void setUpTermine(){
-        heute_terminliste.add(new Termin("Termin2", "hallo2","2",2));
-        heute_terminliste.add(new Termin("Termin3", "hallo3","3",3));
-        heute_terminliste.add(new Termin("Termin1", "hallo1","1",1));
-    }
+
 
 }
