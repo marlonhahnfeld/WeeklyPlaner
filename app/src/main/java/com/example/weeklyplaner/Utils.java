@@ -13,7 +13,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 
-public class Utils extends AppCompatActivity{
+public class Utils extends AppCompatActivity {
 
     // When back button is pressed, finish current activity and go back to previous activity
 

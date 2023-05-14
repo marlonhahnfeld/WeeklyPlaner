@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 public class LoginScreen extends AppCompatActivity implements View.OnClickListener {
 
-    TextView login_to_register_text;
+    TextView loginToRegisterTextButton;
 
     private Button senden_button;
 
@@ -19,20 +19,8 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_screen);
 
-        login_to_register_text = (TextView) findViewById(R.id.login_to_register_text);
-
-        senden_button = findViewById(R.id.button_login_screen);
-        senden_button.setOnClickListener(this);
-
-        login_to_register_text.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            Intent intent = new Intent(LoginScreen.this,RegisterScreen.class);
-            startActivity(intent);
-            }
-        });
-
-
+        loginToRegisterTextButton = findViewById(R.id.registerTextButton);
+        loginToRegisterTextButton.setOnClickListener(this);
 
 
     }
@@ -42,12 +30,11 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         Intent intent;
         int id = v.getId();
 
-        if (id == R.id.button_login_screen) {
-            intent = new Intent(this, MainActivity.class);
+        if (id == R.id.registerTextButton) {
+            intent = new Intent(this, RegisterScreen.class);
             startActivity(intent);
-        } else if (id == R.id.SortButton) {
-            onBackPressed();
         }
     }
+
 
 }
