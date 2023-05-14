@@ -45,7 +45,7 @@
     <string name="PasswortEingabe_edit_text">Passworteingabe</string>
     <string name="senden">senden</string>
     <string name="noch_keinen_account_dann_registriere_dich_jetzt_hier"><u>Noch keinen Account? Dann registriere dich jetzt hier</u></string>
-   <!-- TODO <string name="terminprio">TerminPrio</string> -->
+    <string name="terminprio">TerminPrio</string>
 
     <string name="login">Login</string>
     <string name="passwort_eingeben">Passwort eingeben</string>
