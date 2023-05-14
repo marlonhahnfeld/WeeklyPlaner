@@ -21,13 +21,23 @@
     <string name="priorit_t">PrioritÃ¤t</string>
     <string name="speichern">Speichern</string>
     <string name="Registrieren">Registrierung</string>
-
+    <string-array name="wochentage">
+        <item>Montag</item>
+        <item>Dienstag</item>
+        <item>Mittwoch</item>
+        <item>Donnerstag</item>
+        <item>Freitag</item>
+        <item>Samstag</item>
+        <item>Sonntag</item>
+    </string-array>
     <string-array name="numbers">
-        <item>PrioritÃ¤t 1</item>
-        <item>PrioritÃ¤t 2</item>
-        <item>PrioritÃ¤t 3</item>
-        <item>PrioritÃ¤t 4</item>
-        <item>PrioritÃ¤t 5</item>
+        <item>Priorität 1</item>
+        <item>Priorität 2</item>
+        <item>Priorität 3</item>
+        <item>Priorität 4</item>
+        <item>Priorität 5</item>
+        <item>Priorität 6</item>
+        <item>Priorität 7</item>
     </string-array>
     <string name="Register">register</string>
     <string name="Button">buttonRegister</string>
@@ -35,6 +45,8 @@
     <string name="PasswortEingabe_edit_text">Passworteingabe</string>
     <string name="senden">senden</string>
     <string name="noch_keinen_account_dann_registriere_dich_jetzt_hier"><u>Noch keinen Account? Dann registriere dich jetzt hier</u></string>
+   <!-- TODO <string name="terminprio">TerminPrio</string> -->
+
     <string name="login">Login</string>
     <string name="passwort_eingeben">Passwort eingeben</string>
 </resources>

@@ -5,11 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class LoginScreen extends AppCompatActivity implements View.OnClickListener {
 
     TextView loginToRegisterTextButton;
+
+    private Button senden_button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,6 +21,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
 
         loginToRegisterTextButton = findViewById(R.id.registerTextButton);
         loginToRegisterTextButton.setOnClickListener(this);
+
 
     }
 
@@ -31,4 +35,6 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
             startActivity(intent);
         }
     }
+
+
 }
