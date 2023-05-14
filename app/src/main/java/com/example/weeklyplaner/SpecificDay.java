@@ -18,6 +18,42 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
     public Button heutigerButton;
     static boolean refresh_needed = false;
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // Refresh the activity here
+        refreshSpecificDay();
+    }
+
+    private void refreshSpecificDay() {
+            // Refresh the specific day's data here
+            // For example, update the RecyclerView adapter with the latest data
+            if (heutigerButton.getText().equals("Montag")) {
+                Termin_RecyclerView_Adapter adapter = new Termin_RecyclerView_Adapter(this, MainActivity.montag_terminliste);
+                specificDay_TerminListe_RecyclerView.setAdapter(adapter);
+            } else if (heutigerButton.getText().equals("Dienstag")) {
+                Termin_RecyclerView_Adapter adapter = new Termin_RecyclerView_Adapter(this, MainActivity.dienstag_terminliste);
+                specificDay_TerminListe_RecyclerView.setAdapter(adapter);
+            } else if (heutigerButton.getText().equals("Mittwoch")) {
+                Termin_RecyclerView_Adapter adapter = new Termin_RecyclerView_Adapter(this, MainActivity.mittwoch_terminliste);
+                specificDay_TerminListe_RecyclerView.setAdapter(adapter);
+            } else if (heutigerButton.getText().equals("Donnerstag")) {
+                Termin_RecyclerView_Adapter adapter = new Termin_RecyclerView_Adapter(this, MainActivity.donnerstag_terminliste);
+                specificDay_TerminListe_RecyclerView.setAdapter(adapter);
+            } else if (heutigerButton.getText().equals("Freitag")) {
+                Termin_RecyclerView_Adapter adapter = new Termin_RecyclerView_Adapter(this, MainActivity.freitag_terminliste);
+                specificDay_TerminListe_RecyclerView.setAdapter(adapter);
+            } else if (heutigerButton.getText().equals("Samstag")) {
+                Termin_RecyclerView_Adapter adapter = new Termin_RecyclerView_Adapter(this, MainActivity.samstag_terminliste);
+                specificDay_TerminListe_RecyclerView.setAdapter(adapter);
+            } else if (heutigerButton.getText().equals("Sonntag")) {
+                Termin_RecyclerView_Adapter adapter = new Termin_RecyclerView_Adapter(this, MainActivity.sonntag_terminliste);
+                specificDay_TerminListe_RecyclerView.setAdapter(adapter);
+            }
+        }
+
+
     public RecyclerView specificDay_TerminListe_RecyclerView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,9 +120,8 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
             specificDay_TerminListe_RecyclerView.setLayoutManager(new LinearLayoutManager(this));
         }
 
-
-
     }
+
     // TODO: setText() bei MoSo würde Text mit richtigen Buttonnamen ändern, funktioniert jedoch aktuell nicht aufgrund Kollidierung (?)
     public Button getHeutigerButton(){
         return heutigerButton;

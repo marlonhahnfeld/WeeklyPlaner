@@ -67,7 +67,6 @@ public class  Add extends AppCompatActivity implements View.OnClickListener, Ada
     }
 
 
-
 // TODO: Spinner-Methoden (PrioListe) noch auskapseln into Utils, OnClick-Methoden
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -123,9 +122,7 @@ public class  Add extends AppCompatActivity implements View.OnClickListener, Ada
                 MainActivity.sonntag_terminliste.add(termin);
             }
 
-
-
-
+            SpecificDay.refresh_needed = true;
 
            // String prompt = new String(termin.getTerminname()+termin.getBeschreibung()+termin.getPrio());
            // SaveButton.setText(prompt);
