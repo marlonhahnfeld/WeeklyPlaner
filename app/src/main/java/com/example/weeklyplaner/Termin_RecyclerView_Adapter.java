@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import items.Termin;
 
@@ -18,7 +17,7 @@ public class Termin_RecyclerView_Adapter extends RecyclerView.Adapter<Termin_Rec
     Context context;
     ArrayList<Termin> terminliste;
 
-    public Termin_RecyclerView_Adapter(Context context, ArrayList<Termin> terminliste){
+    public Termin_RecyclerView_Adapter(Context context, ArrayList<Termin> terminliste) {
         this.context = context;
         this.terminliste = terminliste;
     }
@@ -30,7 +29,7 @@ public class Termin_RecyclerView_Adapter extends RecyclerView.Adapter<Termin_Rec
 //        LayoutInflater inflater = LayoutInflater.from(context);
 //        View view = inflater.inflate(R.layout.recycler_view_row, parent, false);
 //        return new Termin_RecyclerView_Adapter.TerminViewHolder(view);
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view_row,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view_row, parent, false);
         return new Termin_RecyclerView_Adapter.TerminViewHolder(view);
     }
 

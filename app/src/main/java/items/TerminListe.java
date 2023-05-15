@@ -1,17 +1,12 @@
 package items;
 
-import androidx.annotation.NonNull;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.function.IntFunction;
 
 public class TerminListe extends ArrayList<Termin> {
     private List<Termin> termine;
 
     public TerminListe() {
-        this.termine = termine;
         termine = new ArrayList<>();
     }
 

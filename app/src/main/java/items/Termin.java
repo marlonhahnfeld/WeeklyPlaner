@@ -1,22 +1,17 @@
 package items;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 public class Termin {
+    private String terminname;
+    private String beschreibung;
+    private String prio;
+    private int id = 0;
+    private String tag;
 
-    public String terminname;
-    public String beschreibung;
-    public String prio;
-    public int id = 0;
-
-    public String tag;
-
-    public Termin(String terminname, String beschreibung, String prio, int id, String Tag){
+    public Termin(String terminname, String beschreibung, String prio, int id, String Tag) {
         this.terminname = terminname;
         this.prio = prio;
         this.beschreibung = beschreibung;
-        this.id = id+1;
+        this.id = id + 1;
         this.tag = Tag;
     }
 
@@ -50,5 +45,13 @@ public class Termin {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
     }
 }
