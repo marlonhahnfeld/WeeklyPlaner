@@ -48,4 +48,5 @@
     <string name="successfullyConnected">You are successfully connected to your Database</string>
     <string name="exampleMailHint">example@hotmail.de</string>
     <string name="logo">Logo</string>
+    <string name="registrieren2">Registrieren</string>
 </resources>
