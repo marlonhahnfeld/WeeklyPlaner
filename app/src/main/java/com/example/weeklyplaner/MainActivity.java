@@ -15,6 +15,8 @@ import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.TimeZone;
 
 import items.Termin;
 import items.TerminListe;
@@ -33,7 +35,46 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static ArrayList<Termin> freitag_terminliste = new ArrayList<>();
     public static ArrayList<Termin> samstag_terminliste = new ArrayList<>();
     public static ArrayList<Termin> sonntag_terminliste = new ArrayList<>();
+    Termin_RecyclerView_Adapter adapter;
+    TimeZone german_timezone = TimeZone.getTimeZone("Europe/Berlin");
+    Calendar calendar = Calendar.getInstance(german_timezone);
 
+// REFRESH PAGE CODE
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // Refresh the activity here
+        refreshMainActivity();
+    }
+
+    private void refreshMainActivity() {
+        // Refresh the specific day's data here
+        // For example, update the RecyclerView adapter with the latest data
+        if (calendar.get(Calendar.DAY_OF_WEEK) == 2) {
+            adapter = new Termin_RecyclerView_Adapter(this, MainActivity.montag_terminliste);
+            recyclerView.setAdapter(adapter);
+        } else if (calendar.get(Calendar.DAY_OF_WEEK) == 3) {
+            adapter = new Termin_RecyclerView_Adapter(this, MainActivity.dienstag_terminliste);
+            recyclerView.setAdapter(adapter);
+        } else if (calendar.get(Calendar.DAY_OF_WEEK) == 4) {
+            adapter = new Termin_RecyclerView_Adapter(this, MainActivity.mittwoch_terminliste);
+            recyclerView.setAdapter(adapter);
+        } else if (calendar.get(Calendar.DAY_OF_WEEK) == 5) {
+            adapter = new Termin_RecyclerView_Adapter(this, MainActivity.donnerstag_terminliste);
+            recyclerView.setAdapter(adapter);
+        } else if (calendar.get(Calendar.DAY_OF_WEEK) == 6) {
+            adapter = new Termin_RecyclerView_Adapter(this, MainActivity.freitag_terminliste);
+            recyclerView.setAdapter(adapter);
+        } else if (calendar.get(Calendar.DAY_OF_WEEK) == 7) {
+            adapter = new Termin_RecyclerView_Adapter(this, MainActivity.samstag_terminliste);
+            recyclerView.setAdapter(adapter);
+        } else if (calendar.get(Calendar.DAY_OF_WEEK) == 1) {
+            adapter = new Termin_RecyclerView_Adapter(this, MainActivity.sonntag_terminliste);
+            recyclerView.setAdapter(adapter);
+        }
+    }
+//
 
     @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
     @Override
@@ -52,14 +93,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
        // setUpTermine();
         recyclerView = findViewById(R.id.TerminlisteRecyclerView);
-        Termin_RecyclerView_Adapter adapter = new Termin_RecyclerView_Adapter(this, heute_terminliste);
+
+        if(calendar.get(Calendar.DAY_OF_WEEK) == 1){
+            adapter = new Termin_RecyclerView_Adapter(this, sonntag_terminliste);
+        }else if(calendar.get(Calendar.DAY_OF_WEEK) == 2){
+            adapter = new Termin_RecyclerView_Adapter(this, montag_terminliste);
+
+        }else if(calendar.get(Calendar.DAY_OF_WEEK) == 3){
+            adapter = new Termin_RecyclerView_Adapter(this, dienstag_terminliste);
+
+        }else if(calendar.get(Calendar.DAY_OF_WEEK) == 4){
+            adapter = new Termin_RecyclerView_Adapter(this, mittwoch_terminliste);
+
+        }else if(calendar.get(Calendar.DAY_OF_WEEK) == 5){
+            adapter = new Termin_RecyclerView_Adapter(this, donnerstag_terminliste);
+
+        }else if(calendar.get(Calendar.DAY_OF_WEEK) == 6){
+            adapter = new Termin_RecyclerView_Adapter(this, freitag_terminliste);
+
+        }else{
+            adapter = new Termin_RecyclerView_Adapter(this, samstag_terminliste);
+
+        }
         recyclerView.setAdapter(adapter);
-       // recyclerView.setHasFixedSize(true);
+        // recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
 
-       // LocalDate currentDate = LocalDate.now();
-       // DayOfWeek dayOfWeek = currentDate.getDayOfWeek();
         // Buttons generieren nach Erstellung
         if (getIntent().getFlags() == getIntent().FLAG_GRANT_READ_URI_PERMISSION){
         int buttonCount = getIntent().getIntExtra("buttonCount", 0);
@@ -77,22 +137,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         }
 
-//        Button myButton = new Button(context);
-//        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
-//                RelativeLayout.LayoutParams.WRAP_CONTENT,
-//                RelativeLayout.LayoutParams.WRAP_CONTENT
-//        );
-//        myButton.setLayoutParams(layoutParams);
-//        myButton.setText("Button Text");
-//        layoutParams.addRule(RelativeLayout.BELOW, terminListe.getLastTermin().getId());
-//        button_for_days.getId();
-//        myButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // Code, der bei Klick auf den Button ausgeführt werden soll
-//            }
-//        });
-//        layoutParams.addView(myButton);
 
 
 
