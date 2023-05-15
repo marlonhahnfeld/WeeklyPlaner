@@ -18,35 +18,45 @@
     <string name="terminname">Terminname</string>
     <string name="wann">Wann?</string>
     <string name="beschreibung">Beschreibung</string>
-    <string name="priorit_t">PrioritÃ¤t</string>
+    <string name="priorit_t">Priorität</string>
     <string name="speichern">Speichern</string>
     <string name="Registrieren">Registrierung</string>
 
+    <string-array name="wochentage">
+        <item>Montag</item>
+        <item>Dienstag</item>
+        <item>Mittwoch</item>
+        <item>Donnerstag</item>
+        <item>Freitag</item>
+        <item>Samstag</item>
+        <item>Sonntag</item>
+    </string-array>
+
     <string-array name="numbers">
-        <item>PrioritÃ¤t 1</item>
-        <item>PrioritÃ¤t 2</item>
-        <item>PrioritÃ¤t 3</item>
-        <item>PrioritÃ¤t 4</item>
-        <item>PrioritÃ¤t 5</item>
+        <item>Priorität 1</item>
+        <item>Priorität 2</item>
+        <item>Priorität 3</item>
+        <item>Priorität 4</item>
+        <item>Priorität 5</item>
     </string-array>
     <string name="Register">register</string>
     <string name="Button">buttonRegister</string>
     <string name="Anmeldename_edit_text">Anmeldename</string>
     <string name="PasswortEingabe_edit_text">Passworteingabe</string>
     <string name="senden">senden</string>
-    <string name="registriereDichJetzt"><u>Noch keinen Account? Dann registriere dich jetzt hier!</u></string>
+    <string name="noch_keinen_account_dann_registriere_dich_jetzt_hier"><u>Noch keinen Account? Dann registriere dich jetzt hier</u></string>
     <string name="login">Login</string>
     <string name="passwort_eingeben">Passwort eingeben</string>
-    <string name="e_mail">E-Mail</string>
-    <string name="e_mail_adresse">E-Mail Adresse</string>
     <string name="passwort">Passwort</string>
-    <string name="passwort_confirm">Passwort bestätigen</string>
-    <string name="mindestens_8_zeichen">Mindestens 8 Zeichen</string>
-    <string name="mindestens_eine_zahl">Mindestens eine Zahl</string>
-    <string name="mindestens_ein_zeichen_enthalten">Mindestens ein Zeichen enthalten</string>
-    <string name="mindestens_ein_gro_und_kleinbuchstabe">Mindestens ein Groß und Kleinbuchstabe</string>
-    <string name="successfullyConnected">You are successfully connected to your Database</string>
-    <string name="exampleMailHint">example@hotmail.de</string>
+    <string name="email">Email</string>
+    <string name="exampleEmail">example@hotmail.de</string>
+    <string name="registriereDichJetzt">Noch keinen Account? Registriere dich jetzt!</string>
     <string name="logo">Logo</string>
-    <string name="registrieren2">Registrieren</string>
+    <string name="confirmPasswort">Passwort bestätigen</string>
+    <string name="min8SignsLong">mind. 8 Zeichen</string>
+    <string name="min1Sign">mind. ein Sonderzeichen</string>
+    <string name="min1UpperLower">mind. einen Groß- und Kleinbuchstaben</string>
+    <string name="min1Figure">mind. eine Zahl</string>
+    <string name="Registrieren2">Registrieren</string>
+    <string name="terminprio">Priorität</string>
 </resources>
