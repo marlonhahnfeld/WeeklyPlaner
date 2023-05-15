@@ -18,9 +18,10 @@
     <string name="terminname">Terminname</string>
     <string name="wann">Wann?</string>
     <string name="beschreibung">Beschreibung</string>
-    <string name="priorit_t">PrioritÃ¤t</string>
+    <string name="priorit_t">Priorität</string>
     <string name="speichern">Speichern</string>
     <string name="Registrieren">Registrierung</string>
+
     <string-array name="wochentage">
         <item>Montag</item>
         <item>Dienstag</item>
@@ -30,14 +31,13 @@
         <item>Samstag</item>
         <item>Sonntag</item>
     </string-array>
+
     <string-array name="numbers">
         <item>Priorität 1</item>
         <item>Priorität 2</item>
         <item>Priorität 3</item>
         <item>Priorität 4</item>
         <item>Priorität 5</item>
-        <item>Priorität 6</item>
-        <item>Priorität 7</item>
     </string-array>
     <string name="Register">register</string>
     <string name="Button">buttonRegister</string>
@@ -45,8 +45,18 @@
     <string name="PasswortEingabe_edit_text">Passworteingabe</string>
     <string name="senden">senden</string>
     <string name="noch_keinen_account_dann_registriere_dich_jetzt_hier"><u>Noch keinen Account? Dann registriere dich jetzt hier</u></string>
-    <string name="terminprio">TerminPrio</string>
-
     <string name="login">Login</string>
     <string name="passwort_eingeben">Passwort eingeben</string>
+    <string name="passwort">Passwort</string>
+    <string name="email">Email</string>
+    <string name="exampleEmail">example@hotmail.de</string>
+    <string name="registriereDichJetzt">Noch keinen Account? Registriere dich jetzt!</string>
+    <string name="logo">Logo</string>
+    <string name="confirmPasswort">Passwort bestätigen</string>
+    <string name="min8SignsLong">mind. 8 Zeichen</string>
+    <string name="min1Sign">mind. ein Sonderzeichen</string>
+    <string name="min1UpperLower">mind. einen Groß- und Kleinbuchstaben</string>
+    <string name="min1Figure">mind. eine Zahl</string>
+    <string name="Registrieren2">Registrieren</string>
+    <string name="terminprio">Priorität</string>
 </resources>
