@@ -73,7 +73,6 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
 
     /**
      * Methode um Login Daten mithilfe der Datenbank zu überprüfen
-     * TODO: Hinweise falls Anmeldedaten falsch eingegeben wurden
      *
      * @param email    des Users
      * @param password des Users
