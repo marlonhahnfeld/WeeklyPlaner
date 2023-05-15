@@ -76,10 +76,10 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
      * @return true, wenn alle Anforderungen eingehalten wurden -> false, wenn nicht
      */
     public boolean checkInput(String email, String password) {
-        TextView minLetters = findViewById(R.id.textView4);
-        TextView min1Sign = findViewById(R.id.textView5);
-        TextView min1UpperAndLower = findViewById(R.id.textView6);
-        TextView min1Figure = findViewById(R.id.textView7);
+        TextView minLetters = findViewById(R.id.min8SignsLongTextView);
+        TextView min1Sign = findViewById(R.id.min1SignTextView);
+        TextView min1UpperAndLower = findViewById(R.id.min1UpperAndLowerLetterTextView);
+        TextView min1Figure = findViewById(R.id.min1FigureTextView);
 
         boolean length = false;
         boolean containsDigit = false;
