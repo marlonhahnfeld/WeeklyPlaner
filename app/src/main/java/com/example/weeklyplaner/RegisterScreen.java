@@ -17,7 +17,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class RegisterScreen extends AppCompatActivity implements View.OnClickListener {
-    private TextView dbTestView;
     private ImageButton backToLoginScreenButton;
     private Button registerButton;
     private EditText editTextEmail;
@@ -41,7 +40,6 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
         editTextPassword2 = findViewById(R.id.editTextPassword2);
-        dbTestView = findViewById(R.id.textView2);
 
         if (isConnected()) {
             System.out.println("Verbunden Registrieren Screen");
