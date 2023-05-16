@@ -8,10 +8,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 // TODO: Statt Memory abspeichern, auf Festplatte
-//
 public class DatabaseOp {
     private static final String DB_DRIVER = "org.h2.Driver";
-    private static final String DB_CONNECTION = "jdbc:h2:mem:testdb";
+    private static final String DB_CONNECTION = "jdbc:h2:file:/data/data/com.example.weeklyplaner/databases/loginDatenbank";
     private static final String DB_USER = "sa";
     private static final String DB_PASSWORD = "";
     private static Connection connection;
