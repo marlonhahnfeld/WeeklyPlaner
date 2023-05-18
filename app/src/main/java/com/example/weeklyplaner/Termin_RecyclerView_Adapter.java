@@ -1,6 +1,7 @@
 package com.example.weeklyplaner;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,10 +26,6 @@ public class Termin_RecyclerView_Adapter extends RecyclerView.Adapter<Termin_Rec
     @NonNull
     @Override
     public Termin_RecyclerView_Adapter.TerminViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // infalte layout (look for row)
-//        LayoutInflater inflater = LayoutInflater.from(context);
-//        View view = inflater.inflate(R.layout.recycler_view_row, parent, false);
-//        return new Termin_RecyclerView_Adapter.TerminViewHolder(view);
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view_row, parent, false);
         return new Termin_RecyclerView_Adapter.TerminViewHolder(view);
     }
@@ -47,15 +44,31 @@ public class Termin_RecyclerView_Adapter extends RecyclerView.Adapter<Termin_Rec
         return terminliste.size();
     }
 
-    public class TerminViewHolder extends RecyclerView.ViewHolder {
-        // grab views form our recycler row
-
+    public class TerminViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView TerminnameTextView, TerminPrioTextView;
 
         public TerminViewHolder(@NonNull View itemView) {
             super(itemView);
             TerminnameTextView = itemView.findViewById(R.id.TerminnameTextView);
             TerminPrioTextView = itemView.findViewById(R.id.TerminPrioritätTextView);
+
+            itemView.setOnClickListener(this);  // Set click listener on the itemView
+        }
+
+        @Override
+        public void onClick(View v) {
+            int position = getBindingAdapterPosition();
+            if (position != RecyclerView.NO_POSITION) {
+                Termin termin = terminliste.get(position);
+                openTerminDetailsScreen(termin);
+            }
+        }
+
+        private void openTerminDetailsScreen(Termin termin) {
+            Intent intent = new Intent(context, TerminDetailsActivity.class);
+            intent.putExtra("termin_id", termin.getId());
+            context.startActivity(intent);
         }
     }
+
 }
