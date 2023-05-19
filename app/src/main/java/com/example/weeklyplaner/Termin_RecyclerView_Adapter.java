@@ -58,4 +58,8 @@ public class Termin_RecyclerView_Adapter extends RecyclerView.Adapter<Termin_Rec
             TerminPrioTextView = itemView.findViewById(R.id.TerminPrioritätTextView);
         }
     }
+
+    public void setTerminliste(ArrayList<Termin> terminliste) {
+        this.terminliste = terminliste;
+    }
 }

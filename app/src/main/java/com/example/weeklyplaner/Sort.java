@@ -11,6 +11,8 @@ public class Sort extends AppCompatActivity implements View.OnClickListener {
     private ImageButton BackButton;
     private ImageButton addButton;
 
+    private ImageButton filterButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,6 +22,8 @@ public class Sort extends AppCompatActivity implements View.OnClickListener {
         BackButton.setOnClickListener(this);
         addButton = findViewById(R.id.AddButton);
         addButton.setOnClickListener(this);
+        filterButton = findViewById(R.id.SortButtonFilter);
+        filterButton.setOnClickListener(this);
 
     }
 
