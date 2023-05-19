@@ -59,4 +59,6 @@
     <string name="min1Figure">mind. eine Zahl</string>
     <string name="Registrieren2">Registrieren</string>
     <string name="terminprio">Priorität</string>
+    <string name="Edit">Edit</string>
+    <string name="Delete">Delete</string>
 </resources>

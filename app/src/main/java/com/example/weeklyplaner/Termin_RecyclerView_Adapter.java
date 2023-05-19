@@ -60,15 +60,28 @@ public class Termin_RecyclerView_Adapter extends RecyclerView.Adapter<Termin_Rec
             int position = getBindingAdapterPosition();
             if (position != RecyclerView.NO_POSITION) {
                 Termin termin = terminliste.get(position);
-                openTerminDetailsScreen(termin);
+                openTerminDetailsScreen();
             }
         }
 
-        private void openTerminDetailsScreen(Termin termin) {
-            Intent intent = new Intent(context, TerminDetailsActivity.class);
-            intent.putExtra("termin_id", termin.getId());
-            context.startActivity(intent);
+        private void openTerminDetailsScreen() {
+            int position = getBindingAdapterPosition();
+            if (position != RecyclerView.NO_POSITION) {
+                Termin termin = terminliste.get(position);
+
+                // Erstelle den Intent für die TerminDetailsActivity
+                Intent intent = new Intent(context, TerminDetailsActivity.class);
+
+                // Füge die Daten des Termins als Extras hinzu
+                intent.putExtra("termin_name", termin.getTerminname());
+                intent.putExtra("termin_beschreibung", termin.getBeschreibung());
+                intent.putExtra("termin_prio", termin.getPrio());
+                intent.putExtra("termin_tag", termin.getTag());
+
+                context.startActivity(intent);
+            }
         }
+
     }
 
 }

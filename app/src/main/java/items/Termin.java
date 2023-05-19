@@ -1,6 +1,6 @@
 package items;
 
-public class Termin {
+public class Termin  {
     private String terminname;
     private String beschreibung;
     private String prio;
