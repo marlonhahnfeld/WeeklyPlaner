@@ -14,6 +14,10 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+
+import items.Termin;
+
 public class TerminDetailsActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
     private EditText terminNameTextView;
     private EditText terminBeschreibungTextView;
@@ -21,13 +25,28 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
     private Spinner terminTagSpinner;
 
     private ImageButton backButton;
+    private Button editButton,deleteBtton;
+    private int terminId;
+    private String terminTag;
 
+    private int getSpinnerIndex(String value, String[] array) {
+        for (int i = 0; i < array.length; i++) {
+            if (array[i].equalsIgnoreCase(value)) {
+                return i;
+            }
+        }
+        return 1; // Default selection index
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_termin_details_screen);
         backButton = findViewById(R.id.imageButton);
         backButton.setOnClickListener(this);
+        editButton = findViewById(R.id.EditButton_details);
+        editButton.setOnClickListener(this);
+        deleteBtton = findViewById(R.id.DeleteButton_details);
+        deleteBtton.setOnClickListener(this);
 
         // Finde die TextViews in deinem Layout
         terminNameTextView = findViewById(R.id.Terminname_edit_text_details);
@@ -36,40 +55,19 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
 
         // Erhalte die übergebenen Daten aus dem Intent
         Intent intent = getIntent();
+        terminId = intent.getIntExtra("termin_id", -1);
         String terminName = intent.getStringExtra("termin_name");
         String terminBeschreibung = intent.getStringExtra("termin_beschreibung");
         String terminPrio = intent.getStringExtra("termin_prio");
-        String terminTag = intent.getStringExtra("termin_tag");
+        terminTag = intent.getStringExtra("termin_tag");
 
 
         terminTagSpinner = findViewById(R.id.TagesSpinner_details);
         ArrayAdapter<CharSequence> daySpinnerAdapter = ArrayAdapter.createFromResource(this,
                 R.array.wochentage, android.R.layout.simple_spinner_item);
         daySpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        switch (terminTag) {
-//            case "Montag":
-//                terminTagSpinner.setSelection(0);
-//                break;
-//            case "Dienstag":
-//                terminTagSpinner.setSelection(1);
-//                break;
-//            case "Mittwoch":
-//                terminTagSpinner.setSelection(2);
-//                break;
-//            case "Donnerstag":
-//                terminTagSpinner.setSelection(3);
-//                break;
-//            case "Freitag":
-//                terminTagSpinner.setSelection(4);
-//                break;
-//            case "Samstag":
-//                terminTagSpinner.setSelection(5);
-//                break;
-//            case "Sonntag":
-//                terminTagSpinner.setSelection(6);
-//                break;
-//        }
         terminTagSpinner.setAdapter(daySpinnerAdapter);
+        terminTagSpinner.setSelection(getSpinnerIndex(terminTag, getResources().getStringArray(R.array.wochentage)));
         terminTagSpinner.setOnItemSelectedListener(this);
 
 
@@ -77,8 +75,8 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
         ArrayAdapter<CharSequence> prioListSpinnerAdapter = ArrayAdapter.createFromResource(this,
                 R.array.numbers, android.R.layout.simple_spinner_item);
         prioListSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        //terminPrioSpinner.setSelection(terminPrio.charAt(terminPrio.length() - 1) - 1);
         terminPrioSpinner.setAdapter(prioListSpinnerAdapter);
+        terminPrioSpinner.setSelection(getSpinnerIndex(terminPrio, getResources().getStringArray(R.array.numbers)));
         terminPrioSpinner.setOnItemSelectedListener(this);
         terminNameTextView.setText(terminName);
         terminBeschreibungTextView.setText(terminBeschreibung);
@@ -88,35 +86,8 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        if (parent == terminTagSpinner) {
-            String selectedTag = parent.getItemAtPosition(position).toString();
-            switch (selectedTag) {
-                case "Montag":
-                    terminTagSpinner.setSelection(0);
-                    break;
-                case "Dienstag":
-                    terminTagSpinner.setSelection(1);
-                    break;
-                case "Mittwoch":
-                    terminTagSpinner.setSelection(2);
-                    break;
-                case "Donnerstag":
-                    terminTagSpinner.setSelection(3);
-                    break;
-                case "Freitag":
-                    terminTagSpinner.setSelection(4);
-                    break;
-                case "Samstag":
-                    terminTagSpinner.setSelection(5);
-                    break;
-                case "Sonntag":
-                    terminTagSpinner.setSelection(6);
-                    break;
-            }
-        } else if (parent == terminPrioSpinner) {
-            String selectedPrio = parent.getItemAtPosition(position).toString();
-            // Code zur Festlegung der Auswahl des Prioritäts-Spinners
-        }
+        String text = parent.getItemAtPosition(position).toString();
+        Toast.makeText(parent.getContext(), text, Toast.LENGTH_SHORT).show();
     }
 
 
@@ -130,6 +101,81 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
         int id = v.getId();
         if (id == R.id.imageButton) {
             onBackPressed();
+        } else if (id == R.id.EditButton_details) {
+            deleteCurrentTermin();
+            EditText terminNameEditText = findViewById(R.id.Terminname_edit_text_details);
+            String terminName_new = terminNameEditText.getText().toString();
+            EditText beschreibungEditText = findViewById(R.id.Beschreibung_edit_text_details);
+            String beschreibung_new = beschreibungEditText.getText().toString();
+            String prio_new = String.valueOf(terminPrioSpinner.getSelectedItem());
+            String tag_new = String.valueOf(terminTagSpinner.getSelectedItem());
+            Termin termin = new Termin(terminName_new,beschreibung_new,prio_new,terminId,tag_new);
+            if (tag_new != terminTag){
+                // zur richtigen liste zuordnen
+                getSpecificTerminliste(tag_new).add(termin);
+            } else {
+                getCurrentTerminListe().add(termin);
+            }
+            onBackPressed();
+            // TODO NEXT RELEASE: POPUP ARE YOU SURE
+        } else if (id == R.id.DeleteButton_details) {
+            deleteCurrentTermin();
+            onBackPressed();
         }
+    }
+    public void deleteCurrentTermin(){
+        for (Termin termin: getCurrentTerminListe()) {
+
+            if (termin.getId() == terminId) {
+                getCurrentTerminListe().remove(termin);
+                break;
+            }
+        }
+    }
+    public ArrayList<Termin> getCurrentTerminListe(){
+        switch (terminTag) {
+            case "Montag":
+                return(MainActivity.montag_terminliste);
+            case "Dienstag":
+                return(MainActivity.dienstag_terminliste);
+            case "Mittwoch":
+                return (MainActivity.mittwoch_terminliste);
+            case "Donnerstag":
+                return (MainActivity.donnerstag_terminliste);
+            case "Freitag":
+                return (MainActivity.freitag_terminliste);
+            case "Samstag":
+                return (MainActivity.samstag_terminliste);
+            case "Sonntag":
+                return (MainActivity.sonntag_terminliste);
+            // Weitere Cases für andere Termin-IDs
+
+            default:
+                break;
+        }
+        return null;
+    }
+    public ArrayList<Termin> getSpecificTerminliste(String tag){
+        switch (tag) {
+            case "Montag":
+                return(MainActivity.montag_terminliste);
+            case "Dienstag":
+                return(MainActivity.dienstag_terminliste);
+            case "Mittwoch":
+                return (MainActivity.mittwoch_terminliste);
+            case "Donnerstag":
+                return (MainActivity.donnerstag_terminliste);
+            case "Freitag":
+                return (MainActivity.freitag_terminliste);
+            case "Samstag":
+                return (MainActivity.samstag_terminliste);
+            case "Sonntag":
+                return (MainActivity.sonntag_terminliste);
+            // Weitere Cases für andere Termin-IDs
+
+            default:
+                break;
+        }
+        return null;
     }
 }

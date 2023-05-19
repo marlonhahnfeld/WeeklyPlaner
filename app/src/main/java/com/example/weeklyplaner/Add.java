@@ -19,7 +19,7 @@ public class Add extends AppCompatActivity implements View.OnClickListener, Adap
     private ImageButton backButton;
     private Button saveButton;
     private Spinner prioListSpinner, daySpinner;
-    private int saveCounter = 0;
+    public static int saveCounter = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
