@@ -1,5 +1,7 @@
 package com.example.weeklyplaner;
 
+import static com.example.weeklyplaner.Utils.getSpecificTerminliste;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -114,7 +116,7 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
                 // zur richtigen liste zuordnen
                 getSpecificTerminliste(tag_new).add(termin);
             } else {
-                getCurrentTerminListe().add(termin);
+                getSpecificTerminliste(terminTag).add(termin);
             }
             onBackPressed();
             // TODO NEXT RELEASE: POPUP ARE YOU SURE
@@ -124,58 +126,12 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
         }
     }
     public void deleteCurrentTermin(){
-        for (Termin termin: getCurrentTerminListe()) {
+        for (Termin termin: getSpecificTerminliste(terminTag)) {
 
             if (termin.getId() == terminId) {
-                getCurrentTerminListe().remove(termin);
+                getSpecificTerminliste(terminTag).remove(termin);
                 break;
             }
         }
-    }
-    public ArrayList<Termin> getCurrentTerminListe(){
-        switch (terminTag) {
-            case "Montag":
-                return(MainActivity.montag_terminliste);
-            case "Dienstag":
-                return(MainActivity.dienstag_terminliste);
-            case "Mittwoch":
-                return (MainActivity.mittwoch_terminliste);
-            case "Donnerstag":
-                return (MainActivity.donnerstag_terminliste);
-            case "Freitag":
-                return (MainActivity.freitag_terminliste);
-            case "Samstag":
-                return (MainActivity.samstag_terminliste);
-            case "Sonntag":
-                return (MainActivity.sonntag_terminliste);
-            // Weitere Cases für andere Termin-IDs
-
-            default:
-                break;
-        }
-        return null;
-    }
-    public ArrayList<Termin> getSpecificTerminliste(String tag){
-        switch (tag) {
-            case "Montag":
-                return(MainActivity.montag_terminliste);
-            case "Dienstag":
-                return(MainActivity.dienstag_terminliste);
-            case "Mittwoch":
-                return (MainActivity.mittwoch_terminliste);
-            case "Donnerstag":
-                return (MainActivity.donnerstag_terminliste);
-            case "Freitag":
-                return (MainActivity.freitag_terminliste);
-            case "Samstag":
-                return (MainActivity.samstag_terminliste);
-            case "Sonntag":
-                return (MainActivity.sonntag_terminliste);
-            // Weitere Cases für andere Termin-IDs
-
-            default:
-                break;
-        }
-        return null;
     }
 }

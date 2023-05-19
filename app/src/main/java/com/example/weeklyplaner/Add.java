@@ -1,5 +1,7 @@
 package com.example.weeklyplaner;
 
+import static com.example.weeklyplaner.Utils.getSpecificTerminliste;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -72,29 +74,8 @@ public class Add extends AppCompatActivity implements View.OnClickListener, Adap
             Termin termin = new Termin(terminName, beschreibung, prio, saveCounter, tag);
             saveCounter++;
 
-            switch (tag) {
-                case "Montag":
-                    MainActivity.montag_terminliste.add(termin);
-                    break;
-                case "Dienstag":
-                    MainActivity.dienstag_terminliste.add(termin);
-                    break;
-                case "Mittwoch":
-                    MainActivity.mittwoch_terminliste.add(termin);
-                    break;
-                case "Donnerstag":
-                    MainActivity.donnerstag_terminliste.add(termin);
-                    break;
-                case "Freitag":
-                    MainActivity.freitag_terminliste.add(termin);
-                    break;
-                case "Samstag":
-                    MainActivity.samstag_terminliste.add(termin);
-                    break;
-                case "Sonntag":
-                    MainActivity.sonntag_terminliste.add(termin);
-                    break;
-            }
+            getSpecificTerminliste(tag).add(termin);
+            
 
             SpecificDay.refresh_needed = true;
             onBackPressed();

@@ -1,5 +1,7 @@
 package com.example.weeklyplaner;
 
+import static com.example.weeklyplaner.Utils.getSpecificTerminliste;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -8,6 +10,10 @@ import android.widget.ImageButton;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
+
+import items.Termin;
 
 public class SpecificDay extends AppCompatActivity implements View.OnClickListener {
 
@@ -30,32 +36,7 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
     private void refreshSpecificDay() {
         // Refresh the specific day's data here
         String day = heutigerButton.getText().toString();
-        switch (day) {
-            case "Montag":
-                specificDay_TerminListe_RecyclerView.setAdapter(new Termin_RecyclerView_Adapter(this, MainActivity.montag_terminliste));
-                break;
-            case "Dienstag":
-                specificDay_TerminListe_RecyclerView.setAdapter(new Termin_RecyclerView_Adapter(this, MainActivity.dienstag_terminliste));
-                break;
-            case "Mittwoch":
-                specificDay_TerminListe_RecyclerView.setAdapter(new Termin_RecyclerView_Adapter(this, MainActivity.mittwoch_terminliste));
-                break;
-            case "Donnerstag":
-                specificDay_TerminListe_RecyclerView.setAdapter(new Termin_RecyclerView_Adapter(this, MainActivity.donnerstag_terminliste));
-                break;
-            case "Freitag":
-                specificDay_TerminListe_RecyclerView.setAdapter(new Termin_RecyclerView_Adapter(this, MainActivity.freitag_terminliste));
-                break;
-            case "Samstag":
-                specificDay_TerminListe_RecyclerView.setAdapter(new Termin_RecyclerView_Adapter(this, MainActivity.samstag_terminliste));
-                break;
-            case "Sonntag":
-                specificDay_TerminListe_RecyclerView.setAdapter(new Termin_RecyclerView_Adapter(this, MainActivity.sonntag_terminliste));
-                break;
-            default:
-                // Handle unexpected day name here
-                break;
-        }
+        specificDay_TerminListe_RecyclerView.setAdapter(new Termin_RecyclerView_Adapter(this, getSpecificTerminliste(day)));
     }
 
     @Override
@@ -78,29 +59,7 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
 
         specificDay_TerminListe_RecyclerView = findViewById(R.id.TerminlisteRecyclerView);
         Termin_RecyclerView_Adapter adapter = null;
-        switch (heutigerButton.getText().toString()) {
-            case "Montag":
-                adapter = new Termin_RecyclerView_Adapter(this, MainActivity.montag_terminliste);
-                break;
-            case "Dienstag":
-                adapter = new Termin_RecyclerView_Adapter(this, MainActivity.dienstag_terminliste);
-                break;
-            case "Mittwoch":
-                adapter = new Termin_RecyclerView_Adapter(this, MainActivity.mittwoch_terminliste);
-                break;
-            case "Donnerstag":
-                adapter = new Termin_RecyclerView_Adapter(this, MainActivity.donnerstag_terminliste);
-                break;
-            case "Freitag":
-                adapter = new Termin_RecyclerView_Adapter(this, MainActivity.freitag_terminliste);
-                break;
-            case "Samstag":
-                adapter = new Termin_RecyclerView_Adapter(this, MainActivity.samstag_terminliste);
-                break;
-            case "Sonntag":
-                adapter = new Termin_RecyclerView_Adapter(this, MainActivity.sonntag_terminliste);
-                break;
-        }
+        adapter = new Termin_RecyclerView_Adapter(this, getSpecificTerminliste(heutigerButton.getText().toString()));
         specificDay_TerminListe_RecyclerView.setAdapter(adapter);
         specificDay_TerminListe_RecyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
