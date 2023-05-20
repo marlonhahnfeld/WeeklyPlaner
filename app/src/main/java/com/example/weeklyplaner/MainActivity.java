@@ -23,7 +23,7 @@ import java.util.TimeZone;
 import items.Termin;
 
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private Button button_for_days;
     private ImageButton addButton;
     private RecyclerView recyclerView;
@@ -38,6 +38,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static ArrayList<Termin> samstag_terminliste = new ArrayList<>();
     public static ArrayList<Termin> sonntag_terminliste = new ArrayList<>();
 
+    protected int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+
     private ImageButton filterButton;
 
 
@@ -49,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void refreshMainActivity() {
-        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+
         adapter = new Termin_RecyclerView_Adapter(this, terminListe[dayOfWeek - 1]);
         recyclerView.setAdapter(adapter);
     }
@@ -91,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (id == R.id.MoSoButton) {
             intent = new Intent(this, Week.class);
             startActivity(intent);
-        } else if  (id == R.id.AddButton) {
+        } else if (id == R.id.AddButton) {
             intent = new Intent(this, Add.class);
             startActivity(intent);
         } else if (id == R.id.SortButtonFilterForMainActivity) {
@@ -125,7 +127,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void sortAscendingByPriority() {
-        ArrayList<Termin> terminliste = (ArrayList<Termin>) getCurrentDayTerminList();
+        //TODO
+        ArrayList<Termin> terminliste = terminListe[dayOfWeek - 1];
         TerminSorter.sortAscendingByPriority(terminliste);
 
         for (Termin termin : terminliste) {
@@ -137,7 +140,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void sortDescendingByPriority() {
-        ArrayList<Termin> terminliste = (ArrayList<Termin>) getCurrentDayTerminList();
+        ArrayList<Termin> terminliste = terminListe[dayOfWeek - 1];
         TerminSorter.sortDescendingByPriority(terminliste);
 
         for (Termin termin : terminliste) {
@@ -146,27 +149,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         adapter.setTerminliste(terminliste);
         adapter.notifyDataSetChanged();
-    }
-    private List<Termin> getCurrentDayTerminList() {
-        List<Termin> terminliste = new ArrayList<>();
-
-        if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY) {
-            terminliste = montag_terminliste;
-        } else if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.TUESDAY) {
-            terminliste = dienstag_terminliste;
-        } else if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.WEDNESDAY) {
-            terminliste = mittwoch_terminliste;
-        } else if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.THURSDAY) {
-            terminliste = donnerstag_terminliste;
-        } else if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY) {
-            terminliste = freitag_terminliste;
-        } else if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {
-            terminliste = samstag_terminliste;
-        } else if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
-            terminliste = sonntag_terminliste;
-        }
-
-        return terminliste;
     }
 
 
