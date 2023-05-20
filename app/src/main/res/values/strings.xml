@@ -59,6 +59,8 @@
     <string name="min1Figure">mind. eine Zahl</string>
     <string name="Registrieren2">Registrieren</string>
     <string name="terminprio">Priorität</string>
-    <string name="Edit">Edit</string>
+    <string name="prio_absteigend">Priorität absteigend</string>
+    <string name="prio_aufsteigend">Priorität aufsteigend</string>
+  <string name="Edit">Edit</string>
     <string name="Delete">Delete</string>
 </resources>

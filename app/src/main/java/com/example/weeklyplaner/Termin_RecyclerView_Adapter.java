@@ -84,4 +84,7 @@ public class Termin_RecyclerView_Adapter extends RecyclerView.Adapter<Termin_Rec
 
     }
 
+    public void setTerminliste(ArrayList<Termin> terminliste) {
+        this.terminliste = terminliste;
+    }
 }
