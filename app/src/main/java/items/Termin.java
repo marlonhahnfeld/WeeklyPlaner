@@ -1,6 +1,8 @@
 package items;
 
-public class Termin {
+import com.example.weeklyplaner.Add;
+
+public class Termin  {
     private String terminname;
     private String beschreibung;
     private String prio;
@@ -11,7 +13,7 @@ public class Termin {
         this.terminname = terminname;
         this.prio = prio;
         this.beschreibung = beschreibung;
-        this.id = id + 1;
+        this.id = Add.saveCounter;
         this.tag = Tag;
     }
 

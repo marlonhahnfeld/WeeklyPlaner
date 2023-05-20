@@ -15,6 +15,9 @@
         android:theme="@style/Theme.WeeklyPlaner"
         tools:targetApi="31">
         <activity
+            android:name=".TerminDetailsActivity"
+            android:exported="false" />
+        <activity
             android:name=".SpecificDay"
             android:exported="false" />
         <activity
@@ -27,16 +30,13 @@
             android:name=".Week"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".LoginScreen"
             android:exported="true" />
         <activity
             android:name=".RegisterScreen"
-            android:exported="false" />
-
-
-        <!-- STARTSCREEN -->
+            android:exported="false" /> <!-- STARTSCREEN -->
         <activity
-            android:name=".LoginScreen"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

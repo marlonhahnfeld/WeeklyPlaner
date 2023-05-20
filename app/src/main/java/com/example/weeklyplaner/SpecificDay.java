@@ -1,6 +1,11 @@
 package com.example.weeklyplaner;
 
+
+
+
+
 import android.content.Context;
+import static com.example.weeklyplaner.Utils.getSpecificTerminliste;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,12 +15,13 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import java.util.List;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import items.Termin;
 
@@ -42,12 +48,17 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
     //Nochmal anschauen
 
     private void refreshSpecificDay() {
+
+    // Refresh the specific day's data here
+        String day = heutigerButton.getText().toString();
+        specificDay_TerminListe_RecyclerView.setAdapter(new Termin_RecyclerView_Adapter(this, getSpecificTerminliste(day)));
         RecyclerView.Adapter adapter = specificDay_TerminListe_RecyclerView.getAdapter();
         if (adapter instanceof Termin_RecyclerView_Adapter) {
             Termin_RecyclerView_Adapter terminAdapter = (Termin_RecyclerView_Adapter) adapter;
             terminAdapter.setTerminliste((ArrayList<Termin>) getCurrentDayTerminList());
             terminAdapter.notifyDataSetChanged();
         }
+
     }
 
     @Override
@@ -71,6 +82,9 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
         this.heutigerButton.setText(buttonText);
 
         specificDay_TerminListe_RecyclerView = findViewById(R.id.TerminlisteRecyclerView);
+      Termin_RecyclerView_Adapter adapter = null;
+        adapter = new Termin_RecyclerView_Adapter(this, getSpecificTerminliste(heutigerButton.getText().toString()));
+        specificDay_TerminListe_RecyclerView.setAdapter(adapter);
         specificDay_TerminListe_RecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         adapter = getAdapterForCurrentDay();
