@@ -54,4 +54,17 @@
         android:layout_marginTop="16dp"
         android:layout_marginBottom="169dp" />
 
+    <ImageButton
+        android:id="@+id/SortButtonFilterForMainActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#00F8F5F5"
+        android:contentDescription="@string/sort"
+        app:srcCompat="@android:drawable/ic_menu_sort_by_size"
+        app:tint="#000000" />
+
 </RelativeLayout>

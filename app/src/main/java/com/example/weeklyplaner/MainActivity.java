@@ -8,12 +8,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.PopupMenu;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.TimeZone;
 
 import items.Termin;
@@ -34,6 +38,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static ArrayList<Termin> samstag_terminliste = new ArrayList<>();
     public static ArrayList<Termin> sonntag_terminliste = new ArrayList<>();
 
+    private ImageButton filterButton;
+
 
     // REFRESH PAGE CODE
     @Override
@@ -53,6 +59,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        filterButton = findViewById(R.id.SortButtonFilterForMainActivity);
+        filterButton.setOnClickListener(this);
 
         button_for_days = findViewById(R.id.MoSoButton);
         button_for_days.setOnClickListener(this);
@@ -82,12 +91,83 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (id == R.id.MoSoButton) {
             intent = new Intent(this, Week.class);
             startActivity(intent);
-        } else if (id == R.id.AddButton) {
+        } else if  (id == R.id.AddButton) {
             intent = new Intent(this, Add.class);
             startActivity(intent);
+        } else if (id == R.id.SortButtonFilterForMainActivity) {
+            showFilterPopupMenu(v);
+
         }
     }
 
+    private static final int FILTER_OPTION_1_ID = R.id.filter_option_1;
+    private static final int FILTER_OPTION_2_ID = R.id.filter_option_2;
+
+    private void showFilterPopupMenu(View anchorView) {
+        PopupMenu popupMenu = new PopupMenu(this, anchorView);
+        popupMenu.inflate(R.menu.menu_filter);
+
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                int itemId = item.getItemId();
+                if (itemId == FILTER_OPTION_1_ID) {
+                    sortAscendingByPriority();
+                    return true;
+                } else if (itemId == FILTER_OPTION_2_ID) {
+                    sortDescendingByPriority();
+                    return true;
+                }
+                return false;
+            }
+        });
+        popupMenu.show();
+    }
+
+    private void sortAscendingByPriority() {
+        ArrayList<Termin> terminliste = (ArrayList<Termin>) getCurrentDayTerminList();
+        TerminSorter.sortAscendingByPriority(terminliste);
+
+        for (Termin termin : terminliste) {
+            Log.d("SortAscending", "Termin: " + termin.getTerminname() + " Prio: " + termin.getPrio());
+        }
+
+        adapter.setTerminliste(terminliste);
+        adapter.notifyDataSetChanged();
+    }
+
+    private void sortDescendingByPriority() {
+        ArrayList<Termin> terminliste = (ArrayList<Termin>) getCurrentDayTerminList();
+        TerminSorter.sortDescendingByPriority(terminliste);
+
+        for (Termin termin : terminliste) {
+            Log.d("SortDescending", "Termin: " + termin.getTerminname() + " Prio: " + termin.getPrio());
+        }
+
+        adapter.setTerminliste(terminliste);
+        adapter.notifyDataSetChanged();
+    }
+    private List<Termin> getCurrentDayTerminList() {
+        List<Termin> terminliste = new ArrayList<>();
+
+        if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY) {
+            terminliste = montag_terminliste;
+        } else if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.TUESDAY) {
+            terminliste = dienstag_terminliste;
+        } else if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.WEDNESDAY) {
+            terminliste = mittwoch_terminliste;
+        } else if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.THURSDAY) {
+            terminliste = donnerstag_terminliste;
+        } else if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.FRIDAY) {
+            terminliste = freitag_terminliste;
+        } else if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {
+            terminliste = samstag_terminliste;
+        } else if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
+            terminliste = sonntag_terminliste;
+        }
+
+        return terminliste;
+    }
 
 
 }
