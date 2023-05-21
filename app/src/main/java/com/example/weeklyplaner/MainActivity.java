@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 
@@ -39,8 +40,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static ArrayList<Termin> sonntag_terminliste = new ArrayList<>();
 
     protected int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
-
     private ImageButton filterButton;
+
+
 
 
     // REFRESH PAGE CODE
@@ -71,6 +73,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         addButton = findViewById(R.id.AddButton);
         addButton.setOnClickListener(this);
         recyclerView = findViewById(R.id.TerminlisteRecyclerView);
+
+
+
+
+
+
+
 
         terminListe[0] = sonntag_terminliste;
         terminListe[1] = montag_terminliste;

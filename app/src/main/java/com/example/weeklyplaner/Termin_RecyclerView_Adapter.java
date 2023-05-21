@@ -2,9 +2,12 @@ package com.example.weeklyplaner;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -46,11 +49,30 @@ public class Termin_RecyclerView_Adapter extends RecyclerView.Adapter<Termin_Rec
 
     public class TerminViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView TerminnameTextView, TerminPrioTextView;
+        static CheckBox checkbox;
 
         public TerminViewHolder(@NonNull View itemView) {
             super(itemView);
             TerminnameTextView = itemView.findViewById(R.id.TerminnameTextView);
             TerminPrioTextView = itemView.findViewById(R.id.TerminPrioritätTextView);
+            checkbox = itemView.findViewById(R.id.checkbox);
+
+
+            //checkbox operations
+            checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if(isChecked){
+                        itemView.setBackgroundColor(Color.GRAY);
+                        TerminnameTextView.setTextColor(Color.GRAY);
+                        TerminPrioTextView.setTextColor(Color.GRAY);
+                    }else {
+                        itemView.setBackgroundColor(Color.parseColor("#1C1F28"));
+                        TerminnameTextView.setTextColor(Color.WHITE);
+                        TerminPrioTextView.setTextColor(Color.WHITE);
+                    }
+                }
+            });
 
             itemView.setOnClickListener(this);  // Set click listener on the itemView
         }
@@ -62,6 +84,7 @@ public class Termin_RecyclerView_Adapter extends RecyclerView.Adapter<Termin_Rec
                 Termin termin = terminliste.get(position);
                 openTerminDetailsScreen();
             }
+            checkbox.toggle();
         }
 
         private void openTerminDetailsScreen() {
