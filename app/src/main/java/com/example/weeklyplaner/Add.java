@@ -55,7 +55,8 @@ public class Add extends AppCompatActivity implements View.OnClickListener, Adap
     }
 
     @Override
-    public void onNothingSelected(AdapterView<?> parent) {}
+    public void onNothingSelected(AdapterView<?> parent) {
+    }
 
     @Override
     public void onClick(View v) {
@@ -75,7 +76,6 @@ public class Add extends AppCompatActivity implements View.OnClickListener, Adap
             saveCounter++;
 
             getSpecificTerminliste(tag).add(termin);
-            
 
             SpecificDay.refresh_needed = true;
             onBackPressed();

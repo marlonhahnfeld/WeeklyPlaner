@@ -14,7 +14,6 @@ import java.util.TimeZone;
 
 public class Week extends AppCompatActivity implements View.OnClickListener {
     private ImageButton BackButton;
-
     private Button button_montag;
     private Button button_dienstag;
     private Button button_mittwoch;

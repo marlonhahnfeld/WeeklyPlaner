@@ -1,6 +1,5 @@
 package com.example.weeklyplaner;
 
-
 import android.content.Context;
 
 import static com.example.weeklyplaner.Utils.getSpecificTerminliste;
@@ -13,7 +12,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
-
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -54,7 +52,7 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
         RecyclerView.Adapter adapter = specificDay_TerminListe_RecyclerView.getAdapter();
         if (adapter instanceof Termin_RecyclerView_Adapter) {
             Termin_RecyclerView_Adapter terminAdapter = (Termin_RecyclerView_Adapter) adapter;
-            terminAdapter.setTerminliste( getSpecificTerminliste(day));
+            terminAdapter.setTerminliste(getSpecificTerminliste(day));
             terminAdapter.notifyDataSetChanged();
         }
     }
