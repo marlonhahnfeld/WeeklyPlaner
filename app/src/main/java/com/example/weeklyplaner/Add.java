@@ -1,6 +1,7 @@
 package com.example.weeklyplaner;
 
 import static com.example.weeklyplaner.Utils.getSpecificTerminliste;
+import static com.example.weeklyplaner.DatabaseOp.*;
 
 import android.os.Bundle;
 import android.view.View;
@@ -27,6 +28,11 @@ public class Add extends AppCompatActivity implements View.OnClickListener, Adap
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
+
+        createDatabaseConnection();
+        if (isConnected()) {
+            System.out.println("Verbunden -> Add Activity");
+        }
 
         backButton = findViewById(R.id.imageButton);
         backButton.setOnClickListener(this);
@@ -58,6 +64,7 @@ public class Add extends AppCompatActivity implements View.OnClickListener, Adap
     public void onNothingSelected(AdapterView<?> parent) {
     }
 
+    // TODO: Datenbank schließen nach Abschluss
     @Override
     public void onClick(View v) {
         int id = v.getId();
@@ -72,7 +79,7 @@ public class Add extends AppCompatActivity implements View.OnClickListener, Adap
             String prio = String.valueOf(prioListSpinner.getSelectedItem());
             String tag = String.valueOf(daySpinner.getSelectedItem());
 
-            Termin termin = new Termin(terminName, beschreibung, prio, saveCounter, tag);
+            Termin termin = new Termin(terminName, beschreibung, prio, tag);
             saveCounter++;
 
             getSpecificTerminliste(tag).add(termin);

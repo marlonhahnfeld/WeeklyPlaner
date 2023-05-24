@@ -11,12 +11,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import java.util.ArrayList;
 
 import items.Termin;
 
@@ -105,7 +102,7 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
             String beschreibung_new = beschreibungEditText.getText().toString();
             String prio_new = String.valueOf(terminPrioSpinner.getSelectedItem());
             String tag_new = String.valueOf(terminTagSpinner.getSelectedItem());
-            Termin termin = new Termin(terminName_new, beschreibung_new, prio_new, terminId, tag_new);
+            Termin termin = new Termin(terminName_new, beschreibung_new, prio_new, tag_new);
             if (tag_new != terminTag) {
                 // zur richtigen liste zuordnen
                 getSpecificTerminliste(tag_new).add(termin);

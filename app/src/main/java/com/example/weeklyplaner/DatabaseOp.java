@@ -9,7 +9,8 @@ import java.sql.Statement;
 
 public class DatabaseOp {
     private static final String DB_DRIVER = "org.h2.Driver";
-    private static final String DB_CONNECTION = "jdbc:h2:file:/data/data/com.example.weeklyplaner/databases/loginDatenbank";
+    private static final String DB_CONNECTION =
+            "jdbc:h2:file:/data/data/com.example.weeklyplaner/databases/loginDatenbank";
     private static final String DB_USER = "sa";
     private static final String DB_PASSWORD = "";
     private static Connection connection;
@@ -28,6 +29,10 @@ public class DatabaseOp {
         }
     }
 
+    public static Connection getConnection() {
+        return connection;
+    }
+
     public static boolean isConnected() {
         return connected;
     }
@@ -35,11 +40,23 @@ public class DatabaseOp {
     /**
      * Erstellung für die Tabelle, wo die Nutzerdaten abgespeichert werden
      */
-    public static void createTable() {
+    public static void createTables() {
         try {
             if (connected) {
                 Statement statement = connection.createStatement();
-                String sqlQuery = "CREATE TABLE IF NOT EXISTS LOGIN (email VARCHAR(50) PRIMARY KEY, passwort VARCHAR(50));";
+                String sqlQuery = "CREATE TABLE IF NOT EXISTS LOGIN (\n" +
+                        "email VARCHAR(50) PRIMARY KEY, \n" +
+                        "passwort VARCHAR(50) \n" +
+                        ");";
+                statement.execute(sqlQuery);
+                sqlQuery = "CREATE TABLE IF NOT EXISTS TERMINE (\n" +
+                        "id INT PRIMARY KEY,\n" +
+                        "email VARCHAR (50),\n" +
+                        "name VARCHAR(100),\n" +
+                        "beschreibung VARCHAR(100),\n" +
+                        "prio VARCHAR(5),\n" +
+                        "tag VARCHAR (10),\n" +
+                        "FOREIGN KEY (email) REFERENCES LOGIN(email));";
                 statement.execute(sqlQuery);
                 statement.close();
             }
@@ -74,7 +91,7 @@ public class DatabaseOp {
      */
     public static void createTableIfNotExists() {
         if (!doesTableExists()) {
-            createTable();
+            createTables();
         }
     }
 
@@ -94,6 +111,7 @@ public class DatabaseOp {
                 String sqlQuery = "INSERT INTO LOGIN VALUES ( '" + email +
                         "', '" + passwort + "')";
                 statement.execute(sqlQuery);
+                // Testausgabe um zu sehen, ob der Input wirklich in der DB vorhanden ist
                 sqlQuery = "SELECT * FROM LOGIN";
                 ResultSet resultSet = statement.executeQuery(sqlQuery);
                 while (resultSet.next()) {
@@ -102,6 +120,51 @@ public class DatabaseOp {
                     System.out.println(em + " " + password);
                 }
                 resultSet.close();
+                statement.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Methode um den erstellten Termin in die Datenbank abzuspeichern
+     * TODO: Methode anwenden -> Add.java
+     *
+     * @param id           des Termins - Primary Key in der Tabelle
+     * @param email        des Users
+     * @param name         des Termins
+     * @param beschreibung des Termins
+     * @param prio         des Termins
+     * @param tag          des Termins
+     */
+    public static void saveAppointment(int id, String email, String name, String beschreibung,
+                                       String prio, String tag) {
+        try {
+            if (connected) {
+                Statement statement = connection.createStatement();
+                String sql = "INSERT INTO TERMIN VALUES ('" + id + "', '" + email + "', '" +
+                        name + "', '" + beschreibung + "', '" + prio + "', '" + tag + "');";
+                statement.execute(sql);
+                statement.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Methode um die Termine eines Users von der Datenbank zu laden
+     * TODO: Methode anwenden -> LoginScreen.java onClick()
+     *
+     * @param email des eingeloggten Users, von dem die Termine geladen werden sollen
+     */
+    public static void loadAppointments(String email) {
+        try {
+            if (connected) {
+                Statement statement = connection.createStatement();
+                String sql = "SELECT * FROM LOGIN WHERE email = '" + email + "';";
+                statement.execute(sql);
                 statement.close();
             }
         } catch (SQLException e) {
@@ -123,8 +186,5 @@ public class DatabaseOp {
         }
     }
 
-    public static Connection getConnection() {
-        return connection;
-    }
 }
 
