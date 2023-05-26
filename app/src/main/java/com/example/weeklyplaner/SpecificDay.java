@@ -45,8 +45,7 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
 
     //Nochmal anschauen
 
-    private void refreshSpecificDay() {
-
+    public void refreshSpecificDay() {
         // Refresh the specific day's data here
         String day = heutigerButton.getText().toString();
         RecyclerView.Adapter adapter = specificDay_TerminListe_RecyclerView.getAdapter();

@@ -1,7 +1,8 @@
 package com.example.weeklyplaner;
 
-import static com.example.weeklyplaner.Utils.getSpecificTerminliste;
 import static com.example.weeklyplaner.DatabaseOp.*;
+
+import static com.example.weeklyplaner.Utils.getSpecificTerminliste;
 
 import android.os.Bundle;
 import android.view.View;
@@ -64,7 +65,6 @@ public class Add extends AppCompatActivity implements View.OnClickListener, Adap
     public void onNothingSelected(AdapterView<?> parent) {
     }
 
-    // TODO: Datenbank schließen nach Abschluss
     @Override
     public void onClick(View v) {
         int id = v.getId();
@@ -82,8 +82,10 @@ public class Add extends AppCompatActivity implements View.OnClickListener, Adap
             Termin termin = new Termin(terminName, beschreibung, prio, tag);
             saveCounter++;
 
+            saveAppointment(LoginScreen.email, terminName, beschreibung, prio, tag);
             getSpecificTerminliste(tag).add(termin);
 
+            closeDatabaseConnection();
             SpecificDay.refresh_needed = true;
             onBackPressed();
         }

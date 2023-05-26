@@ -1,11 +1,16 @@
 package com.example.weeklyplaner;
 
+import static com.example.weeklyplaner.Utils.getSpecificTerminliste;
+
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import items.DatabaseLoadListener;
+import items.Termin;
 
 public class DatabaseOp {
     private static final String DB_DRIVER = "org.h2.Driver";
@@ -50,12 +55,11 @@ public class DatabaseOp {
                         ");";
                 statement.execute(sqlQuery);
                 sqlQuery = "CREATE TABLE IF NOT EXISTS TERMINE (\n" +
-                        "id INT PRIMARY KEY,\n" +
-                        "email VARCHAR (50),\n" +
+                        "email VARCHAR (100),\n" +
                         "name VARCHAR(100),\n" +
                         "beschreibung VARCHAR(100),\n" +
-                        "prio VARCHAR(5),\n" +
-                        "tag VARCHAR (10),\n" +
+                        "prio VARCHAR(100),\n" +
+                        "tag VARCHAR (100),\n" +
                         "FOREIGN KEY (email) REFERENCES LOGIN(email));";
                 statement.execute(sqlQuery);
                 statement.close();
@@ -129,23 +133,34 @@ public class DatabaseOp {
 
     /**
      * Methode um den erstellten Termin in die Datenbank abzuspeichern
-     * TODO: Methode anwenden -> Add.java
      *
-     * @param id           des Termins - Primary Key in der Tabelle
      * @param email        des Users
      * @param name         des Termins
      * @param beschreibung des Termins
      * @param prio         des Termins
      * @param tag          des Termins
      */
-    public static void saveAppointment(int id, String email, String name, String beschreibung,
+    public static void saveAppointment(String email, String name, String beschreibung,
                                        String prio, String tag) {
         try {
             if (connected) {
                 Statement statement = connection.createStatement();
-                String sql = "INSERT INTO TERMIN VALUES ('" + id + "', '" + email + "', '" +
+                String sql = "INSERT INTO TERMINE VALUES ('" + email + "', '" +
                         name + "', '" + beschreibung + "', '" + prio + "', '" + tag + "');";
                 statement.execute(sql);
+
+                sql = "SELECT * FROM TERMINE";
+                ResultSet resultSet = statement.executeQuery(sql);
+                while (resultSet.next()) {
+                    String em = resultSet.getString("email");
+                    String terminName = resultSet.getString("name");
+                    String description = resultSet.getString("beschreibung");
+                    String priority = resultSet.getString("prio");
+                    String day = resultSet.getString("tag");
+                    System.out.println(em + "\n" + terminName + "\n" + description + "\n" +
+                            priority + "\n" + day + "\n\n");
+                }
+
                 statement.close();
             }
         } catch (SQLException e) {
@@ -155,7 +170,6 @@ public class DatabaseOp {
 
     /**
      * Methode um die Termine eines Users von der Datenbank zu laden
-     * TODO: Methode anwenden -> LoginScreen.java onClick()
      *
      * @param email des eingeloggten Users, von dem die Termine geladen werden sollen
      */
@@ -163,13 +177,34 @@ public class DatabaseOp {
         try {
             if (connected) {
                 Statement statement = connection.createStatement();
-                String sql = "SELECT * FROM LOGIN WHERE email = '" + email + "';";
-                statement.execute(sql);
+                String sql = "SELECT * FROM TERMINE WHERE email = '" + email + "';";
+                ResultSet resultSet = statement.executeQuery(sql);
+                Termin termin;
+                while (resultSet.next()) {
+                    termin = new Termin(resultSet.getString("name"),
+                            resultSet.getString("beschreibung"),
+                            resultSet.getString("prio"),
+                            resultSet.getString("tag"));
+                    getSpecificTerminliste(resultSet.getString("tag")).add(termin);
+                    SpecificDay.refresh_needed = true;
+                }
                 statement.close();
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Methode um Daten aus der Datenbank zu laden und hinterher den übergebenden Listener
+     * zu signalisieren, dass Daten fertig geladen wurden
+     *
+     * @param listener der über den Abschluss des Ladevorgans informieren soll
+     * @param email    um auf die Termine des Users zugreifen zu können
+     */
+    public static void loadDataFromDatabase(DatabaseLoadListener listener, String email) {
+        loadAppointments(email);
+        listener.onDatabaseLoadComplete();
     }
 
     /**

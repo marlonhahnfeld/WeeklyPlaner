@@ -127,7 +127,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void sortAscendingByPriority() {
-        //TODO
         ArrayList<Termin> terminliste = terminListe[dayOfWeek - 1];
         TerminSorter.sortAscendingByPriority(terminliste);
 

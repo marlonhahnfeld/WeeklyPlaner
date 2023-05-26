@@ -91,8 +91,6 @@
         android:padding="5dp" />
     />
 
-    <!-- TODO: Button impl -->
-
     <Spinner
         android:id="@+id/PrioListe"
         android:layout_width="270dp"
