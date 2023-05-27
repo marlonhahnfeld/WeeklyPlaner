@@ -4,6 +4,7 @@ import static com.example.weeklyplaner.DatabaseOp.closeDatabaseConnection;
 import static com.example.weeklyplaner.DatabaseOp.createDatabaseConnection;
 import static com.example.weeklyplaner.DatabaseOp.createTableIfNotExists;
 import static com.example.weeklyplaner.DatabaseOp.isConnected;
+import static com.example.weeklyplaner.DatabaseOp.loadDataFromDatabase;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,7 +26,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
     private Button loginButton;
     private EditText editTextEmail;
     private EditText editTextPassword;
-    private String email;
+    public static String email;
     private String password;
 
     @Override
@@ -61,12 +62,15 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
             email = editTextEmail.getText().toString();
             password = editTextPassword.getText().toString();
             if (checkLogInData(email, password)) {
+                loadDataFromDatabase(() -> {
+                    Intent intent1 = new Intent(LoginScreen.this, MainActivity.class);
+                    startActivity(intent1);
+                }, email);
                 closeDatabaseConnection();
                 if (!isConnected()) {
                     System.out.println("Verbindung getrennt");
                 }
-                intent = new Intent(this, MainActivity.class);
-                startActivity(intent);
+
             }
         }
     }

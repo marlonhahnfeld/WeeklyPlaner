@@ -7,7 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <!-- TODO: Vorherigen Button merken und hier verwenden -->
     <Button
         android:id="@+id/HeutigerButton"
         android:layout_width="253dp"

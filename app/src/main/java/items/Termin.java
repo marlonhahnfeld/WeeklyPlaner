@@ -2,19 +2,19 @@ package items;
 
 import com.example.weeklyplaner.Add;
 
-public class Termin  {
+public class Termin {
     private String terminname;
     private String beschreibung;
     private String prio;
-    private int id = 0;
+    private int id;
     private String tag;
 
-    public Termin(String terminname, String beschreibung, String prio, int id, String Tag) {
+    public Termin(String terminname, String beschreibung, String prio, String tag) {
         this.terminname = terminname;
         this.prio = prio;
         this.beschreibung = beschreibung;
         this.id = Add.saveCounter;
-        this.tag = Tag;
+        this.tag = tag;
     }
 
     public String getTerminname() {
