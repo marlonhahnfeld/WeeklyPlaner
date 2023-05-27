@@ -1,10 +1,6 @@
 package com.example.weeklyplaner;
 
-import static com.example.weeklyplaner.DatabaseOp.closeDatabaseConnection;
-import static com.example.weeklyplaner.DatabaseOp.createDatabaseConnection;
-import static com.example.weeklyplaner.DatabaseOp.createTableIfNotExists;
-import static com.example.weeklyplaner.DatabaseOp.isConnected;
-import static com.example.weeklyplaner.DatabaseOp.loadDataFromDatabase;
+import static com.example.weeklyplaner.DatabaseOp.*;
 
 import android.content.Intent;
 import android.os.Bundle;
