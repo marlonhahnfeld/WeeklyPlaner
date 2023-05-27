@@ -62,11 +62,11 @@ public class LoginUITest {
         Espresso.onView(ViewMatchers.withText("Falsche Email oder Passwort"))
                 .inRoot(RootMatchers.isDialog())
                 .check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
-
         Espresso.onView(ViewMatchers.withText("OK"))
                 .inRoot(RootMatchers.isDialog())
                 .perform(ViewActions.click());
 
+        // Überprüfung, ob nach OK klick LoginScreen angezeigt wird
         Espresso.onView(ViewMatchers.withId(R.id.LoginScreenActivityLayout))
                 .check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
     }
@@ -76,7 +76,7 @@ public class LoginUITest {
         String validEmail = "ummar@hh.de";
         String invalidPassword = "ummar123!";
 
-        // Aktion: Eingabe der ungültigen E-Mail und des gültigen Passworts
+        // Aktion: Eingabe der gültigen E-Mail und des ungültigen Passworts
         Espresso.onView(ViewMatchers.withId(R.id.editTextEmail))
                 .perform(ViewActions.typeText(validEmail), ViewActions.closeSoftKeyboard());
         Espresso.onView(ViewMatchers.withId(R.id.editTextPassword))
@@ -90,11 +90,11 @@ public class LoginUITest {
                 .inRoot(RootMatchers.isDialog())
                 .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
                 .perform(ViewActions.click());
-
         Espresso.onView(ViewMatchers.withText("OK"))
                 .inRoot(RootMatchers.isDialog())
                 .perform(ViewActions.click());
 
+        // Überprüfung, ob nach OK klick LoginScreen angezeigt wird
         Espresso.onView(ViewMatchers.withId(R.id.LoginScreenActivityLayout))
                 .check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
     }
