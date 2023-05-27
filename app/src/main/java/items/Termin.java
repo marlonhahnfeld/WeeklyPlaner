@@ -9,6 +9,8 @@ public class Termin  {
     private int id = 0;
     private String tag;
 
+    private boolean marked;
+
     public Termin(String terminname, String beschreibung, String prio, int id, String Tag) {
         this.terminname = terminname;
         this.prio = prio;
@@ -47,6 +49,14 @@ public class Termin  {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public boolean isMarked() {
+        return marked;
+    }
+
+    public void setMarked(boolean marked) {
+        this.marked = marked;
     }
 
     public String getTag() {

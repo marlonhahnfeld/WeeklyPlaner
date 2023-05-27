@@ -36,9 +36,19 @@ public class Termin_RecyclerView_Adapter extends RecyclerView.Adapter<Termin_Rec
     @Override
     public void onBindViewHolder(@NonNull Termin_RecyclerView_Adapter.TerminViewHolder holder, int position) {
         // assign values to view with pos
-        holder.TerminnameTextView.setText(terminliste.get(position).getTerminname());
-        holder.TerminPrioTextView.setText(terminliste.get(position).getPrio());
-
+        Termin termin = terminliste.get(position);
+        holder.TerminnameTextView.setText(termin.getTerminname());
+        holder.TerminPrioTextView.setText(termin.getPrio());
+        holder.checkbox.setChecked(termin.isMarked());
+        if (termin.isMarked()) {
+            holder.itemView.setBackgroundColor(Color.GRAY);
+            holder.TerminnameTextView.setTextColor(Color.GRAY);
+            holder.TerminPrioTextView.setTextColor(Color.GRAY);
+        } else {
+            holder.itemView.setBackgroundColor(Color.parseColor("#1C1F28"));
+            holder.TerminnameTextView.setTextColor(Color.WHITE);
+            holder.TerminPrioTextView.setTextColor(Color.WHITE);
+        }
     }
 
     @Override
@@ -49,7 +59,7 @@ public class Termin_RecyclerView_Adapter extends RecyclerView.Adapter<Termin_Rec
 
     public class TerminViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView TerminnameTextView, TerminPrioTextView;
-        static CheckBox checkbox;
+        CheckBox checkbox;
 
         public TerminViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -57,19 +67,23 @@ public class Termin_RecyclerView_Adapter extends RecyclerView.Adapter<Termin_Rec
             TerminPrioTextView = itemView.findViewById(R.id.TerminPrioritätTextView);
             checkbox = itemView.findViewById(R.id.checkbox);
 
-
-            //checkbox operations
+            // Checkbox operations
             checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if(isChecked){
-                        itemView.setBackgroundColor(Color.GRAY);
-                        TerminnameTextView.setTextColor(Color.GRAY);
-                        TerminPrioTextView.setTextColor(Color.GRAY);
-                    }else {
-                        itemView.setBackgroundColor(Color.parseColor("#1C1F28"));
-                        TerminnameTextView.setTextColor(Color.WHITE);
-                        TerminPrioTextView.setTextColor(Color.WHITE);
+                    int position = getBindingAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        Termin termin = terminliste.get(position);
+                        termin.setMarked(isChecked);
+                        if (isChecked) {
+                            itemView.setBackgroundColor(Color.GRAY);
+                            TerminnameTextView.setTextColor(Color.GRAY);
+                            TerminPrioTextView.setTextColor(Color.GRAY);
+                        } else {
+                            itemView.setBackgroundColor(Color.parseColor("#1C1F28"));
+                            TerminnameTextView.setTextColor(Color.WHITE);
+                            TerminPrioTextView.setTextColor(Color.WHITE);
+                        }
                     }
                 }
             });
@@ -79,32 +93,8 @@ public class Termin_RecyclerView_Adapter extends RecyclerView.Adapter<Termin_Rec
 
         @Override
         public void onClick(View v) {
-            int position = getBindingAdapterPosition();
-            if (position != RecyclerView.NO_POSITION) {
-                Termin termin = terminliste.get(position);
-                openTerminDetailsScreen();
-            }
-            checkbox.toggle();
+            checkbox.setChecked(!checkbox.isChecked()); // Checkbox markieren/entmarkieren
         }
-
-        private void openTerminDetailsScreen() {
-            int position = getBindingAdapterPosition();
-            if (position != RecyclerView.NO_POSITION) {
-                Termin termin = terminliste.get(position);
-
-                // Erstelle den Intent für die TerminDetailsActivity
-                Intent intent = new Intent(context, TerminDetailsActivity.class);
-
-                // Füge die Daten des Termins als Extras hinzu
-                intent.putExtra("termin_name", termin.getTerminname());
-                intent.putExtra("termin_beschreibung", termin.getBeschreibung());
-                intent.putExtra("termin_prio", termin.getPrio());
-                intent.putExtra("termin_tag", termin.getTag());
-                intent.putExtra("termin_id", termin.getId());
-                context.startActivity(intent);
-            }
-        }
-
     }
 
     public void setTerminliste(ArrayList<Termin> terminliste) {
