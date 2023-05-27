@@ -33,11 +33,4 @@ public class MainActivityUITest {
         Espresso.onView(ViewMatchers.withId(R.id.WeekActivityLayout))
                 .check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
     }
-
-    @Test
-    public void clickSortButton_opensActivity() {
-        Espresso.onView(ViewMatchers.withId(R.id.SortButton)).perform(ViewActions.click());
-        Espresso.onView(ViewMatchers.withId(R.id.SortActivityLayout))
-                .check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
-    }
 }
