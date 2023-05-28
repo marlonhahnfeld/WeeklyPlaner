@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+// ? Wie soll der Test für Registrierung aussehen? Dummy User erstellen?
 @RunWith(JUnit4.class)
 public class RegisterScreenUITest {
 
