@@ -30,7 +30,7 @@ public class LoginUITest {
     }
 
     @Test
-    public void testLoginButton_validEmail() {
+    public void testLoginButton_validEmailAndPassword() {
         String validEmail = "ummar@hh.de";
         String validPassword = "Marlon123!";
 
