@@ -9,6 +9,7 @@ import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+// TODO: Fehlende Methoden hinzufügen wie bspw. registerNewUser, saveAppointment usw.
 public class DatabaseOpTest {
 
     @Test
