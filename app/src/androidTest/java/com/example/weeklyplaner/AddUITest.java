@@ -34,5 +34,13 @@ public class AddUITest {
                 .check(ViewAssertions.matches(ViewMatchers.withText(terminBeschreibung)));
     }
 
+    @Test
+    public void spinnerEdit(){
+        String tag = "Freitag";
+        String prio = "Priorität 3";
+
+        Espresso.onView(ViewMatchers.withId(R.id.TagesSpinner)).perform(ViewActions.click());
+        Espresso.onView(ViewMatchers.withText("Freitag")).perform(ViewActions.click());
+    }
 
 }

@@ -139,19 +139,6 @@ public class DatabaseOp {
                 String sql = "INSERT INTO TERMINE VALUES ('" + email + "', '" +
                         name + "', '" + beschreibung + "', '" + prio + "', '" + tag + "');";
                 statement.execute(sql);
-
-                sql = "SELECT * FROM TERMINE";
-                ResultSet resultSet = statement.executeQuery(sql);
-                while (resultSet.next()) {
-                    String em = resultSet.getString("email");
-                    String terminName = resultSet.getString("name");
-                    String description = resultSet.getString("beschreibung");
-                    String priority = resultSet.getString("prio");
-                    String day = resultSet.getString("tag");
-                    System.out.println(em + "\n" + terminName + "\n" + description + "\n" +
-                            priority + "\n" + day + "\n\n");
-                }
-
                 statement.close();
             }
         } catch (SQLException e) {

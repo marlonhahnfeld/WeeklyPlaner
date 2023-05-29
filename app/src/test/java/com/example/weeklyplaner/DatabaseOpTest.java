@@ -15,6 +15,9 @@ import java.sql.Statement;
 // TODO: Fehlende Methoden hinzufügen wie bspw. registerNewUser, saveAppointment usw.
 public class DatabaseOpTest {
 
+    private static final String testAccount = "testAccount@hh.de";
+    private static final String testPassword = "Marlon123!";
+
     @Before
     public void setUp() {
         createDatabaseConnection();
@@ -49,26 +52,61 @@ public class DatabaseOpTest {
 
     @Test
     public void testRegisterNewUser() throws SQLException {
-        String testAccount = "testAccount@hh.de";
         Statement statement = getConnection().createStatement();
+        ResultSet resultSet;
 
-        // Hinzufügen des neu erstellten Kontos
-        registerNewUser(testAccount, "Marlon123!");
-
-        // Abfrage, ob das neu erstellte Konto in der Datenbank drinnen ist
-        String sqlQuery = "SELECT (email) FROM LOGIN WHERE email = '" + testAccount + "';";
-        ResultSet resultSet = statement.executeQuery(sqlQuery);
-        assertTrue(resultSet.next());
-
-        // Löschen des Kontos
+        String sqlQuery = "DELETE FROM TERMINE WHERE email = '" + testAccount + "';";
+        statement.execute(sqlQuery);
         sqlQuery = "DELETE FROM LOGIN WHERE email = '" + testAccount + "';";
         statement.execute(sqlQuery);
-        sqlQuery = "SELECT (email) FROM LOGIN WHERE email = '" + testAccount + "';";
+
+        sqlQuery = "SELECT * FROM LOGIN WHERE email = '" + testAccount + "';";
         resultSet = statement.executeQuery(sqlQuery);
         assertFalse(resultSet.next());
 
+        registerNewUser(testAccount, testPassword);
+
+        sqlQuery = "SELECT * FROM LOGIN WHERE email = '" + testAccount + "';";
+        resultSet = statement.executeQuery(sqlQuery);
+        assertTrue(resultSet.next());
+
+        sqlQuery = "DELETE FROM TERMINE WHERE email = '" + testAccount + "';";
+        statement.execute(sqlQuery);
+        sqlQuery = "DELETE FROM LOGIN WHERE email = '" + testAccount + "';";
+        statement.execute(sqlQuery);
+
         statement.close();
         resultSet.close();
+    }
+
+    @Test
+    public void testSaveAppointment() throws SQLException {
+        Statement statement = getConnection().createStatement();
+
+        String sqlQuery = "DELETE FROM TERMINE WHERE email = '" + testAccount + "';";
+        statement.execute(sqlQuery);
+        sqlQuery = "DELETE FROM LOGIN WHERE email = '" + testAccount + "';";
+        statement.execute(sqlQuery);
+
+        registerNewUser(testAccount, testPassword);
+        saveAppointment(testAccount, "TestAppointment", "",
+                "Priorität 1", "Montag");
+
+        sqlQuery = "SELECT name FROM TERMINE WHERE email = '" + testAccount + "';";
+        ResultSet resultSet = statement.executeQuery(sqlQuery);
+
+        if (resultSet.next()) {
+            String actual = resultSet.getString("name");
+            assertEquals("TestAppointment", actual);
+        }
+
+        sqlQuery = "DELETE FROM TERMINE WHERE email = '" + testAccount + "';";
+        statement.execute(sqlQuery);
+        sqlQuery = "DELETE FROM LOGIN WHERE email = '" + testAccount + "';";
+        statement.execute(sqlQuery);
+
+        resultSet.close();
+        statement.close();
     }
 
     @After
