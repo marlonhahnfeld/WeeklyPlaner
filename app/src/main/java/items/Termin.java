@@ -2,7 +2,7 @@ package items;
 
 import com.example.weeklyplaner.Add;
 
-public class Termin  {
+public class Termin {
     private String terminname;
     private String beschreibung;
     private String prio;
@@ -11,12 +11,12 @@ public class Termin  {
 
     private boolean marked;
 
-    public Termin(String terminname, String beschreibung, String prio, int id, String Tag) {
+    public Termin(String terminname, String beschreibung, String prio, int id, String tag) {
         this.terminname = terminname;
         this.prio = prio;
         this.beschreibung = beschreibung;
-        this.id = Add.saveCounter;
-        this.tag = Tag;
+        this.id = id;
+        this.tag = tag;
     }
 
     public String getTerminname() {
@@ -51,12 +51,12 @@ public class Termin  {
         this.id = id;
     }
 
-    public boolean isMarked() {
+    public boolean isChecked() {
         return marked;
     }
 
-    public void setMarked(boolean marked) {
-        this.marked = marked;
+    public void setChecked(boolean checked) {
+        this.marked = checked;
     }
 
     public String getTag() {

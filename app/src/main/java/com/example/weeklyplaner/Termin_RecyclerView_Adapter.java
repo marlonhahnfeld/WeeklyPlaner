@@ -2,7 +2,6 @@ package com.example.weeklyplaner;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.weeklyplaner.TerminDetailsActivity;
 
 import java.util.ArrayList;
 
@@ -38,9 +36,12 @@ public class Termin_RecyclerView_Adapter extends RecyclerView.Adapter<Termin_Rec
     @Override
     public void onBindViewHolder(@NonNull Termin_RecyclerView_Adapter.TerminViewHolder holder, int position) {
         // assign values to view with pos
-        holder.TerminnameTextView.setText(terminliste.get(position).getTerminname());
-        holder.TerminPrioTextView.setText(terminliste.get(position).getPrio());
+        Termin termin = terminliste.get(position);
+        holder.TerminnameTextView.setText(termin.getTerminname());
+        holder.TerminPrioTextView.setText(termin.getPrio());
 
+        // Set the checkbox state
+        holder.checkbox.setChecked(termin.isChecked());
     }
 
     @Override
@@ -51,7 +52,7 @@ public class Termin_RecyclerView_Adapter extends RecyclerView.Adapter<Termin_Rec
 
     public class TerminViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView TerminnameTextView, TerminPrioTextView;
-        static CheckBox checkbox;
+        CheckBox checkbox;
 
         public TerminViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -59,24 +60,21 @@ public class Termin_RecyclerView_Adapter extends RecyclerView.Adapter<Termin_Rec
             TerminPrioTextView = itemView.findViewById(R.id.TerminPrioritätTextView);
             checkbox = itemView.findViewById(R.id.checkbox);
 
+            // Set click listener on the itemView
+            itemView.setOnClickListener(this);
 
-            //checkbox operations
+            // Set the checkbox listener
             checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if(isChecked){
-                        itemView.setBackgroundColor(Color.GRAY);
-                        TerminnameTextView.setTextColor(Color.GRAY);
-                        TerminPrioTextView.setTextColor(Color.GRAY);
-                    }else {
-                        itemView.setBackgroundColor(Color.parseColor("#1C1F28"));
-                        TerminnameTextView.setTextColor(Color.WHITE);
-                        TerminPrioTextView.setTextColor(Color.WHITE);
+                    // Update the checked state of the Termin object
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        Termin termin = terminliste.get(position);
+                        termin.setChecked(isChecked);
                     }
                 }
             });
-
-            itemView.setOnClickListener(this);  // Set click listener on the itemView
         }
 
         @Override
@@ -84,29 +82,22 @@ public class Termin_RecyclerView_Adapter extends RecyclerView.Adapter<Termin_Rec
             int position = getBindingAdapterPosition();
             if (position != RecyclerView.NO_POSITION) {
                 Termin termin = terminliste.get(position);
-                openTerminDetailsScreen();
-            }
-            checkbox.toggle();
-        }
-
-        private void openTerminDetailsScreen() {
-            int position = getBindingAdapterPosition();
-            if (position != RecyclerView.NO_POSITION) {
-                Termin termin = terminliste.get(position);
-
-                // Erstelle den Intent für die TerminDetailsActivity
-                Intent intent = new Intent(context, TerminDetailsActivity.class);
-
-                // Füge die Daten des Termins als Extras hinzu
-                intent.putExtra("termin_name", termin.getTerminname());
-                intent.putExtra("termin_beschreibung", termin.getBeschreibung());
-                intent.putExtra("termin_prio", termin.getPrio());
-                intent.putExtra("termin_tag", termin.getTag());
-                intent.putExtra("termin_id", termin.getId());
-                context.startActivity(intent);
+                openTerminDetailsScreen(termin);
             }
         }
 
+        private void openTerminDetailsScreen(Termin termin) {
+            // Erstelle den Intent für die TerminDetailsActivity
+            Intent intent = new Intent(context, TerminDetailsActivity.class);
+
+            // Füge die Daten des Termins als Extras hinzu
+            intent.putExtra("termin_name", termin.getTerminname());
+            intent.putExtra("termin_beschreibung", termin.getBeschreibung());
+            intent.putExtra("termin_prio", termin.getPrio());
+            intent.putExtra("termin_tag", termin.getTag());
+            intent.putExtra("termin_id", termin.getId());
+            context.startActivity(intent);
+        }
     }
 
     public void setTerminliste(ArrayList<Termin> terminliste) {
