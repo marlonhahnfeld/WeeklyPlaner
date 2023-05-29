@@ -115,15 +115,6 @@ public class DatabaseOp {
                 String sqlQuery = "INSERT INTO LOGIN VALUES ( '" + email +
                         "', '" + passwort + "')";
                 statement.execute(sqlQuery);
-                // Testausgabe um zu sehen, ob der Input wirklich in der DB vorhanden ist
-                sqlQuery = "SELECT * FROM LOGIN";
-                ResultSet resultSet = statement.executeQuery(sqlQuery);
-                while (resultSet.next()) {
-                    String em = resultSet.getString("email");
-                    String password = resultSet.getString("passwort");
-                    System.out.println(em + " " + password);
-                }
-                resultSet.close();
                 statement.close();
             }
         } catch (SQLException e) {
