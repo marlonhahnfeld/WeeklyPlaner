@@ -2,6 +2,7 @@ package com.example.weeklyplaner;
 
 import static org.junit.Assert.*;
 import static com.example.weeklyplaner.DatabaseOp.*;
+import static com.example.weeklyplaner.Utils.*;
 
 import org.junit.After;
 import org.junit.Before;
@@ -12,9 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-// TODO: Fehlende Methoden hinzufügen wie bspw. registerNewUser, saveAppointment usw.
 public class DatabaseOpTest {
-
     private static final String testAccount = "testAccount@hh.de";
     private static final String testPassword = "Marlon123!";
 
@@ -106,6 +105,31 @@ public class DatabaseOpTest {
         statement.execute(sqlQuery);
 
         resultSet.close();
+        statement.close();
+    }
+
+    @Test
+    public void testLoadAppointment() throws SQLException {
+        Statement statement = getConnection().createStatement();
+        String sqlQuery = "DELETE FROM TERMINE WHERE email = '" + testAccount + "';";
+        statement.execute(sqlQuery);
+        sqlQuery = "DELETE FROM LOGIN WHERE email = '" + testAccount + "';";
+        statement.execute(sqlQuery);
+
+        assertTrue(getSpecificTerminliste("Montag").isEmpty());
+
+        registerNewUser(testAccount, testPassword);
+        saveAppointment(testAccount, "TestAppointment", "",
+                "Priorität 1", "Montag");
+        loadAppointments(testAccount);
+
+        assertFalse(getSpecificTerminliste("Montag").isEmpty());
+
+        sqlQuery = "DELETE FROM TERMINE WHERE email = '" + testAccount + "';";
+        statement.execute(sqlQuery);
+        sqlQuery = "DELETE FROM LOGIN WHERE email = '" + testAccount + "';";
+        statement.execute(sqlQuery);
+
         statement.close();
     }
 
