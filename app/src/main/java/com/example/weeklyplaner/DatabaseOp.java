@@ -157,11 +157,13 @@ public class DatabaseOp {
             String sqlQuery =
                     "DELETE FROM TERMINE WHERE id = " + id + " AND email = '" + email + "';";
             statement.executeUpdate(sqlQuery);
+
             sqlQuery = "SELECT * FROM TERMINE WHERE id = " + id + " AND email = '" + email + "';";
             ResultSet resultSet = statement.executeQuery(sqlQuery);
             while (resultSet.next()) {
                 System.out.println(resultSet.getString("id") + "\n" + resultSet.getString("name"));
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

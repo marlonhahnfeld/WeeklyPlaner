@@ -113,6 +113,7 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
             Termin termin = new Termin(terminName_new, beschreibung_new, prio_new, tag_new,
                     Add.saveCounter);
 
+
             saveAppointment(termin.getId(), LoginScreen.email, terminName_new,
                     beschreibung_new, prio_new, tag_new);
 
@@ -136,6 +137,7 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
         for (Termin termin : getSpecificTerminliste(terminTag)) {
             if (termin.getId() == terminId) {
                 deleteAppointment(termin.getId(), LoginScreen.email);
+
                 getSpecificTerminliste(terminTag).remove(termin);
                 break;
             }

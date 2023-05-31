@@ -81,6 +81,11 @@ public class DatabaseOpTest {
 
         statement.close();
         resultSet.close();
+
+
+    @After
+    public void closeUp() {
+
         closeDatabaseConnection();
     }
 }
