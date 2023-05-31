@@ -126,18 +126,17 @@ public class DatabaseOp {
      * Methode um den erstellten Termin in die Datenbank abzuspeichern
      *
      * @param email        des Users
-     * @param name         des Termins
+     * @param terminName   des Termins
      * @param beschreibung des Termins
      * @param prio         des Termins
      * @param tag          des Termins
      */
-    public static void saveAppointment(String email, String name, String beschreibung,
+    public static void saveAppointment(String email, String terminName, String beschreibung,
                                        String prio, String tag) {
         try {
             if (connected) {
                 Statement statement = connection.createStatement();
-                String sql = "INSERT INTO TERMINE VALUES ('" + email + "', '" +
-                        name + "', '" + beschreibung + "', '" + prio + "', '" + tag + "');";
+                String sql = "INSERT INTO TERMINE VALUES ('" + email + "', '" + terminName + "', '" + beschreibung + "', '" + prio + "', '" + tag + "');";
                 statement.execute(sql);
                 statement.close();
             }
@@ -164,6 +163,7 @@ public class DatabaseOp {
                             resultSet.getString("prio"),
                             resultSet.getString("tag"));
                     getSpecificTerminliste(resultSet.getString("tag")).add(termin);
+                    System.out.println(termin);
                     SpecificDay.refresh_needed = true;
                 }
                 statement.close();

@@ -56,4 +56,15 @@ public class Termin {
     public void setTag(String tag) {
         this.tag = tag;
     }
+
+    @Override
+    public String toString() {
+        return "Termin{" +
+                "terminname='" + terminname + '\'' +
+                ", beschreibung='" + beschreibung + '\'' +
+                ", prio='" + prio + '\'' +
+                ", id=" + id +
+                ", tag='" + tag + '\'' +
+                '}';
+    }
 }
