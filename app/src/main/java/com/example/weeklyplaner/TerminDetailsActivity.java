@@ -108,7 +108,7 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
             String prio_new = String.valueOf(terminPrioSpinner.getSelectedItem());
             String tag_new = String.valueOf(terminTagSpinner.getSelectedItem());
 
-            Add.saveCounter = getSpecificTerminliste(tag_new).size();
+            Add.saveCounter = getSpecificTerminliste(tag_new).get(getSpecificTerminliste(tag_new).size() - 1).getId() + 1;
             Termin termin = new Termin(terminName_new, beschreibung_new, prio_new, tag_new, Add.saveCounter);
             Add.saveCounter++;
 
