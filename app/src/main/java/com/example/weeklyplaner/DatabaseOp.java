@@ -146,6 +146,23 @@ public class DatabaseOp {
     }
 
     /**
+     * Methode um einen existierenden Termin zu löschen aus der Datenbank
+     *
+     * @param email      des Users
+     * @param terminName des Termins, welcher gelöscht werden soll
+     */
+    public static void deleteAppointment(String email, String terminName) {
+        try {
+            Statement statement = connection.createStatement();
+            String sqlQuery =
+                    "DELETE FROM TERMINE WHERE email = '" + email + "' AND name = '" + terminName + "';";
+            statement.executeUpdate(sqlQuery);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
      * Methode um die Termine eines Users von der Datenbank zu laden
      *
      * @param email des eingeloggten Users, von dem die Termine geladen werden sollen

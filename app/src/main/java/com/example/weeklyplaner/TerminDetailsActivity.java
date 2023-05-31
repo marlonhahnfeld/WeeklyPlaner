@@ -1,6 +1,7 @@
 package com.example.weeklyplaner;
 
 import static com.example.weeklyplaner.Utils.getSpecificTerminliste;
+import static com.example.weeklyplaner.DatabaseOp.*;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -40,6 +41,8 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_termin_details_screen);
+
+        createDatabaseConnection();
         backButton = findViewById(R.id.imageButton);
         backButton.setOnClickListener(this);
         editButton = findViewById(R.id.EditButton_details);
@@ -90,9 +93,9 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
 
     @Override
     public void onClick(View v) {
-
         int id = v.getId();
         if (id == R.id.imageButton) {
+            closeDatabaseConnection();
             onBackPressed();
         } else if (id == R.id.EditButton_details) {
             deleteCurrentTermin();
@@ -103,24 +106,29 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
             String prio_new = String.valueOf(terminPrioSpinner.getSelectedItem());
             String tag_new = String.valueOf(terminTagSpinner.getSelectedItem());
             Termin termin = new Termin(terminName_new, beschreibung_new, prio_new, tag_new);
+
+            saveAppointment(LoginScreen.email, terminName_new, beschreibung_new, prio_new, tag_new);
+
             if (tag_new != terminTag) {
                 // zur richtigen liste zuordnen
                 getSpecificTerminliste(tag_new).add(termin);
             } else {
                 getSpecificTerminliste(terminTag).add(termin);
             }
+            closeDatabaseConnection();
             onBackPressed();
             // TODO NEXT RELEASE: POPUP ARE YOU SURE
         } else if (id == R.id.DeleteButton_details) {
             deleteCurrentTermin();
+            closeDatabaseConnection();
             onBackPressed();
         }
     }
 
     public void deleteCurrentTermin() {
         for (Termin termin : getSpecificTerminliste(terminTag)) {
-
             if (termin.getId() == terminId) {
+                deleteAppointment(LoginScreen.email, termin.getTerminname());
                 getSpecificTerminliste(terminTag).remove(termin);
                 break;
             }
