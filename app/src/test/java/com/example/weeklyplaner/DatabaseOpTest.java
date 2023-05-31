@@ -52,7 +52,7 @@ public class DatabaseOpTest {
         }
         closeDatabaseConnection();
     }
-
+//
     @Test
     public void testRegisterNewUser() throws SQLException {
         createDatabaseConnection();
