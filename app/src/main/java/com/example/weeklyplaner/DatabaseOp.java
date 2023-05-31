@@ -55,6 +55,7 @@ public class DatabaseOp {
                         ");";
                 statement.execute(sqlQuery);
                 sqlQuery = "CREATE TABLE IF NOT EXISTS TERMINE (\n" +
+                        "id INT, \n" +
                         "email VARCHAR (100),\n" +
                         "name VARCHAR(100),\n" +
                         "beschreibung VARCHAR(100),\n" +
@@ -131,12 +132,12 @@ public class DatabaseOp {
      * @param prio         des Termins
      * @param tag          des Termins
      */
-    public static void saveAppointment(String email, String terminName, String beschreibung,
+    public static void saveAppointment(int id, String email, String terminName, String beschreibung,
                                        String prio, String tag) {
         try {
             if (connected) {
                 Statement statement = connection.createStatement();
-                String sql = "INSERT INTO TERMINE VALUES ('" + email + "', '" + terminName + "', '" + beschreibung + "', '" + prio + "', '" + tag + "');";
+                String sql = "INSERT INTO TERMINE VALUES (" + id + ", '" + email + "', '" + terminName + "', '" + beschreibung + "', '" + prio + "', '" + tag + "');";
                 statement.execute(sql);
                 statement.close();
             }
@@ -148,14 +149,13 @@ public class DatabaseOp {
     /**
      * Methode um einen existierenden Termin zu löschen aus der Datenbank
      *
-     * @param email      des Users
-     * @param terminName des Termins, welcher gelöscht werden soll
+     * @param email des Users
      */
-    public static void deleteAppointment(String email, String terminName) {
+    public static void deleteAppointment(int id, String email) {
         try {
             Statement statement = connection.createStatement();
             String sqlQuery =
-                    "DELETE FROM TERMINE WHERE email = '" + email + "' AND name = '" + terminName + "';";
+                    "DELETE FROM TERMINE WHERE id = " + id + " AND email = '" + email + "';";
             statement.executeUpdate(sqlQuery);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -178,7 +178,8 @@ public class DatabaseOp {
                     termin = new Termin(resultSet.getString("name"),
                             resultSet.getString("beschreibung"),
                             resultSet.getString("prio"),
-                            resultSet.getString("tag"));
+                            resultSet.getString("tag"),
+                            resultSet.getInt("id"));
                     getSpecificTerminliste(resultSet.getString("tag")).add(termin);
                     System.out.println(termin);
                     SpecificDay.refresh_needed = true;

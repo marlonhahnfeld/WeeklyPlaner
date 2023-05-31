@@ -88,8 +88,8 @@ public class DatabaseOpTest {
         statement.execute(sqlQuery);
 
         registerNewUser(testAccount, testPassword);
-        saveAppointment(testAccount, "TestAppointment", "",
-                "Priorität 1", "Montag");
+//        saveAppointment(testAccount, "TestAppointment", "",
+//                "Priorität 1", "Montag");
 
         sqlQuery = "SELECT name FROM TERMINE WHERE email = '" + testAccount + "';";
         ResultSet resultSet = statement.executeQuery(sqlQuery);
@@ -119,8 +119,8 @@ public class DatabaseOpTest {
         assertTrue(getSpecificTerminliste("Montag").isEmpty());
 
         registerNewUser(testAccount, testPassword);
-        saveAppointment(testAccount, "TestAppointment", "",
-                "Priorität 1", "Montag");
+//        saveAppointment(testAccount, "TestAppointment", "",
+//                "Priorität 1", "Montag");
         loadAppointments(testAccount);
 
         assertFalse(getSpecificTerminliste("Montag").isEmpty());

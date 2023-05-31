@@ -23,7 +23,8 @@ public class Add extends AppCompatActivity implements View.OnClickListener, Adap
     private ImageButton backButton;
     private Button saveButton;
     private Spinner prioListSpinner, daySpinner;
-    public static int saveCounter = 0;
+
+    public static int saveCounter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +32,7 @@ public class Add extends AppCompatActivity implements View.OnClickListener, Adap
         setContentView(R.layout.activity_add);
 
         createDatabaseConnection();
+
         if (isConnected()) {
             System.out.println("Verbunden -> Add Activity");
         }
@@ -79,10 +81,11 @@ public class Add extends AppCompatActivity implements View.OnClickListener, Adap
             String prio = String.valueOf(prioListSpinner.getSelectedItem());
             String tag = String.valueOf(daySpinner.getSelectedItem());
 
-            Termin termin = new Termin(terminName, beschreibung, prio, tag);
+            saveCounter = getSpecificTerminliste(tag).size();
+            Termin termin = new Termin(terminName, beschreibung, prio, tag, saveCounter);
             saveCounter++;
 
-            saveAppointment(LoginScreen.email, terminName, beschreibung, prio, tag);
+            saveAppointment(termin.getId(), LoginScreen.email, terminName, beschreibung, prio, tag);
             getSpecificTerminliste(tag).add(termin);
 
             closeDatabaseConnection();

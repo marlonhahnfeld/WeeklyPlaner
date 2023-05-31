@@ -16,6 +16,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+
 import items.Termin;
 
 public class TerminDetailsActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
@@ -105,9 +107,13 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
             String beschreibung_new = beschreibungEditText.getText().toString();
             String prio_new = String.valueOf(terminPrioSpinner.getSelectedItem());
             String tag_new = String.valueOf(terminTagSpinner.getSelectedItem());
-            Termin termin = new Termin(terminName_new, beschreibung_new, prio_new, tag_new);
 
-            saveAppointment(LoginScreen.email, terminName_new, beschreibung_new, prio_new, tag_new);
+            Add.saveCounter = getSpecificTerminliste(tag_new).size();
+            Termin termin = new Termin(terminName_new, beschreibung_new, prio_new, tag_new, Add.saveCounter);
+            Add.saveCounter++;
+
+            saveAppointment(termin.getId(), LoginScreen.email, terminName_new,
+                    beschreibung_new, prio_new, tag_new);
 
             if (tag_new != terminTag) {
                 // zur richtigen liste zuordnen
@@ -128,7 +134,8 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
     public void deleteCurrentTermin() {
         for (Termin termin : getSpecificTerminliste(terminTag)) {
             if (termin.getId() == terminId) {
-                deleteAppointment(LoginScreen.email, termin.getTerminname());
+                deleteAppointment(termin.getId(), LoginScreen.email);
+                ArrayList<Termin> terminArrayList = getSpecificTerminliste(terminTag);
                 getSpecificTerminliste(terminTag).remove(termin);
                 break;
             }
