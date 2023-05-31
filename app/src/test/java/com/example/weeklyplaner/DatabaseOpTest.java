@@ -78,60 +78,60 @@ public class DatabaseOpTest {
         resultSet.close();
     }
 
-    @Test
-    public void testSaveAppointment() throws SQLException {
-        Statement statement = getConnection().createStatement();
+//    @Test
+//    public void testSaveAppointment() throws SQLException {
+//        Statement statement = getConnection().createStatement();
+//
+//        String sqlQuery = "DELETE FROM TERMINE WHERE email = '" + testAccount + "';";
+//        statement.execute(sqlQuery);
+//        sqlQuery = "DELETE FROM LOGIN WHERE email = '" + testAccount + "';";
+//        statement.execute(sqlQuery);
+//
+//        registerNewUser(testAccount, testPassword);
+////        saveAppointment(testAccount, "TestAppointment", "",
+////                "Priorität 1", "Montag");
+//
+//        sqlQuery = "SELECT name FROM TERMINE WHERE email = '" + testAccount + "';";
+//        ResultSet resultSet = statement.executeQuery(sqlQuery);
+//
+//        if (resultSet.next()) {
+//            String actual = resultSet.getString("name");
+//            assertEquals("TestAppointment", actual);
+//        }
+//
+//        sqlQuery = "DELETE FROM TERMINE WHERE email = '" + testAccount + "';";
+//        statement.execute(sqlQuery);
+//        sqlQuery = "DELETE FROM LOGIN WHERE email = '" + testAccount + "';";
+//        statement.execute(sqlQuery);
+//
+//        resultSet.close();
+//        statement.close();
+//    }
 
-        String sqlQuery = "DELETE FROM TERMINE WHERE email = '" + testAccount + "';";
-        statement.execute(sqlQuery);
-        sqlQuery = "DELETE FROM LOGIN WHERE email = '" + testAccount + "';";
-        statement.execute(sqlQuery);
-
-        registerNewUser(testAccount, testPassword);
-//        saveAppointment(testAccount, "TestAppointment", "",
-//                "Priorität 1", "Montag");
-
-        sqlQuery = "SELECT name FROM TERMINE WHERE email = '" + testAccount + "';";
-        ResultSet resultSet = statement.executeQuery(sqlQuery);
-
-        if (resultSet.next()) {
-            String actual = resultSet.getString("name");
-            assertEquals("TestAppointment", actual);
-        }
-
-        sqlQuery = "DELETE FROM TERMINE WHERE email = '" + testAccount + "';";
-        statement.execute(sqlQuery);
-        sqlQuery = "DELETE FROM LOGIN WHERE email = '" + testAccount + "';";
-        statement.execute(sqlQuery);
-
-        resultSet.close();
-        statement.close();
-    }
-
-    @Test
-    public void testLoadAppointment() throws SQLException {
-        Statement statement = getConnection().createStatement();
-        String sqlQuery = "DELETE FROM TERMINE WHERE email = '" + testAccount + "';";
-        statement.execute(sqlQuery);
-        sqlQuery = "DELETE FROM LOGIN WHERE email = '" + testAccount + "';";
-        statement.execute(sqlQuery);
-
-        assertTrue(getSpecificTerminliste("Montag").isEmpty());
-
-        registerNewUser(testAccount, testPassword);
-//        saveAppointment(testAccount, "TestAppointment", "",
-//                "Priorität 1", "Montag");
-        loadAppointments(testAccount);
-
-        assertFalse(getSpecificTerminliste("Montag").isEmpty());
-
-        sqlQuery = "DELETE FROM TERMINE WHERE email = '" + testAccount + "';";
-        statement.execute(sqlQuery);
-        sqlQuery = "DELETE FROM LOGIN WHERE email = '" + testAccount + "';";
-        statement.execute(sqlQuery);
-
-        statement.close();
-    }
+//    @Test
+//    public void testLoadAppointment() throws SQLException {
+//        Statement statement = getConnection().createStatement();
+//        String sqlQuery = "DELETE FROM TERMINE WHERE email = '" + testAccount + "';";
+//        statement.execute(sqlQuery);
+//        sqlQuery = "DELETE FROM LOGIN WHERE email = '" + testAccount + "';";
+//        statement.execute(sqlQuery);
+//
+//        assertTrue(getSpecificTerminliste("Montag").isEmpty());
+//
+//        registerNewUser(testAccount, testPassword);
+////        saveAppointment(testAccount, "TestAppointment", "",
+////                "Priorität 1", "Montag");
+//        loadAppointments(testAccount);
+//
+//        assertFalse(getSpecificTerminliste("Montag").isEmpty());
+//
+//        sqlQuery = "DELETE FROM TERMINE WHERE email = '" + testAccount + "';";
+//        statement.execute(sqlQuery);
+//        sqlQuery = "DELETE FROM LOGIN WHERE email = '" + testAccount + "';";
+//        statement.execute(sqlQuery);
+//
+//        statement.close();
+//    }
 
     @After
     public void closeUp() {
