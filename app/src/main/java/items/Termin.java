@@ -1,7 +1,5 @@
 package items;
 
-import com.example.weeklyplaner.Add;
-
 public class Termin {
     private String terminname;
     private String beschreibung;

@@ -26,6 +26,7 @@ public class Add extends AppCompatActivity implements View.OnClickListener, Adap
 
     public static int saveCounter;
 
+
     //TOD
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,9 +83,21 @@ public class Add extends AppCompatActivity implements View.OnClickListener, Adap
             String prio = String.valueOf(prioListSpinner.getSelectedItem());
             String tag = String.valueOf(daySpinner.getSelectedItem());
 
-            saveCounter = getSpecificTerminliste(tag).get(getSpecificTerminliste(tag).size() - 1).getId() + 1;
+
+            if (getSpecificTerminliste("Montag").size() == 0 &&
+                    getSpecificTerminliste("Dienstag").size() == 0 &&
+                    getSpecificTerminliste("Mittwoch").size() == 0 &&
+                    getSpecificTerminliste("Donnerstag").size() == 0 &&
+                    getSpecificTerminliste("Freitag").size() == 0 &&
+                    getSpecificTerminliste("Samstag").size() == 0 &&
+                    getSpecificTerminliste("Sonntag").size() == 0) {
+                saveCounter = 0;
+            } else {
+                saveCounter = getMaxID() + 1;
+            }
+
             Termin termin = new Termin(terminName, beschreibung, prio, tag, saveCounter);
-            saveCounter++;
+
 
             saveAppointment(termin.getId(), LoginScreen.email, terminName, beschreibung, prio, tag);
             getSpecificTerminliste(tag).add(termin);

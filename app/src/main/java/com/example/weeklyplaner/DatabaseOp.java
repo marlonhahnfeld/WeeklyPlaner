@@ -157,6 +157,13 @@ public class DatabaseOp {
             String sqlQuery =
                     "DELETE FROM TERMINE WHERE id = " + id + " AND email = '" + email + "';";
             statement.executeUpdate(sqlQuery);
+
+            sqlQuery = "SELECT * FROM TERMINE WHERE id = " + id + " AND email = '" + email + "';";
+            ResultSet resultSet = statement.executeQuery(sqlQuery);
+            while (resultSet.next()) {
+                System.out.println(resultSet.getString("id") + "\n" + resultSet.getString("name"));
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -191,6 +198,22 @@ public class DatabaseOp {
         }
     }
 
+    public static int getMaxID() {
+        try {
+            if (connected) {
+                Statement statement = connection.createStatement();
+                String sqlQueue = "SELECT MAX(id) FROM TERMINE";
+                ResultSet resultSet = statement.executeQuery(sqlQueue);
+                if (resultSet.next()) {
+                    return resultSet.getInt("MAX(id)");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
     /**
      * Methode um Daten aus der Datenbank zu laden und hinterher den übergebenden Listener
      * zu signalisieren, dass Daten fertig geladen wurden
@@ -216,6 +239,4 @@ public class DatabaseOp {
             e.printStackTrace();
         }
     }
-
 }
-

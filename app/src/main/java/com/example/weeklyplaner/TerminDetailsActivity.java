@@ -56,7 +56,7 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
         terminNameTextView = findViewById(R.id.Terminname_edit_text_details);
         terminBeschreibungTextView = findViewById(R.id.Beschreibung_edit_text_details);
 
-        // Erhalte die übergebenen Daten aus dem Intent
+        // Erhalte die Ã¼bergebenen Daten aus dem Intent
         Intent intent = getIntent();
         terminId = intent.getIntExtra("termin_id", -1);
         String terminName = intent.getStringExtra("termin_name");
@@ -108,9 +108,11 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
             String prio_new = String.valueOf(terminPrioSpinner.getSelectedItem());
             String tag_new = String.valueOf(terminTagSpinner.getSelectedItem());
 
-            Add.saveCounter = getSpecificTerminliste(tag_new).get(getSpecificTerminliste(tag_new).size() - 1).getId() + 1;
-            Termin termin = new Termin(terminName_new, beschreibung_new, prio_new, tag_new, Add.saveCounter);
-            Add.saveCounter++;
+            Add.saveCounter = getMaxID() + 1;
+
+            Termin termin = new Termin(terminName_new, beschreibung_new, prio_new, tag_new,
+                    Add.saveCounter);
+
 
             saveAppointment(termin.getId(), LoginScreen.email, terminName_new,
                     beschreibung_new, prio_new, tag_new);
@@ -135,7 +137,7 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
         for (Termin termin : getSpecificTerminliste(terminTag)) {
             if (termin.getId() == terminId) {
                 deleteAppointment(termin.getId(), LoginScreen.email);
-                ArrayList<Termin> terminArrayList = getSpecificTerminliste(terminTag);
+
                 getSpecificTerminliste(terminTag).remove(termin);
                 break;
             }

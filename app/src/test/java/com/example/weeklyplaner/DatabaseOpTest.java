@@ -1,11 +1,15 @@
 package com.example.weeklyplaner;
 
-import static org.junit.Assert.*;
-import static com.example.weeklyplaner.DatabaseOp.*;
-import static com.example.weeklyplaner.Utils.*;
+import static com.example.weeklyplaner.DatabaseOp.closeDatabaseConnection;
+import static com.example.weeklyplaner.DatabaseOp.createDatabaseConnection;
+import static com.example.weeklyplaner.DatabaseOp.createTables;
+import static com.example.weeklyplaner.DatabaseOp.doesTableExists;
+import static com.example.weeklyplaner.DatabaseOp.getConnection;
+import static com.example.weeklyplaner.DatabaseOp.isConnected;
+import static com.example.weeklyplaner.DatabaseOp.registerNewUser;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.sql.DatabaseMetaData;
@@ -17,13 +21,9 @@ public class DatabaseOpTest {
     private static final String testAccount = "testAccount@hh.de";
     private static final String testPassword = "Marlon123!";
 
-    @Before
-    public void setUp() {
-        createDatabaseConnection();
-    }
-
     @Test
     public void testCreateDatabaseConnection() {
+        createDatabaseConnection();
         assertTrue(isConnected());
         closeDatabaseConnection();
         assertFalse(isConnected());
@@ -31,6 +31,7 @@ public class DatabaseOpTest {
 
     @Test
     public void testCloseDatabaseConnection() {
+        createDatabaseConnection();
         assertTrue(isConnected());
         closeDatabaseConnection();
         assertFalse(isConnected());
@@ -38,6 +39,8 @@ public class DatabaseOpTest {
 
     @Test
     public void testDoesTableExists() throws SQLException {
+        createDatabaseConnection();
+        createTables();
         assertTrue(doesTableExists());
         if (isConnected()) {
             DatabaseMetaData metaData = getConnection().getMetaData();
@@ -47,10 +50,12 @@ public class DatabaseOpTest {
             resultSet.close();
             assertFalse(tableExists);
         }
+        closeDatabaseConnection();
     }
 
     @Test
     public void testRegisterNewUser() throws SQLException {
+        createDatabaseConnection();
         Statement statement = getConnection().createStatement();
         ResultSet resultSet;
 
@@ -76,8 +81,14 @@ public class DatabaseOpTest {
 
         statement.close();
         resultSet.close();
-    }
 
+
+    @After
+    public void closeUp() {
+
+        closeDatabaseConnection();
+    }
+}
 //    @Test
 //    public void testSaveAppointment() throws SQLException {
 //        Statement statement = getConnection().createStatement();
@@ -132,9 +143,3 @@ public class DatabaseOpTest {
 //
 //        statement.close();
 //    }
-
-    @After
-    public void closeUp() {
-        closeDatabaseConnection();
-    }
-}
