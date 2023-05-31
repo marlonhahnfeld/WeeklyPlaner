@@ -71,7 +71,7 @@ public class Add extends AppCompatActivity implements View.OnClickListener, Adap
             String prio = String.valueOf(prioListSpinner.getSelectedItem());
             String tag = String.valueOf(daySpinner.getSelectedItem());
 
-            Termin termin = new Termin(terminName, beschreibung, prio, saveCounter, tag);
+            Termin termin = new Termin(terminName, beschreibung, prio, tag);
             saveCounter++;
 
             getSpecificTerminliste(tag).add(termin);

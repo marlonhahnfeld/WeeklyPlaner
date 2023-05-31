@@ -11,11 +11,11 @@ public class Termin {
 
     private boolean marked;
 
-    public Termin(String terminname, String beschreibung, String prio, int id, String tag) {
+    public Termin(String terminname, String beschreibung, String prio, String tag) {
         this.terminname = terminname;
         this.prio = prio;
         this.beschreibung = beschreibung;
-        this.id = id;
+        this.id = Add.saveCounter;
         this.tag = tag;
     }
 
