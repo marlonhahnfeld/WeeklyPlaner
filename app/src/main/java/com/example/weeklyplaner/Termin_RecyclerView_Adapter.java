@@ -81,7 +81,6 @@ public class Termin_RecyclerView_Adapter extends RecyclerView.Adapter<Termin_Rec
                 context.startActivity(intent);
             }
         }
-
     }
 
     public void setTerminliste(ArrayList<Termin> terminliste) {

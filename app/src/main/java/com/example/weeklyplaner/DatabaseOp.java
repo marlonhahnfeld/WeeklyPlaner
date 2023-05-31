@@ -168,6 +168,10 @@ public class DatabaseOp {
         }
     }
 
+    public static void editAppointment(String email, String terminName) {
+
+    }
+
     /**
      * Methode um die Termine eines Users von der Datenbank zu laden
      *
