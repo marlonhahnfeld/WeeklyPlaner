@@ -82,13 +82,14 @@ public class DatabaseOpTest {
         statement.close();
         resultSet.close();
 
-
+    }
     @After
     public void closeUp() {
 
         closeDatabaseConnection();
     }
 }
+
 //    @Test
 //    public void testSaveAppointment() throws SQLException {
 //        Statement statement = getConnection().createStatement();
