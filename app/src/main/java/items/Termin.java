@@ -6,8 +6,9 @@ public class Termin {
     private String terminname;
     private String beschreibung;
     private String prio;
-    private int id = 0;
+    private int id;
     private String tag;
+
 
     private boolean marked;
 

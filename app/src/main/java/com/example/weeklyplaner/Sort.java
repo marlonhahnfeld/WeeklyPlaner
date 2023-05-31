@@ -24,7 +24,6 @@ public class Sort extends AppCompatActivity implements View.OnClickListener {
         addButton.setOnClickListener(this);
         filterButton = findViewById(R.id.SortButtonFilter);
         filterButton.setOnClickListener(this);
-
     }
 
     @Override

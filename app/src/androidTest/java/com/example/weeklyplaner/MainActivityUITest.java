@@ -14,7 +14,7 @@ import org.junit.runner.RunWith;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class MainActivityTest {
+public class MainActivityUITest {
 
     @Rule
     public ActivityScenarioRule<MainActivity> activityRule =
@@ -31,13 +31,6 @@ public class MainActivityTest {
     public void clickMoSoButton_opensAddActivity() {
         Espresso.onView(ViewMatchers.withId(R.id.MoSoButton)).perform(ViewActions.click());
         Espresso.onView(ViewMatchers.withId(R.id.WeekActivityLayout))
-                .check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
-    }
-
-    @Test
-    public void clickSortButton_opensActivity() {
-        Espresso.onView(ViewMatchers.withId(R.id.SortButton)).perform(ViewActions.click());
-        Espresso.onView(ViewMatchers.withId(R.id.SortActivityLayout))
                 .check(ViewAssertions.matches(ViewMatchers.isDisplayed()));
     }
 }

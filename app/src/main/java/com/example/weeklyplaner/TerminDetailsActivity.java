@@ -11,12 +11,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import java.util.ArrayList;
 
 import items.Termin;
 
@@ -25,9 +22,8 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
     private EditText terminBeschreibungTextView;
     private Spinner terminPrioSpinner;
     private Spinner terminTagSpinner;
-
     private ImageButton backButton;
-    private Button editButton,deleteBtton;
+    private Button editButton, deleteBtton;
     private int terminId;
     private String terminTag;
 
@@ -39,6 +35,7 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
         }
         return 1; // Default selection index
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +51,6 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
         terminNameTextView = findViewById(R.id.Terminname_edit_text_details);
         terminBeschreibungTextView = findViewById(R.id.Beschreibung_edit_text_details);
 
-
         // Erhalte die übergebenen Daten aus dem Intent
         Intent intent = getIntent();
         terminId = intent.getIntExtra("termin_id", -1);
@@ -63,7 +59,6 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
         String terminPrio = intent.getStringExtra("termin_prio");
         terminTag = intent.getStringExtra("termin_tag");
 
-
         terminTagSpinner = findViewById(R.id.TagesSpinner_details);
         ArrayAdapter<CharSequence> daySpinnerAdapter = ArrayAdapter.createFromResource(this,
                 R.array.wochentage, android.R.layout.simple_spinner_item);
@@ -71,7 +66,6 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
         terminTagSpinner.setAdapter(daySpinnerAdapter);
         terminTagSpinner.setSelection(getSpinnerIndex(terminTag, getResources().getStringArray(R.array.wochentage)));
         terminTagSpinner.setOnItemSelectedListener(this);
-
 
         terminPrioSpinner = findViewById(R.id.PrioListe_details);
         ArrayAdapter<CharSequence> prioListSpinnerAdapter = ArrayAdapter.createFromResource(this,
@@ -82,8 +76,6 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
         terminPrioSpinner.setOnItemSelectedListener(this);
         terminNameTextView.setText(terminName);
         terminBeschreibungTextView.setText(terminBeschreibung);
-
-
     }
 
     @Override
@@ -91,7 +83,6 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
         String text = parent.getItemAtPosition(position).toString();
         Toast.makeText(parent.getContext(), text, Toast.LENGTH_SHORT).show();
     }
-
 
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
@@ -111,8 +102,10 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
             String beschreibung_new = beschreibungEditText.getText().toString();
             String prio_new = String.valueOf(terminPrioSpinner.getSelectedItem());
             String tag_new = String.valueOf(terminTagSpinner.getSelectedItem());
-            Termin termin = new Termin(terminName_new,beschreibung_new,prio_new,tag_new);
-            if (tag_new != terminTag){
+
+            Termin termin = new Termin(terminName_new, beschreibung_new, prio_new, tag_new);
+            if (tag_new != terminTag) {
+
                 // zur richtigen liste zuordnen
                 getSpecificTerminliste(tag_new).add(termin);
             } else {
@@ -125,8 +118,9 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
             onBackPressed();
         }
     }
-    public void deleteCurrentTermin(){
-        for (Termin termin: getSpecificTerminliste(terminTag)) {
+
+    public void deleteCurrentTermin() {
+        for (Termin termin : getSpecificTerminliste(terminTag)) {
 
             if (termin.getId() == terminId) {
                 getSpecificTerminliste(terminTag).remove(termin);

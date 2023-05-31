@@ -1,5 +1,7 @@
 package com.example.weeklyplaner;
 
+import static com.example.weeklyplaner.DatabaseOp.*;
+
 import static com.example.weeklyplaner.Utils.getSpecificTerminliste;
 
 import android.os.Bundle;
@@ -23,10 +25,16 @@ public class Add extends AppCompatActivity implements View.OnClickListener, Adap
     private Spinner prioListSpinner, daySpinner;
     public static int saveCounter = 0;
 
+    //TOD
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
+
+        createDatabaseConnection();
+        if (isConnected()) {
+            System.out.println("Verbunden -> Add Activity");
+        }
 
         backButton = findViewById(R.id.imageButton);
         backButton.setOnClickListener(this);
@@ -55,7 +63,8 @@ public class Add extends AppCompatActivity implements View.OnClickListener, Adap
     }
 
     @Override
-    public void onNothingSelected(AdapterView<?> parent) {}
+    public void onNothingSelected(AdapterView<?> parent) {
+    }
 
     @Override
     public void onClick(View v) {
@@ -74,9 +83,10 @@ public class Add extends AppCompatActivity implements View.OnClickListener, Adap
             Termin termin = new Termin(terminName, beschreibung, prio, tag);
             saveCounter++;
 
+            saveAppointment(LoginScreen.email, terminName, beschreibung, prio, tag);
             getSpecificTerminliste(tag).add(termin);
-            
 
+            closeDatabaseConnection();
             SpecificDay.refresh_needed = true;
             onBackPressed();
         }

@@ -1,10 +1,5 @@
 package com.example.weeklyplaner;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -16,13 +11,16 @@ import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.TimeZone;
 
 import items.Termin;
-
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private Button button_for_days;
@@ -136,7 +134,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void sortAscendingByPriority() {
-        //TODO
         ArrayList<Termin> terminliste = terminListe[dayOfWeek - 1];
         TerminSorter.sortAscendingByPriority(terminliste);
 

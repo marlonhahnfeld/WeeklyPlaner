@@ -1,6 +1,5 @@
 package com.example.weeklyplaner;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -8,7 +7,6 @@ import java.util.List;
 import items.Termin;
 
 public class TerminSorter {
-
     public static void sortAscendingByPriority(List<Termin> terminliste) {
         Collections.sort(terminliste, new Comparator<Termin>() {
             @Override
