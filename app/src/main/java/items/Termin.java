@@ -68,7 +68,7 @@ public class Termin {
     public void setChecked(boolean checked){
         this.marked = checked;
     }
-}
+
 
     @Override
     public String toString() {
@@ -81,3 +81,4 @@ public class Termin {
                 '}';
     }
 }
+
