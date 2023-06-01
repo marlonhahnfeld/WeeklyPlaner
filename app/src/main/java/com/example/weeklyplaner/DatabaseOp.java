@@ -146,6 +146,10 @@ public class DatabaseOp {
         }
     }
 
+    public static void editAppointment(String email, String terminName) {
+
+    }
+
     /**
      * Methode um einen existierenden Termin zu löschen aus der Datenbank
      *
