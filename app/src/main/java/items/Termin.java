@@ -1,7 +1,5 @@
 package items;
 
-import com.example.weeklyplaner.Add;
-
 public class Termin {
     private String terminname;
     private String beschreibung;
@@ -9,13 +7,16 @@ public class Termin {
     private int id;
     private String tag;
 
+
     private boolean marked;
 
-    public Termin(String terminname, String beschreibung, String prio, String tag) {
+
+    public Termin(String terminname, String beschreibung, String prio, String tag, int id) {
+
         this.terminname = terminname;
         this.prio = prio;
+        this.id = id;
         this.beschreibung = beschreibung;
-        this.id = Add.saveCounter;
         this.tag = tag;
     }
 
@@ -59,11 +60,24 @@ public class Termin {
         this.tag = tag;
     }
 
+
     public boolean isChecked(){
         return marked;
     }
 
     public void setChecked(boolean checked){
         this.marked = checked;
+    }
+}
+
+    @Override
+    public String toString() {
+        return "Termin{" +
+                "terminname='" + terminname + '\'' +
+                ", beschreibung='" + beschreibung + '\'' +
+                ", prio='" + prio + '\'' +
+                ", id=" + id +
+                ", tag='" + tag + '\'' +
+                '}';
     }
 }

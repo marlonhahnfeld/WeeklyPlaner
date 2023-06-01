@@ -55,6 +55,7 @@ public class DatabaseOp {
                         ");";
                 statement.execute(sqlQuery);
                 sqlQuery = "CREATE TABLE IF NOT EXISTS TERMINE (\n" +
+                        "id INT, \n" +
                         "email VARCHAR (100),\n" +
                         "name VARCHAR(100),\n" +
                         "beschreibung VARCHAR(100),\n" +
@@ -115,15 +116,6 @@ public class DatabaseOp {
                 String sqlQuery = "INSERT INTO LOGIN VALUES ( '" + email +
                         "', '" + passwort + "')";
                 statement.execute(sqlQuery);
-                // Testausgabe um zu sehen, ob der Input wirklich in der DB vorhanden ist
-                sqlQuery = "SELECT * FROM LOGIN";
-                ResultSet resultSet = statement.executeQuery(sqlQuery);
-                while (resultSet.next()) {
-                    String em = resultSet.getString("email");
-                    String password = resultSet.getString("passwort");
-                    System.out.println(em + " " + password);
-                }
-                resultSet.close();
                 statement.close();
             }
         } catch (SQLException e) {
@@ -135,32 +127,18 @@ public class DatabaseOp {
      * Methode um den erstellten Termin in die Datenbank abzuspeichern
      *
      * @param email        des Users
-     * @param name         des Termins
+     * @param terminName   des Termins
      * @param beschreibung des Termins
      * @param prio         des Termins
      * @param tag          des Termins
      */
-    public static void saveAppointment(String email, String name, String beschreibung,
+    public static void saveAppointment(int id, String email, String terminName, String beschreibung,
                                        String prio, String tag) {
         try {
             if (connected) {
                 Statement statement = connection.createStatement();
-                String sql = "INSERT INTO TERMINE VALUES ('" + email + "', '" +
-                        name + "', '" + beschreibung + "', '" + prio + "', '" + tag + "');";
+                String sql = "INSERT INTO TERMINE VALUES (" + id + ", '" + email + "', '" + terminName + "', '" + beschreibung + "', '" + prio + "', '" + tag + "');";
                 statement.execute(sql);
-
-                sql = "SELECT * FROM TERMINE";
-                ResultSet resultSet = statement.executeQuery(sql);
-                while (resultSet.next()) {
-                    String em = resultSet.getString("email");
-                    String terminName = resultSet.getString("name");
-                    String description = resultSet.getString("beschreibung");
-                    String priority = resultSet.getString("prio");
-                    String day = resultSet.getString("tag");
-                    System.out.println(em + "\n" + terminName + "\n" + description + "\n" +
-                            priority + "\n" + day + "\n\n");
-                }
-
                 statement.close();
             }
         } catch (SQLException e) {
@@ -170,6 +148,29 @@ public class DatabaseOp {
 
     public static void editAppointment(String email, String terminName) {
 
+    }
+
+    /**
+     * Methode um einen existierenden Termin zu löschen aus der Datenbank
+     *
+     * @param email des Users
+     */
+    public static void deleteAppointment(int id, String email) {
+        try {
+            Statement statement = connection.createStatement();
+            String sqlQuery =
+                    "DELETE FROM TERMINE WHERE id = " + id + " AND email = '" + email + "';";
+            statement.executeUpdate(sqlQuery);
+
+            sqlQuery = "SELECT * FROM TERMINE WHERE id = " + id + " AND email = '" + email + "';";
+            ResultSet resultSet = statement.executeQuery(sqlQuery);
+            while (resultSet.next()) {
+                System.out.println(resultSet.getString("id") + "\n" + resultSet.getString("name"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -188,8 +189,10 @@ public class DatabaseOp {
                     termin = new Termin(resultSet.getString("name"),
                             resultSet.getString("beschreibung"),
                             resultSet.getString("prio"),
-                            resultSet.getString("tag"));
+                            resultSet.getString("tag"),
+                            resultSet.getInt("id"));
                     getSpecificTerminliste(resultSet.getString("tag")).add(termin);
+                    System.out.println(termin);
                     SpecificDay.refresh_needed = true;
                 }
                 statement.close();
@@ -197,6 +200,22 @@ public class DatabaseOp {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public static int getMaxID() {
+        try {
+            if (connected) {
+                Statement statement = connection.createStatement();
+                String sqlQueue = "SELECT MAX(id) FROM TERMINE";
+                ResultSet resultSet = statement.executeQuery(sqlQueue);
+                if (resultSet.next()) {
+                    return resultSet.getInt("MAX(id)");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
     /**
@@ -224,6 +243,4 @@ public class DatabaseOp {
             e.printStackTrace();
         }
     }
-
 }
-

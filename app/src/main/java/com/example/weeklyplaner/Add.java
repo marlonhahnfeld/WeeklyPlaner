@@ -23,7 +23,9 @@ public class Add extends AppCompatActivity implements View.OnClickListener, Adap
     private ImageButton backButton;
     private Button saveButton;
     private Spinner prioListSpinner, daySpinner;
-    public static int saveCounter = 0;
+
+    public static int saveCounter;
+
 
     //TOD
     @Override
@@ -32,6 +34,7 @@ public class Add extends AppCompatActivity implements View.OnClickListener, Adap
         setContentView(R.layout.activity_add);
 
         createDatabaseConnection();
+
         if (isConnected()) {
             System.out.println("Verbunden -> Add Activity");
         }
@@ -80,10 +83,23 @@ public class Add extends AppCompatActivity implements View.OnClickListener, Adap
             String prio = String.valueOf(prioListSpinner.getSelectedItem());
             String tag = String.valueOf(daySpinner.getSelectedItem());
 
-            Termin termin = new Termin(terminName, beschreibung, prio, tag);
-            saveCounter++;
 
-            saveAppointment(LoginScreen.email, terminName, beschreibung, prio, tag);
+            if (getSpecificTerminliste("Montag").size() == 0 &&
+                    getSpecificTerminliste("Dienstag").size() == 0 &&
+                    getSpecificTerminliste("Mittwoch").size() == 0 &&
+                    getSpecificTerminliste("Donnerstag").size() == 0 &&
+                    getSpecificTerminliste("Freitag").size() == 0 &&
+                    getSpecificTerminliste("Samstag").size() == 0 &&
+                    getSpecificTerminliste("Sonntag").size() == 0) {
+                saveCounter = 0;
+            } else {
+                saveCounter = getMaxID() + 1;
+            }
+
+            Termin termin = new Termin(terminName, beschreibung, prio, tag, saveCounter);
+
+
+            saveAppointment(termin.getId(), LoginScreen.email, terminName, beschreibung, prio, tag);
             getSpecificTerminliste(tag).add(termin);
 
             closeDatabaseConnection();
