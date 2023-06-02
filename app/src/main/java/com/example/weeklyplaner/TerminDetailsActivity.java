@@ -44,7 +44,6 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_termin_details_screen);
 
-        createDatabaseConnection();
         backButton = findViewById(R.id.imageButton);
         backButton.setOnClickListener(this);
         editButton = findViewById(R.id.EditButton_details);
@@ -97,7 +96,6 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
     public void onClick(View v) {
         int id = v.getId();
         if (id == R.id.imageButton) {
-            closeDatabaseConnection();
             onBackPressed();
         } else if (id == R.id.EditButton_details) {
             deleteCurrentTermin();
@@ -111,11 +109,11 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
             Add.saveCounter = getMaxID() + 1;
 
             Termin termin = new Termin(terminName_new, beschreibung_new, prio_new, tag_new,
-                    Add.saveCounter);
+                    String.valueOf(Add.saveCounter));
 
 
-            saveAppointment(termin.getId(), LoginScreen.email, terminName_new,
-                    beschreibung_new, prio_new, tag_new);
+            saveAppointment(LoginScreen.email, terminName_new,
+                    beschreibung_new, prio_new, tag_new, Integer.parseInt(termin.getId()));
 
             if (tag_new != terminTag) {
                 // zur richtigen liste zuordnen
@@ -123,21 +121,18 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
             } else {
                 getSpecificTerminliste(terminTag).add(termin);
             }
-            closeDatabaseConnection();
             onBackPressed();
             // TODO NEXT RELEASE: POPUP ARE YOU SURE
         } else if (id == R.id.DeleteButton_details) {
             deleteCurrentTermin();
-            closeDatabaseConnection();
             onBackPressed();
         }
     }
 
     public void deleteCurrentTermin() {
         for (Termin termin : getSpecificTerminliste(terminTag)) {
-            if (termin.getId() == terminId) {
+            if (Integer.parseInt(termin.getId()) == terminId) {
                 deleteAppointment(termin.getId(), LoginScreen.email);
-
                 getSpecificTerminliste(terminTag).remove(termin);
                 break;
             }

@@ -1,7 +1,5 @@
 package com.example.weeklyplaner;
 
-import static com.example.weeklyplaner.DatabaseOp.doesUserExist;
-import static com.example.weeklyplaner.DatabaseOp.isConnected;
 import static com.example.weeklyplaner.DatabaseOp.registerNewUser;
 
 import android.content.Intent;
@@ -44,10 +42,6 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
         editTextPassword2 = findViewById(R.id.editTextPassword2);
-
-        if (isConnected()) {
-            System.out.println("Verbunden Registrieren Screen");
-        }
     }
 
     @Override
@@ -63,27 +57,19 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
             password = editTextPassword.getText().toString();
             password2 = editTextPassword2.getText().toString();
             if (checkInput(email, password)) {
-                if (doesUserExist(email)) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setTitle("E-Mail bereits vergeben :(");
-                    builder.setMessage("Bitte benutzen Sie eine andere E-Mail.");
-                    builder.setPositiveButton("OK", (dialog, which) -> dialog.dismiss()).show();
-                } else {
-                    registerNewUser(email, password);
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    builder.setTitle("\uD83C\uDF89 Registrierung erfolgreich \uD83C\uDF89");
-                    builder.setMessage("Herzlichen Glückwunsch! Sie wurden erfolgreich registriert.");
+                registerNewUser(email, password);
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("\uD83C\uDF89 Registrierung erfolgreich \uD83C\uDF89");
+                builder.setMessage("Herzlichen Glückwunsch! Sie wurden erfolgreich registriert.");
 
-                    builder.setPositiveButton("OK", (dialog, which) -> {
-                        final Intent finished = new Intent(this, LoginScreen.class);
-                        startActivity(finished);
-                        dialog.dismiss();
-                    });
+                builder.setPositiveButton("OK", (dialog, which) -> {
+                    final Intent finished = new Intent(this, LoginScreen.class);
+                    startActivity(finished);
+                    dialog.dismiss();
+                });
 
-                    builder.show();
-                }
+                builder.show();
             }
-
         }
     }
 

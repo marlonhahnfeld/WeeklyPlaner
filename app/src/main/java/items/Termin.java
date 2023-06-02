@@ -4,12 +4,11 @@ public class Termin {
     private String terminname;
     private String beschreibung;
     private String prio;
-    private int id;
+    private String id;
     private String tag;
     private boolean marked;
 
-    public Termin(String terminname, String beschreibung, String prio, String tag, int id) {
-
+    public Termin(String terminname, String beschreibung, String prio, String tag, String id) {
         this.terminname = terminname;
         this.prio = prio;
         this.id = id;
@@ -41,11 +40,11 @@ public class Termin {
         this.prio = prio;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

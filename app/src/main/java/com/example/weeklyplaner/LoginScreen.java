@@ -1,20 +1,17 @@
 package com.example.weeklyplaner;
 
-import static com.example.weeklyplaner.DatabaseOp.*;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import static com.example.weeklyplaner.DatabaseOp.loadAppointments;
+import static com.example.weeklyplaner.DatabaseOp.loadDataFromDatabase;
 
 public class LoginScreen extends AppCompatActivity implements View.OnClickListener {
 
@@ -24,6 +21,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
     private EditText editTextPassword;
     public static String email;
     private String password;
+    private DatabaseOp databaseOp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,11 +37,8 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         loginButton = findViewById(R.id.loginButton);
         loginButton.setOnClickListener(this);
 
-        createDatabaseConnection();
-        if (isConnected()) {
-            System.out.println("Verbunden");
-        }
-        createTableIfNotExists();
+        databaseOp = new DatabaseOp();
+
     }
 
     @Override
@@ -57,49 +52,23 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         } else if (id == R.id.loginButton) {
             email = editTextEmail.getText().toString();
             password = editTextPassword.getText().toString();
-            if (checkLogInData(email, password)) {
-                loadDataFromDatabase(() -> {
-                    Intent intent1 = new Intent(LoginScreen.this, MainActivity.class);
-                    startActivity(intent1);
-                }, email);
-                closeDatabaseConnection();
-                if (!isConnected()) {
-                    System.out.println("Verbindung getrennt");
+
+            databaseOp.checkLogInData(email, password, new DatabaseOp.LoginCallback() {
+                @Override
+                public void onLoginSuccess() {
+                    loadAppointments(email);
+                    Intent intent = new Intent(LoginScreen.this, MainActivity.class);
+                    startActivity(intent);
                 }
 
-            }
+                @Override
+                public void onLoginFailure(String message) {
+                    // Zeige eine Fehlermeldung an, dass die E-Mail oder das Passwort falsch ist
+                    Toast.makeText(LoginScreen.this, message, Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 
-    /**
-     * Methode um Login Daten mithilfe der Datenbank zu überprüfen
-     *
-     * @param email    des Users
-     * @param password des Users
-     * @return true, wenn eine Übereinstimmung in der Datenbank gefunden wird
-     */
-    public boolean checkLogInData(String email, String password) {
-        try {
-            Statement statement = DatabaseOp.getConnection().createStatement();
-            String query = "SELECT * FROM LOGIN WHERE email = '" + email +
-                    "' AND passwort = '" + password + "'";
-            ResultSet resultSet = statement.executeQuery(query);
 
-            if (resultSet.next()) {
-                resultSet.close();
-                statement.close();
-                return true;
-            } else {
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle("Falsche Email oder Passwort");
-                builder.setMessage("Bitte geben Sie Ihre gültige Email oder Passwort ein.");
-                builder.setPositiveButton("OK", (dialog, which) -> dialog.dismiss()).show();
-            }
-            resultSet.close();
-            statement.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
 }

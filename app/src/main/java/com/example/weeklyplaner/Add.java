@@ -33,12 +33,6 @@ public class Add extends AppCompatActivity implements View.OnClickListener, Adap
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
 
-        createDatabaseConnection();
-
-        if (isConnected()) {
-            System.out.println("Verbunden -> Add Activity");
-        }
-
         backButton = findViewById(R.id.imageButton);
         backButton.setOnClickListener(this);
         saveButton = findViewById(R.id.SaveButton);
@@ -96,13 +90,12 @@ public class Add extends AppCompatActivity implements View.OnClickListener, Adap
                 saveCounter = getMaxID() + 1;
             }
 
-            Termin termin = new Termin(terminName, beschreibung, prio, tag, saveCounter);
+            Termin termin = new Termin(terminName, beschreibung, prio, tag, String.valueOf(saveCounter));
 
 
-            saveAppointment(termin.getId(), LoginScreen.email, terminName, beschreibung, prio, tag);
+            saveAppointment(LoginScreen.email, terminName, beschreibung, prio, tag, Integer.parseInt(termin.getId()));
             getSpecificTerminliste(tag).add(termin);
 
-            closeDatabaseConnection();
             SpecificDay.refresh_needed = true;
             onBackPressed();
         }

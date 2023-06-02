@@ -2,259 +2,175 @@ package com.example.weeklyplaner;
 
 import static com.example.weeklyplaner.Utils.getSpecificTerminliste;
 
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import android.util.Log;
+
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import items.DatabaseLoadListener;
 import items.Termin;
 
 public class DatabaseOp {
-    private static final String DB_DRIVER = "org.h2.Driver";
-    private static final String DB_CONNECTION =
-            "jdbc:h2:file:/data/data/com.example.weeklyplaner/databases/loginDatenbank";
-    private static final String DB_USER = "sa";
-    private static final String DB_PASSWORD = "";
-    private static Connection connection;
-    private static boolean connected;
+    private static final String TAG = "Firebase";
+    private static final String COLLECTION_USERS = "users";
+    private static final String COLLECTION_TERMINE = "termine";
+    private static final String FIELD_EMAIL = "email";
+    private static final String FIELD_PASSWORD = "password";
+    private static final String FIELD_TERMIN_NAME = "terminName";
+    private static final String FIELD_BESCHREIBUNG = "description";
+    private static final String FIELD_PRIO = "prio";
+    private static final String FIELD_DAY = "day";
+    private static final String FIELD_ID = "id";
 
-    /**
-     * Methode um eine Verbindung zur Datenbank zur erstellen
-     */
-    public static void createDatabaseConnection() {
-        try {
-            Class.forName(DB_DRIVER);
-            connection = DriverManager.getConnection(DB_CONNECTION, DB_USER, DB_PASSWORD);
-            connected = true;
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-        }
+    private static FirebaseFirestore firebaseDB;
+    private boolean connected;
+
+    public DatabaseOp() {
+        firebaseDB = FirebaseFirestore.getInstance();
+        connected = true;
     }
 
-    public static Connection getConnection() {
-        return connection;
+    public static void registerNewUser(String email, String password) {
+        Map<String, Object> user = new HashMap<>();
+        user.put(FIELD_EMAIL, email);
+        user.put(FIELD_PASSWORD, password);
+
+        CollectionReference usersCollection = firebaseDB.collection(COLLECTION_USERS);
+        usersCollection.document(email).set(user)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Log.d(TAG, "User registration successful");
+                    } else {
+                        Log.e(TAG, "Error registering user: " + task.getException());
+                    }
+                });
     }
 
-    public static boolean isConnected() {
-        return connected;
-    }
+    public void checkLogInData(String email, String password, LoginCallback callback) {
+        CollectionReference usersCollection = firebaseDB.collection(COLLECTION_USERS);
+        Query query = usersCollection.whereEqualTo(FIELD_EMAIL, email).whereEqualTo(FIELD_PASSWORD, password);
 
-    /**
-     * Erstellung für die Tabelle, wo die Nutzerdaten abgespeichert werden
-     */
-    public static void createTables() {
-        try {
-            if (connected) {
-                Statement statement = connection.createStatement();
-                String sqlQuery = "CREATE TABLE IF NOT EXISTS LOGIN (\n" +
-                        "email VARCHAR(50) PRIMARY KEY, \n" +
-                        "passwort VARCHAR(50) \n" +
-                        ");";
-                statement.execute(sqlQuery);
-                sqlQuery = "CREATE TABLE IF NOT EXISTS TERMINE (\n" +
-                        "id INT, \n" +
-                        "email VARCHAR (100),\n" +
-                        "name VARCHAR(100),\n" +
-                        "beschreibung VARCHAR(100),\n" +
-                        "prio VARCHAR(100),\n" +
-                        "tag VARCHAR (100),\n" +
-                        "FOREIGN KEY (email) REFERENCES LOGIN(email));";
-                statement.execute(sqlQuery);
-                statement.close();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Methode zum Überprüfen, ob Tabelle existiert
-     *
-     * @return true, wenn Tabelle existiert
-     */
-    public static boolean doesTableExists() {
-        try {
-            if (connected) {
-                DatabaseMetaData metaData = connection.getMetaData();
-                ResultSet resultSet = metaData.getTables(null, null,
-                        "LOGIN", null);
-                boolean tableExists = resultSet.next();
-                resultSet.close();
-                return tableExists;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    /**
-     * Methode die createTable aufruft, wenn Table nicht existiert
-     */
-    public static void createTableIfNotExists() {
-        if (!doesTableExists()) {
-            createTables();
-        }
-    }
-
-    /**
-     * Methode, die einen neuen User registriert
-     *
-     * @param email    mit den sich der User registrieren möchte.
-     * @param passwort mit den sich der User einloggen möchte später
-     */
-    public static void registerNewUser(String email, String passwort) {
-        try {
-            if (connected) {
-                Statement statement = connection.createStatement();
-                String sqlQuery = "INSERT INTO LOGIN VALUES ( '" + email +
-                        "', '" + passwort + "')";
-                statement.execute(sqlQuery);
-                statement.close();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Methode für die Abfrage, ob ein User existiert
-     *
-     * @param email des Users
-     * @return true, wenn User gefunden wurde, ansonsten false
-     */
-    public static boolean doesUserExist(String email) {
-        try {
-            if (connected) {
-                Statement statement = connection.createStatement();
-                String sqlQuery = "SELECT email FROM LOGIN WHERE email = '" + email + "';";
-                ResultSet resultSet = statement.executeQuery(sqlQuery);
-                return resultSet.next();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    /**
-     * Methode um einen Termin in die Datenbank abzuspeichern
-     *
-     * @param id           des Termins
-     * @param email        des Users für den der Termin abgespeichert wird
-     * @param terminName   des Termins
-     * @param beschreibung des Termins
-     * @param prio         des Termins
-     * @param tag          des Termins
-     */
-    public static void saveAppointment(int id, String email, String terminName, String beschreibung,
-                                       String prio, String tag) {
-        try {
-            if (connected) {
-                Statement statement = connection.createStatement();
-                String sql = "INSERT INTO TERMINE VALUES (" + id + ", '" + email + "', '" + terminName + "', '" + beschreibung + "', '" + prio + "', '" + tag + "');";
-                statement.execute(sql);
-                statement.close();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Methode um einen Termin aus der Datenbank zu löschen
-     *
-     * @param id    des Termins
-     * @param email des Users
-     */
-    public static void deleteAppointment(int id, String email) {
-        try {
-            Statement statement = connection.createStatement();
-            String sqlQuery =
-                    "DELETE FROM TERMINE WHERE id = " + id + " AND email = '" + email + "';";
-            statement.executeUpdate(sqlQuery);
-            statement.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Methode um die Termine eines Users von der Datenbank zu laden
-     *
-     * @param email des eingeloggten Users, von dem die Termine geladen werden sollen
-     */
-    public static void loadAppointments(String email) {
-        try {
-            if (connected) {
-                Statement statement = connection.createStatement();
-                String sql = "SELECT * FROM TERMINE WHERE email = '" + email + "';";
-                ResultSet resultSet = statement.executeQuery(sql);
-                Termin termin;
-                while (resultSet.next()) {
-                    termin = new Termin(resultSet.getString("name"),
-                            resultSet.getString("beschreibung"),
-                            resultSet.getString("prio"),
-                            resultSet.getString("tag"),
-                            resultSet.getInt("id"));
-                    getSpecificTerminliste(resultSet.getString("tag")).add(termin);
-                    System.out.println(termin);
-                    SpecificDay.refresh_needed = true;
+        query.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                QuerySnapshot snapshot = task.getResult();
+                if (snapshot != null && !snapshot.isEmpty()) {
+                    callback.onLoginSuccess(); // Aufruf, wenn die Anmeldeinformationen korrekt sind
+                } else {
+                    callback.onLoginFailure("Falsche E-Mail oder Passwort"); // Aufruf, wenn die Anmeldeinformationen falsch sind
                 }
-                statement.close();
+            } else {
+                callback.onLoginFailure("Fehler beim Überprüfen der Anmeldeinformationen"); // Aufruf, wenn ein Fehler auftritt
+                Log.e(TAG, "Error checking login data: " + task.getException());
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        });
     }
 
-    /**
-     * Methode um den höchsten Wert der IDs zu ermitteln
-     *
-     * @return den höchsten Wert in der Datenbank
-     */
+    public interface LoginCallback {
+        void onLoginSuccess();
+        void onLoginFailure(String message);
+    }
+
+
+    public static void saveAppointment(String email, String terminName, String description,
+                                String prio, String day, int id) {
+
+        CollectionReference appointmentsCollection = firebaseDB.collection(COLLECTION_USERS)
+                .document(email).collection(COLLECTION_TERMINE);
+
+        Map<String, Object> appointment = new HashMap<>();
+        appointment.put(FIELD_TERMIN_NAME, terminName);
+        appointment.put(FIELD_BESCHREIBUNG, description);
+        appointment.put(FIELD_PRIO, prio);
+        appointment.put(FIELD_DAY, day);
+        appointment.put(FIELD_ID, id);
+
+        appointmentsCollection.add(appointment)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Log.d(TAG, "Appointment saved successfully");
+                    } else {
+                        Log.e(TAG, "Error saving appointment: " + task.getException());
+                    }
+                });
+    }
+
     public static int getMaxID() {
-        try {
-            if (connected) {
-                Statement statement = connection.createStatement();
-                String sqlQueue = "SELECT MAX(id) FROM TERMINE";
-                ResultSet resultSet = statement.executeQuery(sqlQueue);
-                if (resultSet.next()) {
-                    return resultSet.getInt("MAX(id)");
+        CollectionReference appointmentCollection = firebaseDB.collection(COLLECTION_TERMINE);
+        Query query = appointmentCollection.orderBy(FIELD_ID, Query.Direction.DESCENDING).limit(1);
+
+        final int[] maxId = new int[1]; // Array zur Speicherung der maximalen ID
+
+        query.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                QuerySnapshot snapshot = task.getResult();
+                if (snapshot != null && !snapshot.isEmpty()) {
+                    DocumentSnapshot document = snapshot.getDocuments().get(0);
+                    Long maxIdLong = document.getLong(FIELD_ID);
+                    if (maxIdLong != null) {
+                        maxId[0] = maxIdLong.intValue(); // Wandelt Long in int um und speichert es im Array
+                    } else {
+                        // Wenn das Feld FIELD_ID null ist, setze den Wert auf 0 oder einen Standardwert
+                        maxId[0] = 0; // Oder einen anderen Standardwert, falls gewünscht
+                    }
+                    Log.d(TAG, "Max ID: " + maxId[0]);
+                } else {
+                    Log.d(TAG, "No appointments found");
                 }
+            } else {
+                Log.e(TAG, "Error getting appointments: " + task.getException());
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return 0;
+        });
+
+        return maxId[0]; // Gibt den Wert der maximalen ID zurück
     }
 
-    /**
-     * Methode um Daten aus der Datenbank zu laden und hinterher den übergebenden Listener
-     * zu signalisieren, dass Daten fertig geladen wurden
-     *
-     * @param listener der über den Abschluss des Ladevorgans informieren soll
-     * @param email    um auf die Termine des Users zugreifen zu können
-     */
+
+
+    public static void loadAppointments(String email) {
+        CollectionReference appointmentsCollection = firebaseDB.collection(COLLECTION_USERS)
+                .document(email).collection(COLLECTION_TERMINE);
+        appointmentsCollection.get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (DocumentSnapshot document : task.getResult()) {
+                            Termin termin = new Termin(
+                                    document.getString(FIELD_TERMIN_NAME),
+                                    document.getString(FIELD_BESCHREIBUNG),
+                                    document.getString(FIELD_PRIO),
+                                    document.getString(FIELD_DAY),
+                                    document.getId()
+                            );
+                            getSpecificTerminliste(document.getString(FIELD_DAY)).add(termin);
+                            Log.d(TAG, "Loaded appointment: " + termin);
+                        }
+                        SpecificDay.refresh_needed = true;
+                    } else {
+                        Log.e(TAG, "Error loading appointments: " + task.getException());
+                    }
+                });
+    }
+
+    public static void deleteAppointment(String email, String appointmentId) {
+        CollectionReference appointmentsCollection = firebaseDB.collection(COLLECTION_USERS)
+                .document(email).collection(COLLECTION_TERMINE);
+        appointmentsCollection.document(appointmentId).delete()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Log.d(TAG, "Appointment deleted successfully");
+                    } else {
+                        Log.e(TAG, "Error deleting appointment: " + task.getException());
+                    }
+                });
+    }
+
     public static void loadDataFromDatabase(DatabaseLoadListener listener, String email) {
         loadAppointments(email);
         listener.onDatabaseLoadComplete();
-    }
-
-    /**
-     * Methode um die Datenbank Verbindung zu trennen
-     */
-    public static void closeDatabaseConnection() {
-        try {
-            if (connected && connection != null) {
-                connection.close();
-                connected = false;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 }
