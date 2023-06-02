@@ -6,10 +6,7 @@ public class Termin {
     private String prio;
     private int id;
     private String tag;
-
-
     private boolean marked;
-
 
     public Termin(String terminname, String beschreibung, String prio, String tag, int id) {
 
@@ -61,11 +58,11 @@ public class Termin {
     }
 
 
-    public boolean isChecked(){
+    public boolean isChecked() {
         return marked;
     }
 
-    public void setChecked(boolean checked){
+    public void setChecked(boolean checked) {
         this.marked = checked;
     }
 
