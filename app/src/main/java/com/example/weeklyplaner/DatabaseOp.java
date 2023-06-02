@@ -102,11 +102,8 @@ public class DatabaseOp {
 
     /**
      * Methode, die einen neuen User registriert
-     * TODO: Hinweis, falls existierende Mail schon benutzt wurde
-     * TODO: Popup, für erfolgreiche Registrierung
      *
      * @param email    mit den sich der User registrieren möchte.
-     *                 ! Pro User nur eine E-Mail, da E-Mail Primary Key ist
      * @param passwort mit den sich der User einloggen möchte später
      */
     public static void registerNewUser(String email, String passwort) {
@@ -124,9 +121,30 @@ public class DatabaseOp {
     }
 
     /**
-     * Methode um den erstellten Termin in die Datenbank abzuspeichern
+     * Methode für die Abfrage, ob ein User existiert
      *
-     * @param email        des Users
+     * @param email des Users
+     * @return true, wenn User gefunden wurde, ansonsten false
+     */
+    public static boolean doesUserExist(String email) {
+        try {
+            if (connected) {
+                Statement statement = connection.createStatement();
+                String sqlQuery = "SELECT email FROM LOGIN WHERE email = '" + email + "';";
+                ResultSet resultSet = statement.executeQuery(sqlQuery);
+                return resultSet.next();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    /**
+     * Methode um einen Termin in die Datenbank abzuspeichern
+     *
+     * @param id           des Termins
+     * @param email        des Users für den der Termin abgespeichert wird
      * @param terminName   des Termins
      * @param beschreibung des Termins
      * @param prio         des Termins
@@ -146,13 +164,10 @@ public class DatabaseOp {
         }
     }
 
-    public static void editAppointment(String email, String terminName) {
-
-    }
-
     /**
-     * Methode um einen existierenden Termin zu löschen aus der Datenbank
+     * Methode um einen Termin aus der Datenbank zu löschen
      *
+     * @param id    des Termins
      * @param email des Users
      */
     public static void deleteAppointment(int id, String email) {
@@ -161,13 +176,7 @@ public class DatabaseOp {
             String sqlQuery =
                     "DELETE FROM TERMINE WHERE id = " + id + " AND email = '" + email + "';";
             statement.executeUpdate(sqlQuery);
-
-            sqlQuery = "SELECT * FROM TERMINE WHERE id = " + id + " AND email = '" + email + "';";
-            ResultSet resultSet = statement.executeQuery(sqlQuery);
-            while (resultSet.next()) {
-                System.out.println(resultSet.getString("id") + "\n" + resultSet.getString("name"));
-            }
-
+            statement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -202,6 +211,11 @@ public class DatabaseOp {
         }
     }
 
+    /**
+     * Methode um den höchsten Wert der IDs zu ermitteln
+     *
+     * @return den höchsten Wert in der Datenbank
+     */
     public static int getMaxID() {
         try {
             if (connected) {
