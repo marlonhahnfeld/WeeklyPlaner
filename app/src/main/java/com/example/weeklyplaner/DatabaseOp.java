@@ -13,7 +13,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.HashMap;
 import java.util.Map;
 
-import items.DatabaseLoadListener;
+import datenbank_listener.DatabaseLoadListener;
+import datenbank_listener.EmailExistsListener;
+import datenbank_listener.LoginCallback;
 import items.Termin;
 
 public class DatabaseOp {
@@ -29,11 +31,9 @@ public class DatabaseOp {
     private static final String FIELD_ID = "id";
 
     private static FirebaseFirestore firebaseDB;
-    private boolean connected;
 
     public DatabaseOp() {
         firebaseDB = FirebaseFirestore.getInstance();
-        connected = true;
     }
 
     public static void registerNewUser(String email, String password) {
@@ -52,33 +52,36 @@ public class DatabaseOp {
                 });
     }
 
+    public static void doesUserExist(String email, EmailExistsListener listener) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference usersRef = db.collection("users");
+
+        usersRef.whereEqualTo("email", email)
+                .get()
+                .addOnCompleteListener(task -> listener.onEmailExists(task.isSuccessful()
+                        && task.getResult() != null && !task.getResult().isEmpty()));
+    }
+
+
     public void checkLogInData(String email, String password, LoginCallback callback) {
         CollectionReference usersCollection = firebaseDB.collection(COLLECTION_USERS);
-        Query query = usersCollection.whereEqualTo(FIELD_EMAIL, email).whereEqualTo(FIELD_PASSWORD, password);
+        Query query = usersCollection.whereEqualTo(FIELD_EMAIL, email)
+                .whereEqualTo(FIELD_PASSWORD, password);
 
         query.get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                QuerySnapshot snapshot = task.getResult();
-                if (snapshot != null && !snapshot.isEmpty()) {
-                    callback.onLoginSuccess(); // Aufruf, wenn die Anmeldeinformationen korrekt sind
-                } else {
-                    callback.onLoginFailure("Falsche E-Mail oder Passwort"); // Aufruf, wenn die Anmeldeinformationen falsch sind
-                }
+            if (task.isSuccessful() && task.getResult() != null && !task.getResult().isEmpty()) {
+                callback.onLoginSuccess();
             } else {
-                callback.onLoginFailure("Fehler beim Überprüfen der Anmeldeinformationen"); // Aufruf, wenn ein Fehler auftritt
-                Log.e(TAG, "Error checking login data: " + task.getException());
+                callback.onLoginFailure("Falsche E-Mail oder Passwort");
             }
+        }).addOnFailureListener(e -> {
+            callback.onLoginFailure("Fehler beim Überprüfen der Anmeldeinformationen");
+            Log.e(TAG, "Error checking login data: " + e.getMessage());
         });
     }
 
-    public interface LoginCallback {
-        void onLoginSuccess();
-        void onLoginFailure(String message);
-    }
-
-
     public static void saveAppointment(String email, String terminName, String description,
-                                String prio, String day, int id) {
+                                       String prio, String day, int id) {
 
         CollectionReference appointmentsCollection = firebaseDB.collection(COLLECTION_USERS)
                 .document(email).collection(COLLECTION_TERMINE);
@@ -131,7 +134,6 @@ public class DatabaseOp {
     }
 
 
-
     public static void loadAppointments(String email) {
         CollectionReference appointmentsCollection = firebaseDB.collection(COLLECTION_USERS)
                 .document(email).collection(COLLECTION_TERMINE);
@@ -139,12 +141,14 @@ public class DatabaseOp {
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         for (DocumentSnapshot document : task.getResult()) {
+                            long idLong = document.getLong(FIELD_ID);
+                            int id = (int) idLong;
                             Termin termin = new Termin(
                                     document.getString(FIELD_TERMIN_NAME),
                                     document.getString(FIELD_BESCHREIBUNG),
                                     document.getString(FIELD_PRIO),
                                     document.getString(FIELD_DAY),
-                                    document.getId()
+                                    String.valueOf(id)
                             );
                             getSpecificTerminliste(document.getString(FIELD_DAY)).add(termin);
                             Log.d(TAG, "Loaded appointment: " + termin);

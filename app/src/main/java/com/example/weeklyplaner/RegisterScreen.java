@@ -1,5 +1,6 @@
 package com.example.weeklyplaner;
 
+import static com.example.weeklyplaner.DatabaseOp.doesUserExist;
 import static com.example.weeklyplaner.DatabaseOp.registerNewUser;
 
 import android.content.Intent;
@@ -57,18 +58,33 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
             password = editTextPassword.getText().toString();
             password2 = editTextPassword2.getText().toString();
             if (checkInput(email, password)) {
-                registerNewUser(email, password);
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle("\uD83C\uDF89 Registrierung erfolgreich \uD83C\uDF89");
-                builder.setMessage("Herzlichen Glückwunsch! Sie wurden erfolgreich registriert.");
-
-                builder.setPositiveButton("OK", (dialog, which) -> {
-                    final Intent finished = new Intent(this, LoginScreen.class);
-                    startActivity(finished);
-                    dialog.dismiss();
+                doesUserExist(email, exists -> {
+                    if (exists) {
+                        AlertDialog.Builder builder =
+                                new AlertDialog.Builder(RegisterScreen.this);
+                        builder.setTitle("Achtung");
+                        builder.setMessage("E-Mail bereits vergeben :(");
+                        builder.setPositiveButton("OK", (dialog, which) -> {
+                            dialog.dismiss();
+                        });
+                        builder.show();
+                    } else {
+                        registerNewUser(email, password);
+                        AlertDialog.Builder builder =
+                                new AlertDialog.Builder(RegisterScreen.this);
+                        builder.setTitle("\uD83C\uDF89 Registrierung erfolgreich \uD83C\uDF89");
+                        builder.setMessage("Herzlichen Glückwunsch! " +
+                                "Sie wurden erfolgreich registriert.");
+                        builder.setPositiveButton("OK", (dialog, which) -> {
+                            final Intent intent1 = new Intent(RegisterScreen.this,
+                                    LoginScreen.class);
+                            startActivity(intent1);
+                            dialog.dismiss();
+                        });
+                        builder.show();
+                    }
                 });
 
-                builder.show();
             }
         }
     }
@@ -97,7 +113,8 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
         boolean passwordsMatch = password.equals(password2);
 
         if (!emailMatchFound) {
-            String emailFormat = "1) Email darf <b>Groß-, Kleinbuchstaben & Zahlen</b> enthalten!<br><br>" +
+            String emailFormat = "1) Email darf <b>Groß-, Kleinbuchstaben & Zahlen</b> " +
+                    "enthalten!<br><br>" +
                     "2) Email darf <b>keine</b> Sonderzeichen enthalten!<br><br>" +
                     "3) Email muss ein <b>@-Zeichen</b> enthalten!<br><br>" +
                     "4) Email muss mit einem <b>abschließenden Punkt</b> enden!";

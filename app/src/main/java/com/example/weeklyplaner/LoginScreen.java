@@ -10,8 +10,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import static com.example.weeklyplaner.DatabaseOp.loadAppointments;
 import static com.example.weeklyplaner.DatabaseOp.loadDataFromDatabase;
+
+import datenbank_listener.LoginCallback;
 
 public class LoginScreen extends AppCompatActivity implements View.OnClickListener {
 
@@ -53,7 +54,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
             email = editTextEmail.getText().toString();
             password = editTextPassword.getText().toString();
 
-            databaseOp.checkLogInData(email, password, new DatabaseOp.LoginCallback() {
+            databaseOp.checkLogInData(email, password, new LoginCallback() {
                 @Override
                 public void onLoginSuccess() {
                     loadDataFromDatabase(() -> {
