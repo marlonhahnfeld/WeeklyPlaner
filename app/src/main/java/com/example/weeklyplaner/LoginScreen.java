@@ -1,5 +1,7 @@
 package com.example.weeklyplaner;
 
+import static com.example.weeklyplaner.DatabaseOp.loadAppointments;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,9 +12,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import static com.example.weeklyplaner.DatabaseOp.loadDataFromDatabase;
-
-import datenbank_listener.LoginCallback;
+import datenbank_listener.LoadAppointmentsListener;
+import datenbank_listener.LoginListener;
 
 public class LoginScreen extends AppCompatActivity implements View.OnClickListener {
 
@@ -54,14 +55,15 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
             email = editTextEmail.getText().toString();
             password = editTextPassword.getText().toString();
 
-            databaseOp.checkLogInData(email, password, new LoginCallback() {
+            databaseOp.checkLogInData(email, password, new LoginListener() {
                 @Override
                 public void onLoginSuccess() {
-                    loadDataFromDatabase(() -> {
-                        Intent intent1 =
-                                new Intent(LoginScreen.this, MainActivity.class);
+                    loadAppointments(email, () -> {
+                        Intent intent1 = new Intent(LoginScreen.this,
+                                MainActivity.class);
                         startActivity(intent1);
-                    }, email);
+                    });
+
                 }
 
                 @Override
@@ -70,6 +72,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
                     Toast.makeText(LoginScreen.this, message, Toast.LENGTH_SHORT).show();
                 }
             });
+
         }
     }
 

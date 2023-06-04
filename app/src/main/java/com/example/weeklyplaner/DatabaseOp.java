@@ -8,14 +8,16 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
-import datenbank_listener.DatabaseLoadListener;
 import datenbank_listener.EmailExistsListener;
-import datenbank_listener.LoginCallback;
+import datenbank_listener.LoadAppointmentsListener;
+import datenbank_listener.LoginListener;
+import datenbank_listener.MaxIDListener;
 import items.Termin;
 
 public class DatabaseOp {
@@ -63,7 +65,7 @@ public class DatabaseOp {
     }
 
 
-    public void checkLogInData(String email, String password, LoginCallback callback) {
+    public void checkLogInData(String email, String password, LoginListener callback) {
         CollectionReference usersCollection = firebaseDB.collection(COLLECTION_USERS);
         Query query = usersCollection.whereEqualTo(FIELD_EMAIL, email)
                 .whereEqualTo(FIELD_PASSWORD, password);
@@ -103,38 +105,31 @@ public class DatabaseOp {
                 });
     }
 
-    public static int getMaxID() {
-        CollectionReference appointmentCollection = firebaseDB.collection(COLLECTION_TERMINE);
-        Query query = appointmentCollection.orderBy(FIELD_ID, Query.Direction.DESCENDING).limit(1);
+    public static void getHighestID(String email, MaxIDListener listener) {
+        CollectionReference appointmentsCollection = firebaseDB.collection(COLLECTION_USERS)
+                .document(email).collection(COLLECTION_TERMINE);
 
-        final int[] maxId = new int[1]; // Array zur Speicherung der maximalen ID
+        appointmentsCollection.get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        int highestID = 0;
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Long maxIdLong = document.getLong(FIELD_ID);
+                            int currentID = (maxIdLong != null) ? maxIdLong.intValue() : 0;
+                            Log.d(TAG, "Current ID: " + currentID + ", Highest ID: " + highestID);
+                            highestID = Math.max(highestID, currentID);
+                        }
 
-        query.get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                QuerySnapshot snapshot = task.getResult();
-                if (snapshot != null && !snapshot.isEmpty()) {
-                    DocumentSnapshot document = snapshot.getDocuments().get(0);
-                    Long maxIdLong = document.getLong(FIELD_ID);
-                    if (maxIdLong != null) {
-                        maxId[0] = maxIdLong.intValue(); // Wandelt Long in int um und speichert es im Array
+                        listener.onMaxIDReceived(highestID);
                     } else {
-                        // Wenn das Feld FIELD_ID null ist, setze den Wert auf 0 oder einen Standardwert
-                        maxId[0] = 0; // Oder einen anderen Standardwert, falls gewünscht
+                        Log.e(TAG, "Error getting appointments: " + task.getException());
+                        listener.onMaxIDReceived(-1);
                     }
-                    Log.d(TAG, "Max ID: " + maxId[0]);
-                } else {
-                    Log.d(TAG, "No appointments found");
-                }
-            } else {
-                Log.e(TAG, "Error getting appointments: " + task.getException());
-            }
-        });
-
-        return maxId[0]; // Gibt den Wert der maximalen ID zurück
+                });
     }
 
 
-    public static void loadAppointments(String email) {
+    public static void loadAppointments(String email, LoadAppointmentsListener listener) {
         CollectionReference appointmentsCollection = firebaseDB.collection(COLLECTION_USERS)
                 .document(email).collection(COLLECTION_TERMINE);
         appointmentsCollection.get()
@@ -148,33 +143,33 @@ public class DatabaseOp {
                                     document.getString(FIELD_BESCHREIBUNG),
                                     document.getString(FIELD_PRIO),
                                     document.getString(FIELD_DAY),
-                                    String.valueOf(id)
+                                    id
                             );
                             getSpecificTerminliste(document.getString(FIELD_DAY)).add(termin);
+                            getSpecificTerminliste(document.getString(FIELD_DAY))
+                                    .sort(Comparator.comparingInt(Termin::getId));
                             Log.d(TAG, "Loaded appointment: " + termin);
                         }
                         SpecificDay.refresh_needed = true;
+                        listener.onLoadAppointments();
                     } else {
                         Log.e(TAG, "Error loading appointments: " + task.getException());
                     }
                 });
     }
 
-    public static void deleteAppointment(String email, String appointmentId) {
-        CollectionReference appointmentsCollection = firebaseDB.collection(COLLECTION_USERS)
-                .document(email).collection(COLLECTION_TERMINE);
-        appointmentsCollection.document(appointmentId).delete()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        Log.d(TAG, "Appointment deleted successfully");
-                    } else {
-                        Log.e(TAG, "Error deleting appointment: " + task.getException());
-                    }
-                });
+    // TODO: Methode überarbeiten, sodass Termin richtige entfernt wird
+    public static void deleteAppointment(String email, int appointmentId) {
+//        CollectionReference appointmentsCollection = firebaseDB.collection(COLLECTION_USERS)
+//                .document(email).collection(COLLECTION_TERMINE);
+//        appointmentsCollection.document(appointmentId).delete()
+//                .addOnCompleteListener(task -> {
+//                    if (task.isSuccessful()) {
+//                        Log.d(TAG, "Appointment deleted successfully");
+//                    } else {
+//                        Log.e(TAG, "Error deleting appointment: " + task.getException());
+//                    }
+//                });
     }
 
-    public static void loadDataFromDatabase(DatabaseLoadListener listener, String email) {
-        loadAppointments(email);
-        listener.onDatabaseLoadComplete();
-    }
 }

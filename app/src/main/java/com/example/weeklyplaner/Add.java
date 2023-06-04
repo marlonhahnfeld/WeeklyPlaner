@@ -16,6 +16,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.Comparator;
+
+import datenbank_listener.MaxIDListener;
 import items.Termin;
 
 public class Add extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
@@ -78,26 +81,19 @@ public class Add extends AppCompatActivity implements View.OnClickListener, Adap
             String tag = String.valueOf(daySpinner.getSelectedItem());
 
 
-            if (getSpecificTerminliste("Montag").size() == 0 &&
-                    getSpecificTerminliste("Dienstag").size() == 0 &&
-                    getSpecificTerminliste("Mittwoch").size() == 0 &&
-                    getSpecificTerminliste("Donnerstag").size() == 0 &&
-                    getSpecificTerminliste("Freitag").size() == 0 &&
-                    getSpecificTerminliste("Samstag").size() == 0 &&
-                    getSpecificTerminliste("Sonntag").size() == 0) {
-                saveCounter = 0;
-            } else {
-                saveCounter = getMaxID() + 1;
-            }
+            getHighestID(LoginScreen.email, maxID -> {
+                int saveCounter = maxID + 1;
+                Termin termin = new Termin(terminName, beschreibung, prio, tag, saveCounter);
 
-            Termin termin = new Termin(terminName, beschreibung, prio, tag, String.valueOf(saveCounter));
+                saveAppointment(LoginScreen.email, terminName, beschreibung, prio, tag, termin.getId());
+                getSpecificTerminliste(tag).add(termin);
+                getSpecificTerminliste(tag).sort(Comparator.comparingInt(Termin::getId));
+
+                SpecificDay.refresh_needed = true;
+                onBackPressed();
+            });
 
 
-            saveAppointment(LoginScreen.email, terminName, beschreibung, prio, tag, Integer.parseInt(termin.getId()));
-            getSpecificTerminliste(tag).add(termin);
-
-            SpecificDay.refresh_needed = true;
-            onBackPressed();
         }
     }
 }

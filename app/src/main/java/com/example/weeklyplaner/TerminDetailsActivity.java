@@ -106,14 +106,14 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
             String prio_new = String.valueOf(terminPrioSpinner.getSelectedItem());
             String tag_new = String.valueOf(terminTagSpinner.getSelectedItem());
 
-            Add.saveCounter = getMaxID() + 1;
+            //getHighestID(maxID -> Add.saveCounter = maxID + 1);
 
             Termin termin = new Termin(terminName_new, beschreibung_new, prio_new, tag_new,
-                    String.valueOf(Add.saveCounter));
+                    Add.saveCounter);
 
 
             saveAppointment(LoginScreen.email, terminName_new,
-                    beschreibung_new, prio_new, tag_new, Integer.parseInt(termin.getId()));
+                    beschreibung_new, prio_new, tag_new, termin.getId());
 
             if (tag_new != terminTag) {
                 // zur richtigen liste zuordnen
@@ -131,8 +131,8 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
 
     public void deleteCurrentTermin() {
         for (Termin termin : getSpecificTerminliste(terminTag)) {
-            if (Integer.parseInt(termin.getId()) == terminId) {
-                deleteAppointment(termin.getId(), LoginScreen.email);
+            if (termin.getId() == terminId) {
+                //deleteAppointment(termin.getId(), LoginScreen.email);
                 getSpecificTerminliste(terminTag).remove(termin);
                 break;
             }

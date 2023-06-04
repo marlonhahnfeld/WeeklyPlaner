@@ -1,6 +1,6 @@
 package datenbank_listener;
 
-public interface LoginCallback {
+public interface LoginListener {
     void onLoginSuccess();
 
     void onLoginFailure(String message);
