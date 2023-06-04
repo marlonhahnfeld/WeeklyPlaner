@@ -21,7 +21,8 @@ import java.util.Comparator;
 import datenbank_listener.MaxIDListener;
 import items.Termin;
 
-public class Add extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class Add extends AppCompatActivity implements View.OnClickListener,
+        AdapterView.OnItemSelectedListener {
 
     private ImageButton backButton;
     private Button saveButton;
@@ -49,9 +50,11 @@ public class Add extends AppCompatActivity implements View.OnClickListener, Adap
         daySpinner.setOnItemSelectedListener(this);
 
         prioListSpinner = findViewById(R.id.PrioListe);
-        ArrayAdapter<CharSequence> prioListSpinnerAdapter = ArrayAdapter.createFromResource(this,
-                R.array.numbers, android.R.layout.simple_spinner_item);
-        prioListSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<CharSequence> prioListSpinnerAdapter =
+                ArrayAdapter.createFromResource(this, R.array.numbers,
+                        android.R.layout.simple_spinner_item);
+        prioListSpinnerAdapter
+                .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         prioListSpinner.setAdapter(prioListSpinnerAdapter);
         prioListSpinner.setOnItemSelectedListener(this);
     }
@@ -80,20 +83,18 @@ public class Add extends AppCompatActivity implements View.OnClickListener, Adap
             String prio = String.valueOf(prioListSpinner.getSelectedItem());
             String tag = String.valueOf(daySpinner.getSelectedItem());
 
-
             getHighestID(LoginScreen.email, maxID -> {
                 int saveCounter = maxID + 1;
                 Termin termin = new Termin(terminName, beschreibung, prio, tag, saveCounter);
+                saveAppointment(LoginScreen.email, terminName, beschreibung, prio, tag,
+                        termin.getId());
 
-                saveAppointment(LoginScreen.email, terminName, beschreibung, prio, tag, termin.getId());
                 getSpecificTerminliste(tag).add(termin);
                 getSpecificTerminliste(tag).sort(Comparator.comparingInt(Termin::getId));
 
                 SpecificDay.refresh_needed = true;
                 onBackPressed();
             });
-
-
         }
     }
 }

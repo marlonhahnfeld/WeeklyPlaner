@@ -56,8 +56,10 @@ public class Week extends AppCompatActivity implements View.OnClickListener {
     }
 
     private void highlightTodayButton() {
-        int[] buttonIds = {R.id.Montag, R.id.Dienstag, R.id.Mittwoch, R.id.Donnerstag, R.id.Freitag, R.id.Samstag, R.id.Sonntag};
-        Button[] buttons = {button_montag, button_dienstag, button_mittwoch, button_donnerstag, button_freitag, button_samstag, button_sonntag};
+        int[] buttonIds = {R.id.Montag, R.id.Dienstag, R.id.Mittwoch, R.id.Donnerstag,
+                R.id.Freitag, R.id.Samstag, R.id.Sonntag};
+        Button[] buttons = {button_montag, button_dienstag, button_mittwoch,
+                button_donnerstag, button_freitag, button_samstag, button_sonntag};
 
         for (int i = 0; i < buttonIds.length; i++) {
             if (dayOfWeek == (Calendar.MONDAY + i)) {
@@ -72,7 +74,9 @@ public class Week extends AppCompatActivity implements View.OnClickListener {
         Intent intent;
         int id = v.getId();
 
-        if (id == R.id.Montag || id == R.id.Dienstag || id == R.id.Mittwoch || id == R.id.Donnerstag || id == R.id.Freitag || id == R.id.Samstag || id == R.id.Sonntag) {
+        if (id == R.id.Montag || id == R.id.Dienstag || id == R.id.Mittwoch ||
+                id == R.id.Donnerstag || id == R.id.Freitag || id == R.id.Samstag ||
+                id == R.id.Sonntag) {
             intent = new Intent(this, SpecificDay.class);
             Button clickedButton = findViewById(id);
             intent.putExtra("button_text", clickedButton.getText());

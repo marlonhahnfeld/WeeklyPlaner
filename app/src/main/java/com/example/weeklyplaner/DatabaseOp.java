@@ -116,10 +116,10 @@ public class DatabaseOp {
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             Long maxIdLong = document.getLong(FIELD_ID);
                             int currentID = (maxIdLong != null) ? maxIdLong.intValue() : 0;
-                            Log.d(TAG, "Current ID: " + currentID + ", Highest ID: " + highestID);
+                            Log.d(TAG, "Current ID: " + currentID + ", Highest ID: " +
+                                    highestID);
                             highestID = Math.max(highestID, currentID);
                         }
-
                         listener.onMaxIDReceived(highestID);
                     } else {
                         Log.e(TAG, "Error getting appointments: " + task.getException());

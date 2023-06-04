@@ -129,7 +129,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         TerminSorter.sortAscendingByPriority(terminliste);
 
         for (Termin termin : terminliste) {
-            Log.d("SortAscending", "Termin: " + termin.getTerminname() + " Prio: " + termin.getPrio());
+            Log.d("SortAscending", "Termin: " + termin.getTerminname() + " Prio: " +
+                    termin.getPrio());
         }
 
         adapter.setTerminliste(terminliste);
@@ -141,7 +142,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         TerminSorter.sortDescendingByPriority(terminliste);
 
         for (Termin termin : terminliste) {
-            Log.d("SortDescending", "Termin: " + termin.getTerminname() + " Prio: " + termin.getPrio());
+            Log.d("SortDescending", "Termin: " + termin.getTerminname() + " Prio: " +
+                    termin.getPrio());
         }
 
         adapter.setTerminliste(terminliste);
