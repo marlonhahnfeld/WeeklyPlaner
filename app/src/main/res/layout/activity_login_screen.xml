@@ -9,50 +9,62 @@
     tools:context=".LoginScreen">
 
     <TextView
+        android:id="@+id/willkommenTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/willkommen"
+        android:textAlignment="center"
+        android:textSize="35sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.478"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.342" />
+
+    <TextView
         android:id="@+id/text_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/passwort"
         android:textSize="28sp"
-        app:layout_constraintBottom_toTopOf="@+id/editTextPassword"
+        app:drawableStartCompat="@drawable/ic_lock_dark"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.345"
+        app:layout_constraintHorizontal_bias="0.373"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.601" />
 
     <EditText
         android:id="@+id/editTextEmail"
         android:layout_width="229dp"
         android:layout_height="48dp"
-        android:layout_marginStart="100dp"
-        android:layout_marginEnd="51dp"
-        android:layout_marginBottom="13dp"
         android:autofillHints="example@hotmail.de"
         android:ems="10"
         android:hint="@string/exampleEmail"
         android:inputType="textEmailAddress"
-        app:layout_constraintBottom_toTopOf="@+id/text_password"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.032"
+        app:layout_constraintHorizontal_bias="0.549"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.931"
+        app:layout_constraintVertical_bias="0.499"
         tools:ignore="TextContrastCheck" />
 
     <TextView
         android:id="@+id/text_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="312dp"
-        android:layout_marginBottom="261dp"
         android:text="@string/email"
         android:textSize="28sp"
+        app:drawableStartCompat="@drawable/ic_email_dark"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.302"
+        app:layout_constraintHorizontal_bias="0.315"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.434" />
 
     <EditText
         android:id="@+id/editTextPassword"
@@ -67,7 +79,7 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.68"
+        app:layout_constraintVertical_bias="0.666"
         tools:ignore="TextContrastCheck,DuplicateSpeakableTextCheck" />
 
     <Button
@@ -107,13 +119,13 @@
         android:id="@+id/logoView"
         android:layout_width="188dp"
         android:layout_height="191dp"
+        android:contentDescription="@string/logo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.107"
-        app:srcCompat="@drawable/microsoftteams_image"
-        android:contentDescription="@string/logo" />
+        app:layout_constraintVertical_bias="0.083"
+        app:srcCompat="@drawable/microsoftteams_image" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
