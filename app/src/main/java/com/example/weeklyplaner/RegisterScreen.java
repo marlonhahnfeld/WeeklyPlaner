@@ -11,7 +11,9 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.Html;
+import android.text.TextWatcher;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -47,12 +49,30 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
         backButton = findViewById(R.id.backToLoginScreenButton);
         registerButton = findViewById(R.id.registerButton);
 
+        editTextPassword2.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!editTextPassword.getText().toString()
+                        .equals(editTextPassword2.getText().toString())) {
+                    editTextPassword2.setTextColor(Color.RED);
+                } else {
+                    editTextPassword2.setTextColor(Color.GREEN);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
         backButton.setOnClickListener(this);
         registerButton.setOnClickListener(this);
-
-        setEditTextUnderlineColor(editTextEmail, Color.BLUE);
-        setEditTextUnderlineColor(editTextPassword, Color.BLUE);
-        setEditTextUnderlineColor(editTextPassword2, Color.BLUE);
     }
 
     @Override
@@ -63,9 +83,6 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
         editTextEmail.clearFocus();
         editTextPassword.clearFocus();
         editTextPassword2.clearFocus();
-        editTextEmail.getBackground().setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_IN);
-        editTextPassword.getBackground().setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_IN);
-        editTextPassword2.getBackground().setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_IN);
 
         if (id == R.id.backToLoginScreenButton) {
             onBackPressed();

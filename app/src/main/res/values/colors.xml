@@ -9,6 +9,6 @@
 
     <color name="red">#FFFF0000</color>
     <color name="blue">#0022FF</color>
-<!--    <color name="blue">#0004FF</color>-->
+    <color name="light_purple">#FCF1FF</color>
 
 </resources>

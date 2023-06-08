@@ -63,12 +63,6 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         animateNonVisible2Visible(registerButton, dauer);
         animateNonVisible2Visible(loginButton, dauer);
 
-        setEditTextUnderlineColor(editTextEmail, Color.BLUE);
-        setEditTextUnderlineColor(editTextPassword, Color.BLUE);
-
-        editTextEmail.getBackground().setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_IN);
-        editTextPassword.getBackground().setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_IN);
-
         databaseOp = new DatabaseOp();
     }
 
@@ -77,8 +71,6 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         int id = v.getId();
         editTextEmail.clearFocus();
         editTextPassword.clearFocus();
-        editTextEmail.getBackground().setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_IN);
-        editTextPassword.getBackground().setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_IN);
 
         if (id == R.id.registerTextButton) {
             Intent intent = new Intent(this, RegisterScreen.class);

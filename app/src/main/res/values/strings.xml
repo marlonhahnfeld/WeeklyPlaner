@@ -64,4 +64,7 @@
     <string name="Delete">Delete</string>
     <string name="willkommen">Herzlich Willkommen</string>
     <string name="weeklyPlaner">WeeklyPlaner</string>
+    <string name="emailAngeben">Bitte eine gültige Email Adresse eingeben</string>
+    <string name="passwordEingeben">Bitte ein gültiges Passwort eingeben</string>
+    <string name="counterText">0/8</string>
 </resources>
