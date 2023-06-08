@@ -3,12 +3,9 @@ package com.example.weeklyplaner;
 import static com.example.weeklyplaner.DatabaseOp.doesUserExist;
 import static com.example.weeklyplaner.DatabaseOp.registerNewUser;
 
-import static items.UI_Items.setEditTextUnderlineColor;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.text.Editable;
