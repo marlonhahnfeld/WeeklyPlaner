@@ -8,5 +8,7 @@
     <color name="gray_Termin">#1C1F28</color>
 
     <color name="red">#FFFF0000</color>
+    <color name="blue">#0022FF</color>
+<!--    <color name="blue">#0004FF</color>-->
 
 </resources>

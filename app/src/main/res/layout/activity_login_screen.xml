@@ -9,10 +9,11 @@
     tools:context=".LoginScreen">
 
     <TextView
-        android:id="@+id/willkommenTextView"
+        android:id="@+id/weeklyPlaner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/willkommen"
+        android:text="@string/weeklyPlaner"
+        android:fontFamily="sans-serif-medium"
         android:textAlignment="center"
         android:textSize="35sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -106,6 +107,7 @@
         android:layout_marginTop="73dp"
         android:layout_marginEnd="38dp"
         android:clickable="true"
+        android:textColor="@color/blue"
         android:text="@string/registriereDichJetzt"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

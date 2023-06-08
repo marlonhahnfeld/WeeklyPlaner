@@ -3,11 +3,18 @@ package com.example.weeklyplaner;
 import static com.example.weeklyplaner.DatabaseOp.doesUserExist;
 import static com.example.weeklyplaner.DatabaseOp.registerNewUser;
 
+import static items.UI_Items.setEditTextUnderlineColor;
+
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.text.Html;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -43,6 +50,10 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
         editTextPassword2 = findViewById(R.id.editTextPassword2);
+
+        setEditTextUnderlineColor(editTextEmail, Color.BLUE);
+        setEditTextUnderlineColor(editTextPassword, Color.BLUE);
+        setEditTextUnderlineColor(editTextPassword2, Color.BLUE);
     }
 
     @Override
@@ -50,9 +61,15 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
         Intent intent;
         int id = v.getId();
 
+        editTextEmail.clearFocus();
+        editTextPassword.clearFocus();
+        editTextPassword2.clearFocus();
+        editTextEmail.getBackground().setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_IN);
+        editTextPassword.getBackground().setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_IN);
+        editTextPassword2.getBackground().setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_IN);
+
         if (id == R.id.backToLoginScreenButton) {
-            intent = new Intent(this, LoginScreen.class);
-            startActivity(intent);
+            onBackPressed();
         } else if (id == R.id.registerButton) {
             email = editTextEmail.getText().toString();
             password = editTextPassword.getText().toString();
@@ -87,6 +104,24 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
 
             }
         }
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            View v = getCurrentFocus();
+            if (v instanceof EditText) {
+                Rect outRect = new Rect();
+                v.getGlobalVisibleRect(outRect);
+                if (!outRect.contains((int) event.getRawX(), (int) event.getRawY())) {
+                    v.clearFocus();
+                    InputMethodManager imm =
+                            (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+        }
+        return super.onTouchEvent(event);
     }
 
     /**
