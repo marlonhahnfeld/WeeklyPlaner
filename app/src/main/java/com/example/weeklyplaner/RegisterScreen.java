@@ -27,7 +27,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class RegisterScreen extends AppCompatActivity implements View.OnClickListener {
-    private ImageButton backToLoginScreenButton;
+    private ImageButton backButton;
     private Button registerButton;
     private EditText editTextEmail;
     private EditText editTextPassword;
@@ -41,15 +41,14 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_screen);
 
-        backToLoginScreenButton = findViewById(R.id.backToLoginScreenButton);
-        backToLoginScreenButton.setOnClickListener(this);
-
-        registerButton = findViewById(R.id.registerButton);
-        registerButton.setOnClickListener(this);
-
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
         editTextPassword2 = findViewById(R.id.editTextPassword2);
+        backButton = findViewById(R.id.backToLoginScreenButton);
+        registerButton = findViewById(R.id.registerButton);
+
+        backButton.setOnClickListener(this);
+        registerButton.setOnClickListener(this);
 
         setEditTextUnderlineColor(editTextEmail, Color.BLUE);
         setEditTextUnderlineColor(editTextPassword, Color.BLUE);
