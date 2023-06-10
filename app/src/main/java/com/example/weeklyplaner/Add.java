@@ -16,9 +16,13 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.Comparator;
+
+import datenbank_listener.MaxIDListener;
 import items.Termin;
 
-public class Add extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class Add extends AppCompatActivity implements View.OnClickListener,
+        AdapterView.OnItemSelectedListener {
 
     private ImageButton backButton;
     private Button saveButton;
@@ -33,12 +37,6 @@ public class Add extends AppCompatActivity implements View.OnClickListener, Adap
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add);
 
-        createDatabaseConnection();
-
-        if (isConnected()) {
-            System.out.println("Verbunden -> Add Activity");
-        }
-
         backButton = findViewById(R.id.imageButton);
         backButton.setOnClickListener(this);
         saveButton = findViewById(R.id.SaveButton);
@@ -52,9 +50,11 @@ public class Add extends AppCompatActivity implements View.OnClickListener, Adap
         daySpinner.setOnItemSelectedListener(this);
 
         prioListSpinner = findViewById(R.id.PrioListe);
-        ArrayAdapter<CharSequence> prioListSpinnerAdapter = ArrayAdapter.createFromResource(this,
-                R.array.numbers, android.R.layout.simple_spinner_item);
-        prioListSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<CharSequence> prioListSpinnerAdapter =
+                ArrayAdapter.createFromResource(this, R.array.numbers,
+                        android.R.layout.simple_spinner_item);
+        prioListSpinnerAdapter
+                .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         prioListSpinner.setAdapter(prioListSpinnerAdapter);
         prioListSpinner.setOnItemSelectedListener(this);
     }
@@ -83,28 +83,18 @@ public class Add extends AppCompatActivity implements View.OnClickListener, Adap
             String prio = String.valueOf(prioListSpinner.getSelectedItem());
             String tag = String.valueOf(daySpinner.getSelectedItem());
 
+            getHighestID(LoginScreen.email, maxID -> {
+                int saveCounter = maxID + 1;
+                Termin termin = new Termin(terminName, beschreibung, prio, tag, saveCounter);
+                saveAppointment(LoginScreen.email, terminName, beschreibung, prio, tag,
+                        termin.getId());
 
-            if (getSpecificTerminliste("Montag").size() == 0 &&
-                    getSpecificTerminliste("Dienstag").size() == 0 &&
-                    getSpecificTerminliste("Mittwoch").size() == 0 &&
-                    getSpecificTerminliste("Donnerstag").size() == 0 &&
-                    getSpecificTerminliste("Freitag").size() == 0 &&
-                    getSpecificTerminliste("Samstag").size() == 0 &&
-                    getSpecificTerminliste("Sonntag").size() == 0) {
-                saveCounter = 0;
-            } else {
-                saveCounter = getMaxID() + 1;
-            }
+                getSpecificTerminliste(tag).add(termin);
+                getSpecificTerminliste(tag).sort(Comparator.comparingInt(Termin::getId));
 
-            Termin termin = new Termin(terminName, beschreibung, prio, tag, saveCounter);
-
-
-            saveAppointment(termin.getId(), LoginScreen.email, terminName, beschreibung, prio, tag);
-            getSpecificTerminliste(tag).add(termin);
-
-            closeDatabaseConnection();
-            SpecificDay.refresh_needed = true;
-            onBackPressed();
+                SpecificDay.refresh_needed = true;
+                onBackPressed();
+            });
         }
     }
 }

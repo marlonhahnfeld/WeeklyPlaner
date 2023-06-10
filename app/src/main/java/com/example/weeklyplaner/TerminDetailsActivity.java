@@ -44,7 +44,6 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_termin_details_screen);
 
-        createDatabaseConnection();
         backButton = findViewById(R.id.imageButton);
         backButton.setOnClickListener(this);
         editButton = findViewById(R.id.EditButton_details);
@@ -97,7 +96,6 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
     public void onClick(View v) {
         int id = v.getId();
         if (id == R.id.imageButton) {
-            closeDatabaseConnection();
             onBackPressed();
         } else if (id == R.id.EditButton_details) {
             deleteCurrentTermin();
@@ -108,14 +106,14 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
             String prio_new = String.valueOf(terminPrioSpinner.getSelectedItem());
             String tag_new = String.valueOf(terminTagSpinner.getSelectedItem());
 
-            Add.saveCounter = getMaxID() + 1;
+            //getHighestID(maxID -> Add.saveCounter = maxID + 1);
 
             Termin termin = new Termin(terminName_new, beschreibung_new, prio_new, tag_new,
                     Add.saveCounter);
 
 
-            saveAppointment(termin.getId(), LoginScreen.email, terminName_new,
-                    beschreibung_new, prio_new, tag_new);
+            saveAppointment(LoginScreen.email, terminName_new,
+                    beschreibung_new, prio_new, tag_new, termin.getId());
 
             if (tag_new != terminTag) {
                 // zur richtigen liste zuordnen
@@ -123,12 +121,10 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
             } else {
                 getSpecificTerminliste(terminTag).add(termin);
             }
-            closeDatabaseConnection();
             onBackPressed();
             // TODO NEXT RELEASE: POPUP ARE YOU SURE
         } else if (id == R.id.DeleteButton_details) {
             deleteCurrentTermin();
-            closeDatabaseConnection();
             onBackPressed();
         }
     }
@@ -136,8 +132,7 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
     public void deleteCurrentTermin() {
         for (Termin termin : getSpecificTerminliste(terminTag)) {
             if (termin.getId() == terminId) {
-                deleteAppointment(termin.getId(), LoginScreen.email);
-
+                //deleteAppointment(termin.getId(), LoginScreen.email);
                 getSpecificTerminliste(terminTag).remove(termin);
                 break;
             }

@@ -1,16 +1,19 @@
 package com.example.weeklyplaner;
 
-import static com.example.weeklyplaner.DatabaseOp.*;
+import static com.example.weeklyplaner.DatabaseOp.doesUserExist;
+import static com.example.weeklyplaner.DatabaseOp.registerNewUser;
 
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.regex.Matcher;
@@ -40,10 +43,6 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
         editTextPassword2 = findViewById(R.id.editTextPassword2);
-
-        if (isConnected()) {
-            System.out.println("Verbunden Registrieren Screen");
-        }
     }
 
     @Override
@@ -59,9 +58,33 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
             password = editTextPassword.getText().toString();
             password2 = editTextPassword2.getText().toString();
             if (checkInput(email, password)) {
-                registerNewUser(email, password);
-                intent = new Intent(this, LoginScreen.class);
-                startActivity(intent);
+                doesUserExist(email, exists -> {
+                    if (exists) {
+                        AlertDialog.Builder builder =
+                                new AlertDialog.Builder(RegisterScreen.this);
+                        builder.setTitle("Achtung");
+                        builder.setMessage("E-Mail bereits vergeben :(");
+                        builder.setPositiveButton("OK", (dialog, which) -> {
+                            dialog.dismiss();
+                        });
+                        builder.show();
+                    } else {
+                        registerNewUser(email, password);
+                        AlertDialog.Builder builder =
+                                new AlertDialog.Builder(RegisterScreen.this);
+                        builder.setTitle("\uD83C\uDF89 Registrierung erfolgreich \uD83C\uDF89");
+                        builder.setMessage("Herzlichen Glückwunsch! " +
+                                "Sie wurden erfolgreich registriert.");
+                        builder.setPositiveButton("OK", (dialog, which) -> {
+                            final Intent intent1 = new Intent(RegisterScreen.this,
+                                    LoginScreen.class);
+                            startActivity(intent1);
+                            dialog.dismiss();
+                        });
+                        builder.show();
+                    }
+                });
+
             }
         }
     }
@@ -88,6 +111,20 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
         Matcher emailMatcher = emailPattern.matcher(email);
         boolean emailMatchFound = emailMatcher.find();
         boolean passwordsMatch = password.equals(password2);
+
+        if (!emailMatchFound) {
+            String emailFormat = "1) Email darf <b>Groß-, Kleinbuchstaben & Zahlen</b> " +
+                    "enthalten!<br><br>" +
+                    "2) Email darf <b>keine</b> Sonderzeichen enthalten!<br><br>" +
+                    "3) Email muss ein <b>@-Zeichen</b> enthalten!<br><br>" +
+                    "4) Email muss mit einem <b>abschließenden Punkt</b> enden!";
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Falsche E-Mail Formatierung");
+            builder.setMessage(Html.fromHtml(emailFormat, Html.FROM_HTML_MODE_LEGACY));
+            builder.setPositiveButton("OK", (dialog, which) -> dialog.dismiss()).show();
+        }
+
 
         if (password.length() <= 8) {
             minLetters.setTextColor(Color.RED);
