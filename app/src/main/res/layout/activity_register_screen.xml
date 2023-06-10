@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/RegisterActivityLayout"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:background="@color/light_purple"
     tools:context=".RegisterScreen">
@@ -85,7 +85,7 @@
         android:layout_width="260dp"
         android:layout_height="45dp"
         android:layout_marginStart="75dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="76dp"
         android:ems="10"
         android:hint="@string/exampleEmail"
@@ -102,7 +102,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="134dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="134dp"
         android:text="@string/passwort"
         android:textSize="28sp"
@@ -134,70 +134,18 @@
         android:layout_width="260dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="75dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="76dp"
-        android:layout_marginBottom="17dp"
+        android:layout_marginBottom="52dp"
         android:ems="10"
         android:hint="@string/confirmPasswort"
         android:inputType="textPassword"
-        app:layout_constraintBottom_toTopOf="@+id/min8SignsLongTextView"
+        app:layout_constraintBottom_toTopOf="@+id/registerButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextPassword"
         tools:ignore="Autofill,TouchTargetSizeCheck,TextContrastCheck" />
-
-    <TextView
-        android:id="@+id/min8SignsLongTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="84dp"
-        android:text="@string/min8SignsLong"
-        app:layout_constraintBottom_toTopOf="@+id/min1UpperAndLowerLetterTextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/min1SignTextView"
-        app:layout_constraintTop_toBottomOf="@+id/editTextPassword2" />
-
-    <TextView
-        android:id="@+id/min1SignTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="37dp"
-        android:layout_marginTop="17dp"
-        android:layout_marginEnd="38dp"
-        android:layout_marginBottom="9dp"
-        android:text="@string/min1Sign"
-        app:layout_constraintBottom_toTopOf="@+id/min1UpperAndLowerLetterTextView"
-        app:layout_constraintEnd_toStartOf="@+id/min8SignsLongTextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextPassword2" />
-
-    <TextView
-        android:id="@+id/min1UpperAndLowerLetterTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="20dp"
-        android:text="@string/min1UpperLower"
-        app:layout_constraintBottom_toTopOf="@+id/registerButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/min1FigureTextView"
-        app:layout_constraintTop_toBottomOf="@+id/min8SignsLongTextView" />
-
-    <TextView
-        android:id="@+id/min1FigureTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="37dp"
-        android:layout_marginTop="9dp"
-        android:layout_marginEnd="18dp"
-        android:layout_marginBottom="20dp"
-        android:text="@string/min1Figure"
-        app:layout_constraintBottom_toTopOf="@+id/registerButton"
-        app:layout_constraintEnd_toStartOf="@+id/min1UpperAndLowerLetterTextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/min1SignTextView" />
 
     <Button
         android:id="@+id/registerButton"
@@ -210,7 +158,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/min1UpperAndLowerLetterTextView"
+        app:layout_constraintTop_toBottomOf="@+id/editTextPassword2"
         tools:ignore="TouchTargetSizeCheck" />
 
     <ImageView
@@ -219,13 +167,29 @@
         android:layout_height="180dp"
         android:layout_marginStart="115dp"
         android:layout_marginTop="30dp"
-        android:layout_marginEnd="115dp"
         android:contentDescription="@string/logo"
         app:layout_constraintBottom_toTopOf="@+id/textViewRegister"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/helpPasswordButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/weeklyplaner" />
+
+    <ImageButton
+        android:id="@+id/helpPasswordButton"
+        android:layout_width="35dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="63dp"
+        android:layout_marginEnd="50dp"
+        android:background="@color/light_purple"
+        android:contentDescription="@string/helpPasswordView"
+        android:minWidth="48dp"
+        android:minHeight="48dp"
+        app:layout_constraintBottom_toTopOf="@+id/editTextPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textValidPassword"
+        app:layout_constraintTop_toBottomOf="@+id/editTextEmail"
+        app:srcCompat="@drawable/ic_helpbox"
+        tools:ignore="TouchTargetSizeCheck" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

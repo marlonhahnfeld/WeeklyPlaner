@@ -17,7 +17,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,6 +26,7 @@ import java.util.regex.Pattern;
 
 public class RegisterScreen extends AppCompatActivity implements View.OnClickListener {
     private ImageButton backButton;
+    private ImageButton helpPasswordButton;
     private Button registerButton;
     private EditText editTextEmail;
     private EditText editTextPassword;
@@ -45,6 +45,7 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
         editTextPassword2 = findViewById(R.id.editTextPassword2);
         backButton = findViewById(R.id.backToLoginScreenButton);
         registerButton = findViewById(R.id.registerButton);
+        helpPasswordButton = findViewById(R.id.helpPasswordButton);
 
         editTextPassword2.addTextChangedListener(new TextWatcher() {
             @Override
@@ -69,12 +70,12 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
         });
 
         backButton.setOnClickListener(this);
+        helpPasswordButton.setOnClickListener(this);
         registerButton.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-        Intent intent;
         int id = v.getId();
 
         editTextEmail.clearFocus();
@@ -83,6 +84,18 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
 
         if (id == R.id.backToLoginScreenButton) {
             onBackPressed();
+        } else if (id == R.id.helpPasswordButton) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(RegisterScreen.this);
+            builder.setTitle("Hilfestellung Passwort");
+            builder.setMessage("Passwort muss... \n" +
+                    "1) mind. 8 Zeichen lang sein \n" +
+                    "2) mind. einen Groß- und Kleinbuchstaben enthalten \n" +
+                    "3) mind. eine Zahl enthalten \n" +
+                    "4) mind. ein Sonderzeichen enthalten");
+            builder.setPositiveButton("Verstanden", ((dialog, which) -> {
+                dialog.dismiss();
+            }));
+            builder.show();
         } else if (id == R.id.registerButton) {
             email = editTextEmail.getText().toString();
             password = editTextPassword.getText().toString();
@@ -145,11 +158,6 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
      * @return true, wenn alle Anforderungen eingehalten wurden -> false, wenn nicht
      */
     public boolean checkInput(String email, String password) {
-        TextView minLetters = findViewById(R.id.min8SignsLongTextView);
-        TextView min1Sign = findViewById(R.id.min1SignTextView);
-        TextView min1UpperAndLower = findViewById(R.id.min1UpperAndLowerLetterTextView);
-        TextView min1Figure = findViewById(R.id.min1FigureTextView);
-
         boolean length = false;
         boolean containsDigit = false;
         boolean containsSign = false;
@@ -174,45 +182,8 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
         }
 
 
-        if (password.length() <= 8) {
-            minLetters.setTextColor(Color.RED);
-        } else {
-            minLetters.setTextColor(Color.GREEN);
+        if (password.length() >= 8) {
             length = true;
-        }
-
-        for (char c : password.toCharArray()) {
-            if (Character.isDigit(c)) {
-                containsDigit = true;
-                break;
-            }
-        }
-        if (containsDigit) {
-            min1Figure.setTextColor(Color.GREEN);
-        } else {
-            min1Figure.setTextColor(Color.RED);
-        }
-
-        for (char c : password.toCharArray()) {
-            if (!Character.isLetter(c)) {
-                if (Character.isDigit(c)) {
-                    continue;
-                }
-                containsSign = true;
-                break;
-            }
-        }
-        if (containsSign) {
-            min1Sign.setTextColor(Color.GREEN);
-        } else {
-            min1Sign.setTextColor(Color.RED);
-        }
-
-        if (containsLowerCaseLetter(password) && containsUpperCaseLetter(password)) {
-            containsUpperAndLower = true;
-            min1UpperAndLower.setTextColor(Color.GREEN);
-        } else {
-            min1UpperAndLower.setTextColor(Color.RED);
         }
 
         if (!passwordsMatch) {
@@ -223,8 +194,7 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
             editTextPassword2.setTextColor(Color.BLACK);
         }
 
-        return emailMatchFound && length && containsDigit && containsSign &&
-                containsUpperAndLower && passwordsMatch;
+        return emailMatchFound && passwordsMatch && length;
     }
 
     /**

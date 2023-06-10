@@ -67,4 +67,5 @@
     <string name="emailAngeben">Bitte eine gültige Email Adresse eingeben</string>
     <string name="passwordEingeben">Bitte ein gültiges Passwort eingeben</string>
     <string name="counterText">0/8</string>
+    <string name="helpPasswordView">Hinweise für die Erstellung eines Passworts</string>
 </resources>

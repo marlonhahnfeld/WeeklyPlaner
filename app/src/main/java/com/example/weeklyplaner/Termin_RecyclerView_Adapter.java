@@ -113,7 +113,7 @@ public class Termin_RecyclerView_Adapter extends RecyclerView.Adapter<Termin_Rec
             intent.putExtra("termin_name", termin.getTerminname());
             intent.putExtra("termin_beschreibung", termin.getBeschreibung());
             intent.putExtra("termin_prio", termin.getPrio());
-            intent.putExtra("termin_tag", termin.getTag());
+            intent.putExtra("termin_tag", termin.getDate());
             intent.putExtra("termin_id", termin.getId());
             context.startActivity(intent);
         }

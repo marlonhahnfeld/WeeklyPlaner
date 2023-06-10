@@ -7,15 +7,15 @@ public class Termin {
     private String beschreibung;
     private String prio;
     private int id;
-    private LocalDate tag;
+    private LocalDate date;
     private boolean marked;
 
-    public Termin(String terminname, String beschreibung, String prio, LocalDate tag, int id) {
+    public Termin(String terminname, String beschreibung,String prio, LocalDate tag, int id) {
         this.terminname = terminname;
         this.prio = prio;
         this.id = id;
         this.beschreibung = beschreibung;
-        this.tag = tag;
+        this.date = tag;
     }
 
     public String getTerminname() {
@@ -50,12 +50,12 @@ public class Termin {
         this.id = id;
     }
 
-    public LocalDate getTag() {
-        return tag;
+    public LocalDate getDate() {
+        return date;
     }
 
-    public void setTag(LocalDate tag) {
-        this.tag = tag;
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
 
@@ -75,7 +75,7 @@ public class Termin {
                 ", beschreibung='" + beschreibung + '\'' +
                 ", prio='" + prio + '\'' +
                 ", id=" + id +
-                ", tag='" + tag + '\'' +
+                ", tag='" + date + '\'' +
                 '}';
     }
 }

@@ -17,6 +17,7 @@ import java.time.ZoneOffset;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import datenbank_listener.EmailExistsListener;
 import datenbank_listener.LoadAppointmentsListener;
@@ -139,8 +140,10 @@ public class DatabaseOp {
                         for (DocumentSnapshot document : task.getResult()) {
                             long idLong = document.getLong(FIELD_ID);
                             int id = (int) idLong;
-                            com.google.firebase.Timestamp timestamp = document.getTimestamp(FIELD_DATE);
-                            LocalDate date = timestamp.toDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                            com.google.firebase.Timestamp timestamp =
+                                    document.getTimestamp(FIELD_DATE);
+                            LocalDate date = timestamp.toDate().toInstant()
+                                    .atZone(ZoneId.systemDefault()).toLocalDate();
                             Termin termin = new Termin(
                                     document.getString(FIELD_TERMIN_NAME),
                                     document.getString(FIELD_BESCHREIBUNG),
@@ -148,8 +151,10 @@ public class DatabaseOp {
                                     date,
                                     id
                             );
-                            getSpecificTerminliste(date.getDayOfWeek().getValue()).add(termin);
-                            getSpecificTerminliste(date.getDayOfWeek().getValue())
+                            Objects.requireNonNull(getSpecificTerminliste(date.getDayOfWeek()
+                                    .getValue())).add(termin);
+                            Objects.requireNonNull(getSpecificTerminliste(date.getDayOfWeek()
+                                            .getValue()))
                                     .sort(Comparator.comparingInt(Termin::getId));
                             Log.d(TAG, "Loaded appointment: " + termin);
                         }

@@ -87,6 +87,7 @@ public class Add extends AppCompatActivity implements View.OnClickListener, Adap
         if (id == R.id.imageButton) {
             onBackPressed();
         } else if (id == R.id.SaveButton) {
+            //TODO: Termin-Name, und Date dürfen nicht Null sein
             EditText terminNameEditText = findViewById(R.id.Terminname_edit_text);
             String terminName = terminNameEditText.getText().toString();
             EditText beschreibungEditText = findViewById(R.id.Beschreibung_edit_text);
