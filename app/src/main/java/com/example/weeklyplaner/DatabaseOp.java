@@ -10,6 +10,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,9 +33,8 @@ public class DatabaseOp {
     private static final String FIELD_TERMIN_NAME = "terminName";
     private static final String FIELD_BESCHREIBUNG = "description";
     private static final String FIELD_PRIO = "prio";
-    private static final String FIELD_DAY = "day";
+    private static final String FIELD_DATE = "date"; // Updated field name
     private static final String FIELD_ID = "id";
-
     private static FirebaseFirestore firebaseDB;
 
     public DatabaseOp() {
@@ -83,8 +86,7 @@ public class DatabaseOp {
     }
 
     public static void saveAppointment(String email, String terminName, String description,
-                                       String prio, String day, int id) {
-
+                                       String prio, LocalDate date, int id) {
         CollectionReference appointmentsCollection = firebaseDB.collection(COLLECTION_USERS)
                 .document(email).collection(COLLECTION_TERMINE);
 
@@ -92,7 +94,7 @@ public class DatabaseOp {
         appointment.put(FIELD_TERMIN_NAME, terminName);
         appointment.put(FIELD_BESCHREIBUNG, description);
         appointment.put(FIELD_PRIO, prio);
-        appointment.put(FIELD_DAY, day);
+        appointment.put(FIELD_DATE, Timestamp.from(date.atStartOfDay(ZoneOffset.UTC).toInstant()));
         appointment.put(FIELD_ID, id);
 
         appointmentsCollection.add(appointment)
@@ -128,7 +130,6 @@ public class DatabaseOp {
                 });
     }
 
-
     public static void loadAppointments(String email, LoadAppointmentsListener listener) {
         CollectionReference appointmentsCollection = firebaseDB.collection(COLLECTION_USERS)
                 .document(email).collection(COLLECTION_TERMINE);
@@ -138,15 +139,17 @@ public class DatabaseOp {
                         for (DocumentSnapshot document : task.getResult()) {
                             long idLong = document.getLong(FIELD_ID);
                             int id = (int) idLong;
+                            com.google.firebase.Timestamp timestamp = document.getTimestamp(FIELD_DATE);
+                            LocalDate date = timestamp.toDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                             Termin termin = new Termin(
                                     document.getString(FIELD_TERMIN_NAME),
                                     document.getString(FIELD_BESCHREIBUNG),
                                     document.getString(FIELD_PRIO),
-                                    document.getString(FIELD_DAY),
+                                    date,
                                     id
                             );
-                            getSpecificTerminliste(document.getString(FIELD_DAY)).add(termin);
-                            getSpecificTerminliste(document.getString(FIELD_DAY))
+                            getSpecificTerminliste(date.getDayOfWeek().getValue()).add(termin);
+                            getSpecificTerminliste(date.getDayOfWeek().getValue())
                                     .sort(Comparator.comparingInt(Termin::getId));
                             Log.d(TAG, "Loaded appointment: " + termin);
                         }
@@ -157,19 +160,4 @@ public class DatabaseOp {
                     }
                 });
     }
-
-    // TODO: Methode überarbeiten, sodass Termin richtige entfernt wird
-    public static void deleteAppointment(String email, int appointmentId) {
-//        CollectionReference appointmentsCollection = firebaseDB.collection(COLLECTION_USERS)
-//                .document(email).collection(COLLECTION_TERMINE);
-//        appointmentsCollection.document(appointmentId).delete()
-//                .addOnCompleteListener(task -> {
-//                    if (task.isSuccessful()) {
-//                        Log.d(TAG, "Appointment deleted successfully");
-//                    } else {
-//                        Log.e(TAG, "Error deleting appointment: " + task.getException());
-//                    }
-//                });
-    }
-
 }

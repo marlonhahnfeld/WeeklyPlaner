@@ -1,14 +1,16 @@
 package items;
 
+import java.time.LocalDate;
+
 public class Termin {
     private String terminname;
     private String beschreibung;
     private String prio;
     private int id;
-    private String tag;
+    private LocalDate tag;
     private boolean marked;
 
-    public Termin(String terminname, String beschreibung, String prio, String tag, int id) {
+    public Termin(String terminname, String beschreibung, String prio, LocalDate tag, int id) {
         this.terminname = terminname;
         this.prio = prio;
         this.id = id;
@@ -48,11 +50,11 @@ public class Termin {
         this.id = id;
     }
 
-    public String getTag() {
+    public LocalDate getTag() {
         return tag;
     }
 
-    public void setTag(String tag) {
+    public void setTag(LocalDate tag) {
         this.tag = tag;
     }
 
@@ -77,4 +79,5 @@ public class Termin {
                 '}';
     }
 }
+
 
