@@ -86,6 +86,8 @@ public class DatabaseOp {
         });
     }
 
+    // TODO: Null Werte müssen abgefangen werden
+    // ? Eventuell durch AlertDialog Felder bei der Erstellung eines Termins
     public static void saveAppointment(String email, String terminName, String description,
                                        String prio, LocalDate date, int id) {
         CollectionReference appointmentsCollection = firebaseDB.collection(COLLECTION_USERS)
@@ -108,25 +110,23 @@ public class DatabaseOp {
                 });
     }
 
-    public static void getHighestID(String email, MaxIDListener listener) {
+    public static void deleteAppointment(int id, String email) {
         CollectionReference appointmentsCollection = firebaseDB.collection(COLLECTION_USERS)
                 .document(email).collection(COLLECTION_TERMINE);
-
-        appointmentsCollection.get()
+        Query query = appointmentsCollection.whereEqualTo(FIELD_ID, id);
+        query.get()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        int highestID = 0;
                         for (QueryDocumentSnapshot document : task.getResult()) {
-                            Long maxIdLong = document.getLong(FIELD_ID);
-                            int currentID = (maxIdLong != null) ? maxIdLong.intValue() : 0;
-                            Log.d(TAG, "Current ID: " + currentID + ", Highest ID: " +
-                                    highestID);
-                            highestID = Math.max(highestID, currentID);
+                            appointmentsCollection.document(document.getId()).delete()
+                                    .addOnSuccessListener(aVoid -> Log.d(TAG,
+                                            "Appointment deleted successfully"))
+                                    .addOnFailureListener(e -> Log.e(TAG,
+                                            "Error deleting appointment: " + e));
                         }
-                        listener.onMaxIDReceived(highestID);
                     } else {
-                        Log.e(TAG, "Error getting appointments: " + task.getException());
-                        listener.onMaxIDReceived(-1);
+                        Log.e(TAG, "Error getting appointment document: " +
+                                task.getException());
                     }
                 });
     }
@@ -162,6 +162,29 @@ public class DatabaseOp {
                         listener.onLoadAppointments();
                     } else {
                         Log.e(TAG, "Error loading appointments: " + task.getException());
+                    }
+                });
+    }
+
+    public static void getHighestIDFromDB(String email, MaxIDListener listener) {
+        CollectionReference appointmentsCollection = firebaseDB.collection(COLLECTION_USERS)
+                .document(email).collection(COLLECTION_TERMINE);
+
+        appointmentsCollection.get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        int highestID = 0;
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Long maxIdLong = document.getLong(FIELD_ID);
+                            int currentID = (maxIdLong != null) ? maxIdLong.intValue() : 0;
+                            Log.d(TAG, "Current ID: " + currentID + ", Highest ID: " +
+                                    highestID);
+                            highestID = Math.max(highestID, currentID);
+                        }
+                        listener.onMaxIDReceived(highestID);
+                    } else {
+                        Log.e(TAG, "Error getting appointments: " + task.getException());
+                        listener.onMaxIDReceived(-1);
                     }
                 });
     }

@@ -10,12 +10,12 @@ public class Termin {
     private LocalDate date;
     private boolean marked;
 
-    public Termin(String terminname, String beschreibung,String prio, LocalDate tag, int id) {
+    public Termin(String terminname, String beschreibung, String prio, LocalDate date, int id) {
         this.terminname = terminname;
         this.prio = prio;
         this.id = id;
         this.beschreibung = beschreibung;
-        this.date = tag;
+        this.date = date;
     }
 
     public String getTerminname() {

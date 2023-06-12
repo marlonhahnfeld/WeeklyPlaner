@@ -1,14 +1,18 @@
 package com.example.weeklyplaner;
 
-import static com.example.weeklyplaner.DatabaseOp.getHighestID;
+import static com.example.weeklyplaner.DatabaseOp.getHighestIDFromDB;
 import static com.example.weeklyplaner.DatabaseOp.saveAppointment;
 import static com.example.weeklyplaner.Utils.getSpecificTerminliste;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.Context;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -50,12 +54,12 @@ public class Add extends AppCompatActivity implements View.OnClickListener, Adap
         initDatePicker();
         //buttonDatePicker.setText(getTodaysDay());
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.DAY_OF_MONTH, LocalDate.now().getDayOfMonth() - (LocalDate.now().getDayOfWeek().getValue() - DayOfWeek.MONDAY.getValue()));
+        calendar.set(Calendar.DAY_OF_MONTH, LocalDate.now().getDayOfMonth() -
+                (LocalDate.now().getDayOfWeek().getValue() - DayOfWeek.MONDAY.getValue()));
         calendar.set(Calendar.MONTH, LocalDate.now().getMonthValue() - 1);
         calendar.set(Calendar.YEAR, LocalDate.now().getYear());
         //default ausgewähltes datum beim Öffnen von datum für den datum spinner
         datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
-
 
         backButton = findViewById(R.id.imageButton);
         backButton.setOnClickListener(this);
@@ -63,9 +67,11 @@ public class Add extends AppCompatActivity implements View.OnClickListener, Adap
         saveButton.setOnClickListener(this);
 
         prioListSpinner = findViewById(R.id.PrioListe);
-        ArrayAdapter<CharSequence> prioListSpinnerAdapter = ArrayAdapter.createFromResource(this,
-                R.array.numbers, android.R.layout.simple_spinner_item);
-        prioListSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<CharSequence> prioListSpinnerAdapter =
+                ArrayAdapter.createFromResource(this, R.array.numbers,
+                        android.R.layout.simple_spinner_item);
+        prioListSpinnerAdapter
+                .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         prioListSpinner.setAdapter(prioListSpinnerAdapter);
         prioListSpinner.setOnItemSelectedListener(this);
     }
@@ -94,7 +100,7 @@ public class Add extends AppCompatActivity implements View.OnClickListener, Adap
             String beschreibung = beschreibungEditText.getText().toString();
             String prio = String.valueOf(prioListSpinner.getSelectedItem());
 
-            getHighestID(LoginScreen.email, maxID -> {
+            getHighestIDFromDB(LoginScreen.email, maxID -> {
                 int saveCounter = maxID + 1;
                 LocalDate datum = LocalDate.of(datePickerDialog.getDatePicker().getYear(),
                         datePickerDialog.getDatePicker().getMonth() + 1,
@@ -110,6 +116,24 @@ public class Add extends AppCompatActivity implements View.OnClickListener, Adap
         }
     }
 
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            View v = getCurrentFocus();
+            if (v instanceof EditText) {
+                Rect outRect = new Rect();
+                v.getGlobalVisibleRect(outRect);
+                if (!outRect.contains((int) event.getRawX(), (int) event.getRawY())) {
+                    v.clearFocus();
+                    InputMethodManager imm =
+                            (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+        }
+        return super.onTouchEvent(event);
+    }
+
     private void initDatePicker() {
         DatePickerDialog.OnDateSetListener dateSetListener = (view, year, month, dayOfMonth) -> {
             month = month + 1;
@@ -117,17 +141,15 @@ public class Add extends AppCompatActivity implements View.OnClickListener, Adap
             buttonDatePicker.setText(date);
 
         };
+
         Calendar cal = Calendar.getInstance();
         int year = cal.get(Calendar.YEAR);
         int month = cal.get(Calendar.MONTH);
         int day = cal.get(Calendar.DAY_OF_MONTH);
-
-
         int style = AlertDialog.THEME_HOLO_LIGHT;
 
-        datePickerDialog = new DatePickerDialog(this, style, dateSetListener, day, month, year);
-
-
+        datePickerDialog =
+                new DatePickerDialog(this, style, dateSetListener, day, month, year);
     }
 
     private String makeDateString(int dayOfMonth, int month, int year) {

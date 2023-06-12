@@ -1,5 +1,6 @@
 package com.example.weeklyplaner;
 
+import static com.example.weeklyplaner.DatabaseOp.deleteAppointment;
 import static com.example.weeklyplaner.DatabaseOp.saveAppointment;
 import static com.example.weeklyplaner.Utils.getSpecificTerminliste;
 
@@ -7,6 +8,7 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -24,7 +26,8 @@ import java.util.Calendar;
 
 import items.Termin;
 
-public class TerminDetailsActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class TerminDetailsActivity extends AppCompatActivity implements View.OnClickListener,
+        AdapterView.OnItemSelectedListener {
     private EditText terminNameTextView;
     private EditText terminBeschreibungTextView;
     private Spinner terminPrioSpinner;
@@ -64,13 +67,13 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
         buttonDatePicker = findViewById(R.id.datepicker);
         initDatePicker();
         buttonDatePicker.setText(getTodaysDay());
+        Log.d("TerminDetails", buttonDatePicker.getText().toString());
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.DAY_OF_MONTH, LocalDate.now().getDayOfMonth());
-        calendar.set(Calendar.MONTH, LocalDate.now().getMonthValue()-1);
+        calendar.set(Calendar.MONTH, LocalDate.now().getMonthValue() - 1);
         calendar.set(Calendar.YEAR, LocalDate.now().getYear());
         //default ausgewähltes datum beim öffnen von datum für den datum spinner
         datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
-
 
         // Finde die TextViews in deinem Layout
         terminNameTextView = findViewById(R.id.Terminname_edit_text_details);
@@ -83,8 +86,7 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
         String terminBeschreibung = intent.getStringExtra("termin_beschreibung");
         String terminPrio = intent.getStringExtra("termin_prio");
         String terminDatum = intent.getStringExtra("termin_datum");
-        terminTag = intent.getIntExtra("termin_tag",0);
-
+        //terminTag = intent.getIntExtra("termin_tag", 0);
 
 
         terminPrioSpinner = findViewById(R.id.PrioListe_details);
@@ -97,7 +99,7 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
         terminNameTextView.setText(terminName);
         terminBeschreibungTextView.setText(terminBeschreibung);
         buttonDatePicker.setText(terminDatum);
-
+        Log.d("TerminDetails", buttonDatePicker.getText().toString());
     }
 
     @Override
@@ -150,7 +152,7 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
         // LocalDate datum = LocalDate.of(datePickerDialog.getDatePicker().getYear(), datePickerDialog.getDatePicker().getMonth() + 1, datePickerDialog.getDatePicker().getDayOfMonth());
         for (Termin termin : getSpecificTerminliste(terminTag)) {
             if (termin.getId() == terminId) {
-                //deleteAppointment(termin.getId(), LoginScreen.email);
+                deleteAppointment(termin.getId(), LoginScreen.email);
                 getSpecificTerminliste(terminTag).remove(termin);
                 break;
             }
@@ -222,9 +224,8 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
     private String getTodaysDay() {
         Calendar cal = Calendar.getInstance();
         int year = cal.get(Calendar.YEAR);
-        int month = cal.get(Calendar.MONTH)+1;
+        int month = cal.get(Calendar.MONTH) + 1;
         int day = cal.get(Calendar.DAY_OF_MONTH);
         return makeDateString(day, month, year);
-
     }
 }
