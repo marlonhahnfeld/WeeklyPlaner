@@ -80,7 +80,8 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
                 @Override
                 public void onLoginSuccess() {
                     loadAppointments(email, () -> {
-                        Intent intent = new Intent(LoginScreen.this, MainActivity.class);
+                        Intent intent =
+                                new Intent(LoginScreen.this, MainActivity.class);
                         startActivity(intent);
                     });
                 }

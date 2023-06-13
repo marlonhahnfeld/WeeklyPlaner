@@ -29,12 +29,11 @@ import java.util.Calendar;
 
 import items.Termin;
 
-public class Add extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
-
+public class Add extends AppCompatActivity implements View.OnClickListener,
+        AdapterView.OnItemSelectedListener {
     private ImageButton backButton;
     private Button saveButton;
-    private Spinner prioListSpinner, daySpinner;
-
+    private Spinner prioListSpinner;
     public static int saveCounter;
     private DatePickerDialog datePickerDialog;
     private Button buttonDatePicker;

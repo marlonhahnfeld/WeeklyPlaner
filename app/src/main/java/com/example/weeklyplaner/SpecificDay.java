@@ -1,13 +1,11 @@
 package com.example.weeklyplaner;
 
-import android.content.Context;
-
 import static com.example.weeklyplaner.Utils.getSpecificTerminliste;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -17,10 +15,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.time.LocalDate;
-import java.util.List;
-
 import java.util.ArrayList;
+import java.util.List;
 
 import items.Termin;
 
@@ -100,9 +96,11 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
 
         specificDay_TerminListe_RecyclerView = findViewById(R.id.TerminlisteRecyclerView);
         Termin_RecyclerView_Adapter adapter = null;
-        adapter = new Termin_RecyclerView_Adapter(this, getSpecificTerminliste(currentDay()));
+        adapter = new Termin_RecyclerView_Adapter(this,
+                getSpecificTerminliste(currentDay()));
         specificDay_TerminListe_RecyclerView.setAdapter(adapter);
-        specificDay_TerminListe_RecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        specificDay_TerminListe_RecyclerView
+                .setLayoutManager(new LinearLayoutManager(this));
 
         adapter = getAdapterForCurrentDay();
         specificDay_TerminListe_RecyclerView.setAdapter(adapter);
@@ -127,7 +125,6 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
         }
     }
 
-
     private static final int FILTER_OPTION_1_ID = R.id.filter_option_1;
     private static final int FILTER_OPTION_2_ID = R.id.filter_option_2;
 
@@ -135,19 +132,16 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
         PopupMenu popupMenu = new PopupMenu(this, anchorView);
         popupMenu.inflate(R.menu.menu_filter);
 
-        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                int itemId = item.getItemId();
-                if (itemId == FILTER_OPTION_1_ID) {
-                    sortAscendingByPriority();
-                    return true;
-                } else if (itemId == FILTER_OPTION_2_ID) {
-                    sortDescendingByPriority();
-                    return true;
-                }
-                return false;
+        popupMenu.setOnMenuItemClickListener(item -> {
+            int itemId = item.getItemId();
+            if (itemId == FILTER_OPTION_1_ID) {
+                sortAscendingByPriority();
+                return true;
+            } else if (itemId == FILTER_OPTION_2_ID) {
+                sortDescendingByPriority();
+                return true;
             }
+            return false;
         });
         popupMenu.show();
     }
@@ -157,7 +151,8 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
         TerminSorter.sortAscendingByPriority(terminliste);
 
         for (Termin termin : terminliste) {
-            Log.d("SortAscending", "Termin: " + termin.getTerminname() + " Prio: " + termin.getPrio());
+            Log.d("SortAscending", "Termin: " + termin.getTerminname() + " Prio: " +
+                    termin.getPrio());
         }
 
         adapter_sort.setTerminliste((ArrayList<Termin>) terminliste);
@@ -169,20 +164,20 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
         TerminSorter.sortDescendingByPriority(terminliste);
 
         for (Termin termin : terminliste) {
-            Log.d("SortDescending", "Termin: " + termin.getTerminname() + " Prio: " + termin.getPrio());
+            Log.d("SortDescending", "Termin: " + termin.getTerminname() + " Prio: " +
+                    termin.getPrio());
         }
 
         adapter_sort.setTerminliste((ArrayList<Termin>) terminliste);
         adapter_sort.notifyDataSetChanged();
     }
 
-
     private Termin_RecyclerView_Adapter getAdapterForCurrentDay() {
         List<Termin> terminliste = getSpecificTerminliste(currentDay());
-        Termin_RecyclerView_Adapter adapter = new Termin_RecyclerView_Adapter((Context) this, (ArrayList<Termin>) terminliste);
-        specificDay_TerminListe_RecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        Termin_RecyclerView_Adapter adapter = new Termin_RecyclerView_Adapter((Context) this,
+                (ArrayList<Termin>) terminliste);
+        specificDay_TerminListe_RecyclerView
+                .setLayoutManager(new LinearLayoutManager(this));
         return adapter;
     }
-
-
 }

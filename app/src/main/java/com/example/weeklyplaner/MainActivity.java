@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -107,19 +106,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         PopupMenu popupMenu = new PopupMenu(this, anchorView);
         popupMenu.inflate(R.menu.menu_filter);
 
-        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                int itemId = item.getItemId();
-                if (itemId == FILTER_OPTION_1_ID) {
-                    sortAscendingByPriority();
-                    return true;
-                } else if (itemId == FILTER_OPTION_2_ID) {
-                    sortDescendingByPriority();
-                    return true;
-                }
-                return false;
+        popupMenu.setOnMenuItemClickListener(item -> {
+            int itemId = item.getItemId();
+            if (itemId == FILTER_OPTION_1_ID) {
+                sortAscendingByPriority();
+                return true;
+            } else if (itemId == FILTER_OPTION_2_ID) {
+                sortDescendingByPriority();
+                return true;
             }
+            return false;
         });
         popupMenu.show();
     }
