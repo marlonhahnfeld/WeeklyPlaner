@@ -3,45 +3,62 @@ package com.example.weeklyplaner;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.time.LocalDate;
+import java.time.temporal.WeekFields;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import items.Termin;
 
 
 public class Utils extends AppCompatActivity {
-
-    // When back button is pressed, finish current activity and go back to previous activity
-
-    /**
-     * Methode zum Beenden des aktuellen Threads und somit die Rückkehr zum vorherigen
-     */
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        finish();
-    }
+        finish();}
 
-    public static ArrayList<Termin> getSpecificTerminliste(String tag) {
-        switch (tag) {
-            case "Montag":
+    public static ArrayList<Termin> getSpecificTerminliste(int wochenTag) {
+        switch (wochenTag) {
+            case 1:
                 return (MainActivity.montag_terminliste);
-            case "Dienstag":
+            case 2:
                 return (MainActivity.dienstag_terminliste);
-            case "Mittwoch":
+            case 3:
                 return (MainActivity.mittwoch_terminliste);
-            case "Donnerstag":
+            case 4:
                 return (MainActivity.donnerstag_terminliste);
-            case "Freitag":
+            case 5:
                 return (MainActivity.freitag_terminliste);
-            case "Samstag":
+            case 6:
                 return (MainActivity.samstag_terminliste);
-            case "Sonntag":
+            case 7:
                 return (MainActivity.sonntag_terminliste);
             // Weitere Cases für andere Termin-IDs
             default:
-                break;
+                System.err.println("Something went wrong"); break;
         }
         return null;
+    }
+
+    public static ArrayList<Termin> getSpecificTerminlisteInCurrentWeek(int wochenTag) {
+        ArrayList<Termin> terminliste = getSpecificTerminliste(wochenTag);
+        ArrayList<Termin> terminlisteInCurrentWeek = new ArrayList<>();
+
+        int currentWeek = getCurrentCalendarWeek();
+
+        for (Termin termin : terminliste) {
+            if (termin.getWeek() == currentWeek) {
+                terminlisteInCurrentWeek.add(termin);
+            }
+        }
+
+        return terminlisteInCurrentWeek;
+    }
+
+    private static int getCurrentCalendarWeek() {
+        LocalDate currentDate = LocalDate.now();
+        WeekFields weekFields = WeekFields.of(Locale.getDefault());
+        return currentDate.get(weekFields.weekOfWeekBasedYear());
     }
 
 

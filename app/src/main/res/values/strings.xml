@@ -44,13 +44,12 @@
     <string name="Anmeldename_edit_text">Anmeldename</string>
     <string name="PasswortEingabe_edit_text">Passworteingabe</string>
     <string name="senden">senden</string>
-    <string name="noch_keinen_account_dann_registriere_dich_jetzt_hier"><u>Noch keinen Account? Dann registriere dich jetzt hier</u></string>
     <string name="login">Login</string>
     <string name="passwort_eingeben">Passwort eingeben</string>
     <string name="passwort">Passwort</string>
     <string name="email">Email</string>
     <string name="exampleEmail">example@hotmail.de</string>
-    <string name="registriereDichJetzt">Noch keinen Account? Registriere dich jetzt!</string>
+    <string name="registriereDichJetzt"><u>Noch keinen Account? Registriere dich jetzt!</u></string>
     <string name="logo">Logo</string>
     <string name="confirmPasswort">Passwort bestätigen</string>
     <string name="min8SignsLong">mind. 8 Zeichen</string>
@@ -64,4 +63,9 @@
   <string name="Edit">Edit</string>
     <string name="Delete">Delete</string>
     <string name="willkommen">Herzlich Willkommen</string>
+    <string name="weeklyPlaner">WeeklyPlaner</string>
+    <string name="emailAngeben">Bitte eine gültige Email Adresse eingeben</string>
+    <string name="passwordEingeben">Bitte ein gültiges Passwort eingeben</string>
+    <string name="counterText">0/8</string>
+    <string name="helpPasswordView">Hinweise für die Erstellung eines Passworts</string>
 </resources>

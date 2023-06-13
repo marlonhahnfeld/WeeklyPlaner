@@ -1,9 +1,8 @@
 package com.example.weeklyplaner;
 
+import static com.example.weeklyplaner.Utils.getSpecificTerminlisteInCurrentWeek;
+
 import android.content.Context;
-
-import static com.example.weeklyplaner.Utils.getSpecificTerminliste;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,14 +16,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.List;
-
 import java.util.ArrayList;
+import java.util.List;
 
 import items.Termin;
 
+// TODO: UI -> Siehe Zeichnung
 public class SpecificDay extends AppCompatActivity implements View.OnClickListener {
-
     private ImageButton BackButton;
     private ImageButton filterButton;
     private ImageButton addButton;
@@ -34,6 +32,28 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
     private Termin_RecyclerView_Adapter adapter_sort;
 
     public RecyclerView specificDay_TerminListe_RecyclerView;
+
+    public int currentDay(){
+        Intent intent = getIntent();
+        switch (intent.getStringExtra("button_text")) {
+            case "Montag":
+                return 1;
+            case "Dienstag":
+                return 2;
+            case "Mittwoch":
+                return 3;
+            case "Donnerstag":
+                return 4;
+            case "Freitag":
+                return 5;
+            case "Samstag":
+                return 6;
+            case "Sonntag":
+                return 7;
+            default:
+                return -1;
+        }
+    }
 
     @Override
     protected void onResume() {
@@ -47,11 +67,10 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
 
     public void refreshSpecificDay() {
         // Refresh the specific day's data here
-        String day = heutigerButton.getText().toString();
         RecyclerView.Adapter adapter = specificDay_TerminListe_RecyclerView.getAdapter();
         if (adapter instanceof Termin_RecyclerView_Adapter) {
             Termin_RecyclerView_Adapter terminAdapter = (Termin_RecyclerView_Adapter) adapter;
-            terminAdapter.setTerminliste(getSpecificTerminliste(day));
+            terminAdapter.setTerminliste(getSpecificTerminlisteInCurrentWeek(currentDay()));
             terminAdapter.notifyDataSetChanged();
         }
     }
@@ -78,7 +97,7 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
 
         specificDay_TerminListe_RecyclerView = findViewById(R.id.TerminlisteRecyclerView);
         Termin_RecyclerView_Adapter adapter = null;
-        adapter = new Termin_RecyclerView_Adapter(this, getSpecificTerminliste(heutigerButton.getText().toString()));
+        adapter = new Termin_RecyclerView_Adapter(this, getSpecificTerminlisteInCurrentWeek(currentDay()));
         specificDay_TerminListe_RecyclerView.setAdapter(adapter);
         specificDay_TerminListe_RecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -131,7 +150,7 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
     }
 
     private void sortAscendingByPriority() {
-        List<Termin> terminliste = getSpecificTerminliste((String) heutigerButton.getText());
+        List<Termin> terminliste = getSpecificTerminlisteInCurrentWeek(currentDay());
         TerminSorter.sortAscendingByPriority(terminliste);
 
         for (Termin termin : terminliste) {
@@ -143,7 +162,7 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
     }
 
     private void sortDescendingByPriority() {
-        List<Termin> terminliste = getSpecificTerminliste((String) heutigerButton.getText());
+        List<Termin> terminliste = getSpecificTerminlisteInCurrentWeek(currentDay());
         TerminSorter.sortDescendingByPriority(terminliste);
 
         for (Termin termin : terminliste) {
@@ -154,13 +173,11 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
         adapter_sort.notifyDataSetChanged();
     }
 
-
     private Termin_RecyclerView_Adapter getAdapterForCurrentDay() {
-        List<Termin> terminliste = getSpecificTerminliste((String) heutigerButton.getText());
-        Termin_RecyclerView_Adapter adapter = new Termin_RecyclerView_Adapter((Context) this, (ArrayList<Termin>) terminliste);
+        List<Termin> terminliste = getSpecificTerminlisteInCurrentWeek(currentDay());
+        Termin_RecyclerView_Adapter adapter = new Termin_RecyclerView_Adapter((Context) this,
+                (ArrayList<Termin>) terminliste);
         specificDay_TerminListe_RecyclerView.setLayoutManager(new LinearLayoutManager(this));
         return adapter;
     }
-
-
 }

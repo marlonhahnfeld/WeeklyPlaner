@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "628219783647",
-    "project_id": "weeklyplaner-8f81f",
-    "storage_bucket": "weeklyplaner-8f81f.appspot.com"
+    "project_number": "405661401501",
+    "project_id": "weeklyplaner-aa856",
+    "storage_bucket": "weeklyplaner-aa856.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:628219783647:android:025c9fd0926acc30a73c6a",
+        "mobilesdk_app_id": "1:405661401501:android:d3480c9e8956a6bd902f74",
         "android_client_info": {
           "package_name": "com.example.weeklyplaner"
         }
       },
       "oauth_client": [
         {
-          "client_id": "628219783647-belcdq2eo08ggd9vsch4fo719bhejeda.apps.googleusercontent.com",
+          "client_id": "405661401501-pfgeqdi0kr2nvg2e5lsii8ncbdbi0g7q.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBlnrpyERPiaWB3JHT9Rc_46vtmMIVW_Vw"
+          "current_key": "AIzaSyBCYPmBvtdrJxh3VIVIrA72kPBlpN_Z0a0"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "628219783647-belcdq2eo08ggd9vsch4fo719bhejeda.apps.googleusercontent.com",
+              "client_id": "405661401501-pfgeqdi0kr2nvg2e5lsii8ncbdbi0g7q.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

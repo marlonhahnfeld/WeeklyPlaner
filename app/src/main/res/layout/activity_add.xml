@@ -101,18 +101,6 @@
         android:layout_marginStart="56dp"
         android:layout_marginBottom="252dp" />
 
-    <Spinner
-        android:id="@+id/TagesSpinner"
-        android:layout_width="wrap_content"
-        android:layout_height="37dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="168dp"
-        android:layout_marginEnd="29dp"
-        android:layout_marginBottom="585dp" />
-
     <Button
         android:id="@+id/SaveButton"
         android:layout_width="176dp"
@@ -122,6 +110,22 @@
         android:layout_marginBottom="18dp"
         android:text="@string/speichern" />
 
-    <!-- Place your content inside the ScrollView -->
+
+    <Button
+        android:id="@+id/datepicker"
+        style="?android:spinnerItemStyle"
+        android:layout_width="176dp"
+        android:layout_height="58dp"
+        android:layout_above="@+id/SaveButton"
+
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="39dp"
+        android:layout_marginEnd="70dp"
+        android:layout_marginBottom="493dp"
+        android:layout_toEndOf="@+id/Wann"
+        android:onClick="openDatePicker"
+        android:text="Datum auswählen"
+        android:textSize="18sp" />
+
 
 </RelativeLayout>

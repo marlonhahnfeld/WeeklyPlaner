@@ -81,12 +81,12 @@ public class Termin_RecyclerView_Adapter extends RecyclerView.Adapter<Termin_Rec
                         termin.setChecked(isChecked);
 
                         if (isChecked) {
-                            CardView  c =itemView.findViewById(R.id.cardview);
+                            CardView c = itemView.findViewById(R.id.cardview);
                             c.setCardBackgroundColor(ContextCompat.getColor(context, R.color.gray));
                             TerminnameTextView.setTextColor(Color.DKGRAY);
                             TerminPrioTextView.setTextColor(Color.DKGRAY);
                         } else {
-                            CardView  c =itemView.findViewById(R.id.cardview);
+                            CardView c = itemView.findViewById(R.id.cardview);
                             c.setCardBackgroundColor(ContextCompat.getColor(context, R.color.gray_Termin));
                             TerminnameTextView.setTextColor(Color.WHITE);
                             TerminPrioTextView.setTextColor(Color.WHITE);
@@ -115,6 +115,8 @@ public class Termin_RecyclerView_Adapter extends RecyclerView.Adapter<Termin_Rec
             intent.putExtra("termin_prio", termin.getPrio());
             intent.putExtra("termin_tag", termin.getTag());
             intent.putExtra("termin_id", termin.getId());
+            intent.putExtra("termin_datum", termin.getDatum().toString());
+            intent.putExtra("termin_tag", termin.getActualDatum().getDayOfWeek().getValue());
             context.startActivity(intent);
         }
     }

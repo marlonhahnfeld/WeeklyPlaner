@@ -10,9 +10,14 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import datenbank_listener.EmailExistsListener;
 import datenbank_listener.LoadAppointmentsListener;
@@ -20,6 +25,7 @@ import datenbank_listener.LoginListener;
 import datenbank_listener.MaxIDListener;
 import items.Termin;
 
+// TODO: Den Wert checked abspeichern + Wöchentlicher Reset von Terminen die abgehakt wurden
 public class DatabaseOp {
     private static final String TAG = "Firebase";
     private static final String COLLECTION_USERS = "users";
@@ -29,9 +35,8 @@ public class DatabaseOp {
     private static final String FIELD_TERMIN_NAME = "terminName";
     private static final String FIELD_BESCHREIBUNG = "description";
     private static final String FIELD_PRIO = "prio";
-    private static final String FIELD_DAY = "day";
+    private static final String FIELD_DATE = "date"; // Updated field name
     private static final String FIELD_ID = "id";
-
     private static FirebaseFirestore firebaseDB;
 
     public DatabaseOp() {
@@ -64,7 +69,6 @@ public class DatabaseOp {
                         && task.getResult() != null && !task.getResult().isEmpty()));
     }
 
-
     public void checkLogInData(String email, String password, LoginListener callback) {
         CollectionReference usersCollection = firebaseDB.collection(COLLECTION_USERS);
         Query query = usersCollection.whereEqualTo(FIELD_EMAIL, email)
@@ -83,8 +87,7 @@ public class DatabaseOp {
     }
 
     public static void saveAppointment(String email, String terminName, String description,
-                                       String prio, String day, int id) {
-
+                                       String prio, LocalDate date, int id) {
         CollectionReference appointmentsCollection = firebaseDB.collection(COLLECTION_USERS)
                 .document(email).collection(COLLECTION_TERMINE);
 
@@ -92,7 +95,7 @@ public class DatabaseOp {
         appointment.put(FIELD_TERMIN_NAME, terminName);
         appointment.put(FIELD_BESCHREIBUNG, description);
         appointment.put(FIELD_PRIO, prio);
-        appointment.put(FIELD_DAY, day);
+        appointment.put(FIELD_DATE, Timestamp.from(date.atStartOfDay(ZoneOffset.UTC).toInstant()));
         appointment.put(FIELD_ID, id);
 
         appointmentsCollection.add(appointment)
@@ -105,7 +108,63 @@ public class DatabaseOp {
                 });
     }
 
-    public static void getHighestID(String email, MaxIDListener listener) {
+    public static void deleteAppointment(int id, String email) {
+        CollectionReference appointmentsCollection = firebaseDB.collection(COLLECTION_USERS)
+                .document(email).collection(COLLECTION_TERMINE);
+        Query query = appointmentsCollection.whereEqualTo(FIELD_ID, id);
+        query.get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            appointmentsCollection.document(document.getId()).delete()
+                                    .addOnSuccessListener(aVoid -> Log.d(TAG,
+                                            "Appointment deleted successfully"))
+                                    .addOnFailureListener(e -> Log.e(TAG,
+                                            "Error deleting appointment: " + e));
+                        }
+                    } else {
+                        Log.e(TAG, "Error getting appointment document: " +
+                                task.getException());
+                    }
+                });
+    }
+
+    public static void loadAppointments(String email, LoadAppointmentsListener listener) {
+        CollectionReference appointmentsCollection = firebaseDB.collection(COLLECTION_USERS)
+                .document(email).collection(COLLECTION_TERMINE);
+        appointmentsCollection.get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (DocumentSnapshot document : task.getResult()) {
+                            long idLong = document.getLong(FIELD_ID);
+                            int id = (int) idLong;
+                            com.google.firebase.Timestamp timestamp =
+                                    document.getTimestamp(FIELD_DATE);
+                            LocalDate date = timestamp.toDate().toInstant()
+                                    .atZone(ZoneId.systemDefault()).toLocalDate();
+                            Termin termin = new Termin(
+                                    document.getString(FIELD_TERMIN_NAME),
+                                    document.getString(FIELD_BESCHREIBUNG),
+                                    document.getString(FIELD_PRIO),
+                                    date,
+                                    id
+                            );
+                            Objects.requireNonNull(getSpecificTerminliste(date.getDayOfWeek()
+                                    .getValue())).add(termin);
+                            Objects.requireNonNull(getSpecificTerminliste(date.getDayOfWeek()
+                                            .getValue()))
+                                    .sort(Comparator.comparingInt(Termin::getId));
+                            Log.d(TAG, "Loaded appointment: " + termin);
+                        }
+                        SpecificDay.refresh_needed = true;
+                        listener.onLoadAppointments();
+                    } else {
+                        Log.e(TAG, "Error loading appointments: " + task.getException());
+                    }
+                });
+    }
+
+    public static void getHighestIDFromDB(String email, MaxIDListener listener) {
         CollectionReference appointmentsCollection = firebaseDB.collection(COLLECTION_USERS)
                 .document(email).collection(COLLECTION_TERMINE);
 
@@ -127,49 +186,4 @@ public class DatabaseOp {
                     }
                 });
     }
-
-
-    public static void loadAppointments(String email, LoadAppointmentsListener listener) {
-        CollectionReference appointmentsCollection = firebaseDB.collection(COLLECTION_USERS)
-                .document(email).collection(COLLECTION_TERMINE);
-        appointmentsCollection.get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        for (DocumentSnapshot document : task.getResult()) {
-                            long idLong = document.getLong(FIELD_ID);
-                            int id = (int) idLong;
-                            Termin termin = new Termin(
-                                    document.getString(FIELD_TERMIN_NAME),
-                                    document.getString(FIELD_BESCHREIBUNG),
-                                    document.getString(FIELD_PRIO),
-                                    document.getString(FIELD_DAY),
-                                    id
-                            );
-                            getSpecificTerminliste(document.getString(FIELD_DAY)).add(termin);
-                            getSpecificTerminliste(document.getString(FIELD_DAY))
-                                    .sort(Comparator.comparingInt(Termin::getId));
-                            Log.d(TAG, "Loaded appointment: " + termin);
-                        }
-                        SpecificDay.refresh_needed = true;
-                        listener.onLoadAppointments();
-                    } else {
-                        Log.e(TAG, "Error loading appointments: " + task.getException());
-                    }
-                });
-    }
-
-    // TODO: Methode überarbeiten, sodass Termin richtige entfernt wird
-    public static void deleteAppointment(String email, int appointmentId) {
-//        CollectionReference appointmentsCollection = firebaseDB.collection(COLLECTION_USERS)
-//                .document(email).collection(COLLECTION_TERMINE);
-//        appointmentsCollection.document(appointmentId).delete()
-//                .addOnCompleteListener(task -> {
-//                    if (task.isSuccessful()) {
-//                        Log.d(TAG, "Appointment deleted successfully");
-//                    } else {
-//                        Log.e(TAG, "Error deleting appointment: " + task.getException());
-//                    }
-//                });
-    }
-
 }

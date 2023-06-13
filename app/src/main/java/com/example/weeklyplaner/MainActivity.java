@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -15,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -35,11 +35,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static ArrayList<Termin> freitag_terminliste = new ArrayList<>();
     public static ArrayList<Termin> samstag_terminliste = new ArrayList<>();
     public static ArrayList<Termin> sonntag_terminliste = new ArrayList<>();
-
     protected int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
-
     private ImageButton filterButton;
-
 
     // REFRESH PAGE CODE
     @Override
@@ -49,10 +46,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void refreshMainActivity() {
+        LocalDate currentDate = LocalDate.now();
+        int currentDayOfWeek = currentDate.getDayOfWeek().getValue();
 
-        adapter = new Termin_RecyclerView_Adapter(this, terminListe[dayOfWeek - 1]);
+        ArrayList<Termin> currentDayTerminliste = terminListe[currentDayOfWeek];
+        ArrayList<Termin> filteredTerminliste = new ArrayList<>();
+
+        for (Termin termin : currentDayTerminliste) {
+            if (termin.getDatum().isEqual(currentDate)) {
+                filteredTerminliste.add(termin);
+            }
+        }
+
+        adapter = new Termin_RecyclerView_Adapter(this, filteredTerminliste);
         recyclerView.setAdapter(adapter);
     }
+
 
     @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
     @Override
@@ -83,6 +92,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
+
     @Override
     public void onClick(View v) {
         Intent intent;
@@ -107,19 +117,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         PopupMenu popupMenu = new PopupMenu(this, anchorView);
         popupMenu.inflate(R.menu.menu_filter);
 
-        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                int itemId = item.getItemId();
-                if (itemId == FILTER_OPTION_1_ID) {
-                    sortAscendingByPriority();
-                    return true;
-                } else if (itemId == FILTER_OPTION_2_ID) {
-                    sortDescendingByPriority();
-                    return true;
-                }
-                return false;
+        popupMenu.setOnMenuItemClickListener(item -> {
+            int itemId = item.getItemId();
+            if (itemId == FILTER_OPTION_1_ID) {
+                sortAscendingByPriority();
+                return true;
+            } else if (itemId == FILTER_OPTION_2_ID) {
+                sortDescendingByPriority();
+                return true;
             }
+            return false;
         });
         popupMenu.show();
     }
@@ -149,6 +156,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         adapter.setTerminliste(terminliste);
         adapter.notifyDataSetChanged();
     }
+
 
 
 }
