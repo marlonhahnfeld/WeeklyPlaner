@@ -52,7 +52,6 @@ public class Week extends AppCompatActivity implements View.OnClickListener {
         button_sonntag.setOnClickListener(this);
 
         highlightTodayButton();
-
     }
 
     private void highlightTodayButton() {

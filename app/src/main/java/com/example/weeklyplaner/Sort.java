@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 public class Sort extends AppCompatActivity implements View.OnClickListener {
     private ImageButton BackButton;
     private ImageButton addButton;
-
     private ImageButton filterButton;
 
     @Override

@@ -28,7 +28,6 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
     private TextView titleTextView;
     private EditText editTextEmail;
     private EditText editTextPassword;
-
     public static String email;
     private String password;
     private DatabaseOp databaseOp;

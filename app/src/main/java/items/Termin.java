@@ -37,24 +37,12 @@ public class Termin {
         return terminname;
     }
 
-    public void setTerminname(String terminname) {
-        this.terminname = terminname;
-    }
-
     public String getBeschreibung() {
         return beschreibung;
     }
 
-    public void setBeschreibung(String beschreibung) {
-        this.beschreibung = beschreibung;
-    }
-
     public String getPrio() {
         return prio;
-    }
-
-    public void setPrio(String prio) {
-        this.prio = prio;
     }
 
     public int getId() {
@@ -67,10 +55,6 @@ public class Termin {
 
     public String getTag() {
         return tag;
-    }
-
-    public void setTag(String tag) {
-        this.tag = tag;
     }
 
 

@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -28,9 +27,7 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
     private ImageButton addButton;
     public Button heutigerButton;
     static boolean refresh_needed = false;
-
     private Termin_RecyclerView_Adapter adapter_sort;
-
     public RecyclerView specificDay_TerminListe_RecyclerView;
 
     public int currentDay(){
@@ -63,8 +60,6 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
         refreshSpecificDay();
     }
 
-    //Nochmal anschauen
-
     public void refreshSpecificDay() {
         // Refresh the specific day's data here
         RecyclerView.Adapter adapter = specificDay_TerminListe_RecyclerView.getAdapter();
@@ -79,7 +74,6 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_specific_day);
-
 
         BackButton = findViewById(R.id.BackButton);
         BackButton.setOnClickListener(this);
@@ -96,10 +90,12 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
         this.heutigerButton.setText(buttonText);
 
         specificDay_TerminListe_RecyclerView = findViewById(R.id.TerminlisteRecyclerView);
-        Termin_RecyclerView_Adapter adapter = null;
-        adapter = new Termin_RecyclerView_Adapter(this, getSpecificTerminlisteInCurrentWeek(currentDay()));
+        Termin_RecyclerView_Adapter adapter;
+        adapter = new Termin_RecyclerView_Adapter(this,
+                getSpecificTerminlisteInCurrentWeek(currentDay()));
         specificDay_TerminListe_RecyclerView.setAdapter(adapter);
-        specificDay_TerminListe_RecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        specificDay_TerminListe_RecyclerView
+                .setLayoutManager(new LinearLayoutManager(this));
 
         adapter = getAdapterForCurrentDay();
         specificDay_TerminListe_RecyclerView.setAdapter(adapter);
@@ -132,19 +128,16 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
         PopupMenu popupMenu = new PopupMenu(this, anchorView);
         popupMenu.inflate(R.menu.menu_filter);
 
-        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                int itemId = item.getItemId();
-                if (itemId == FILTER_OPTION_1_ID) {
-                    sortAscendingByPriority();
-                    return true;
-                } else if (itemId == FILTER_OPTION_2_ID) {
-                    sortDescendingByPriority();
-                    return true;
-                }
-                return false;
+        popupMenu.setOnMenuItemClickListener(item -> {
+            int itemId = item.getItemId();
+            if (itemId == FILTER_OPTION_1_ID) {
+                sortAscendingByPriority();
+                return true;
+            } else if (itemId == FILTER_OPTION_2_ID) {
+                sortDescendingByPriority();
+                return true;
             }
+            return false;
         });
         popupMenu.show();
     }
@@ -154,7 +147,8 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
         TerminSorter.sortAscendingByPriority(terminliste);
 
         for (Termin termin : terminliste) {
-            Log.d("SortAscending", "Termin: " + termin.getTerminname() + " Prio: " + termin.getPrio());
+            Log.d("SortAscending", "Termin: " + termin.getTerminname() + " Prio: " +
+                    termin.getPrio());
         }
 
         adapter_sort.setTerminliste((ArrayList<Termin>) terminliste);
@@ -166,7 +160,8 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
         TerminSorter.sortDescendingByPriority(terminliste);
 
         for (Termin termin : terminliste) {
-            Log.d("SortDescending", "Termin: " + termin.getTerminname() + " Prio: " + termin.getPrio());
+            Log.d("SortDescending", "Termin: " + termin.getTerminname() + " Prio: " +
+                    termin.getPrio());
         }
 
         adapter_sort.setTerminliste((ArrayList<Termin>) terminliste);
@@ -177,7 +172,8 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
         List<Termin> terminliste = getSpecificTerminlisteInCurrentWeek(currentDay());
         Termin_RecyclerView_Adapter adapter = new Termin_RecyclerView_Adapter((Context) this,
                 (ArrayList<Termin>) terminliste);
-        specificDay_TerminListe_RecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        specificDay_TerminListe_RecyclerView
+                .setLayoutManager(new LinearLayoutManager(this));
         return adapter;
     }
 }

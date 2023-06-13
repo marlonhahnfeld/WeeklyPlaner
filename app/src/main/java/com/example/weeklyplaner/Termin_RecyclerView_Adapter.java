@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,15 +14,13 @@ import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-
 import java.util.ArrayList;
 
 import items.Termin;
 
-public class Termin_RecyclerView_Adapter extends RecyclerView.Adapter<Termin_RecyclerView_Adapter.TerminViewHolder> {
+public class Termin_RecyclerView_Adapter extends
+        RecyclerView.Adapter<Termin_RecyclerView_Adapter.TerminViewHolder> {
     Context context;
-
-
     CardView cardView;
     ArrayList<Termin> terminliste;
 
@@ -34,13 +31,16 @@ public class Termin_RecyclerView_Adapter extends RecyclerView.Adapter<Termin_Rec
 
     @NonNull
     @Override
-    public Termin_RecyclerView_Adapter.TerminViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view_row, parent, false);
+    public Termin_RecyclerView_Adapter.TerminViewHolder onCreateViewHolder(@NonNull ViewGroup parent,
+                                                                           int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_view_row,
+                parent, false);
         return new Termin_RecyclerView_Adapter.TerminViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull Termin_RecyclerView_Adapter.TerminViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull Termin_RecyclerView_Adapter.TerminViewHolder holder,
+                                 int position) {
         // assign values to view with pos
         Termin termin = terminliste.get(position);
         holder.TerminnameTextView.setText(termin.getTerminname());
@@ -71,26 +71,24 @@ public class Termin_RecyclerView_Adapter extends RecyclerView.Adapter<Termin_Rec
             itemView.setOnClickListener(this);
 
             // Set the checkbox listener
-            checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    // Update the checked state of the Termin object
-                    int position = getAdapterPosition();
-                    if (position != RecyclerView.NO_POSITION) {
-                        Termin termin = terminliste.get(position);
-                        termin.setChecked(isChecked);
+            checkbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                // Update the checked state of the Termin object
+                int position = getAdapterPosition();
+                if (position != RecyclerView.NO_POSITION) {
+                    Termin termin = terminliste.get(position);
+                    termin.setChecked(isChecked);
 
-                        if (isChecked) {
-                            CardView c = itemView.findViewById(R.id.cardview);
-                            c.setCardBackgroundColor(ContextCompat.getColor(context, R.color.gray));
-                            TerminnameTextView.setTextColor(Color.DKGRAY);
-                            TerminPrioTextView.setTextColor(Color.DKGRAY);
-                        } else {
-                            CardView c = itemView.findViewById(R.id.cardview);
-                            c.setCardBackgroundColor(ContextCompat.getColor(context, R.color.gray_Termin));
-                            TerminnameTextView.setTextColor(Color.WHITE);
-                            TerminPrioTextView.setTextColor(Color.WHITE);
-                        }
+                    if (isChecked) {
+                        CardView c = itemView.findViewById(R.id.cardview);
+                        c.setCardBackgroundColor(ContextCompat.getColor(context, R.color.gray));
+                        TerminnameTextView.setTextColor(Color.DKGRAY);
+                        TerminPrioTextView.setTextColor(Color.DKGRAY);
+                    } else {
+                        CardView c = itemView.findViewById(R.id.cardview);
+                        c.setCardBackgroundColor(ContextCompat.getColor(context,
+                                R.color.gray_Termin));
+                        TerminnameTextView.setTextColor(Color.WHITE);
+                        TerminPrioTextView.setTextColor(Color.WHITE);
                     }
                 }
             });

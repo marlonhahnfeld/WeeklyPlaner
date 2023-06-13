@@ -75,7 +75,6 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
         //default ausgewähltes datum beim Öffnen von datum für den datum spinner
         datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
 
-
         // Finde die TextViews in deinem Layout
         terminNameTextView = findViewById(R.id.Terminname_edit_text_details);
         terminBeschreibungTextView = findViewById(R.id.Beschreibung_edit_text_details);

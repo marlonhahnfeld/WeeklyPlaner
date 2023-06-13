@@ -10,12 +10,12 @@ import java.util.Locale;
 
 import items.Termin;
 
-
 public class Utils extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        finish();}
+        finish();
+    }
 
     public static ArrayList<Termin> getSpecificTerminliste(int wochenTag) {
         switch (wochenTag) {
@@ -60,6 +60,4 @@ public class Utils extends AppCompatActivity {
         WeekFields weekFields = WeekFields.of(Locale.getDefault());
         return currentDate.get(weekFields.weekOfWeekBasedYear());
     }
-
-
 }
