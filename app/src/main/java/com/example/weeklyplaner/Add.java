@@ -29,6 +29,7 @@ import java.util.Calendar;
 
 import items.Termin;
 
+// TODO: NULL Werte abfangen
 public class Add extends AppCompatActivity implements View.OnClickListener,
         AdapterView.OnItemSelectedListener {
     private ImageButton backButton;
@@ -37,9 +38,7 @@ public class Add extends AppCompatActivity implements View.OnClickListener,
     public static int saveCounter;
     private DatePickerDialog datePickerDialog;
     private Button buttonDatePicker;
-
     private static DatabaseOp databaseOp;
-
 
     //TOD
     @Override
@@ -82,8 +81,7 @@ public class Add extends AppCompatActivity implements View.OnClickListener,
     }
 
     @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-    }
+    public void onNothingSelected(AdapterView<?> parent) {}
 
     @Override
     public void onClick(View v) {
@@ -92,7 +90,6 @@ public class Add extends AppCompatActivity implements View.OnClickListener,
         if (id == R.id.imageButton) {
             onBackPressed();
         } else if (id == R.id.SaveButton) {
-            //TODO: Termin-Name, und Date dürfen nicht Null sein
             EditText terminNameEditText = findViewById(R.id.Terminname_edit_text);
             String terminName = terminNameEditText.getText().toString();
             EditText beschreibungEditText = findViewById(R.id.Beschreibung_edit_text);
@@ -198,6 +195,4 @@ public class Add extends AppCompatActivity implements View.OnClickListener,
         return makeDateString(day, month, year);
 
     }
-
-
 }

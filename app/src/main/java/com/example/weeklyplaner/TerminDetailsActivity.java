@@ -1,6 +1,7 @@
 package com.example.weeklyplaner;
 
 import static com.example.weeklyplaner.DatabaseOp.deleteAppointment;
+import static com.example.weeklyplaner.DatabaseOp.getHighestIDFromDB;
 import static com.example.weeklyplaner.DatabaseOp.saveAppointment;
 import static com.example.weeklyplaner.Utils.getSpecificTerminliste;
 
@@ -8,6 +9,7 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -25,13 +27,14 @@ import java.util.Objects;
 
 import items.Termin;
 
+// TODO: Bei Edit soll Termin Möglichkeit haben beim Datum an Anfang der Woche zu kommen
 public class TerminDetailsActivity extends AppCompatActivity implements View.OnClickListener,
         AdapterView.OnItemSelectedListener {
     private EditText terminNameTextView;
     private EditText terminBeschreibungTextView;
     private Spinner terminPrioSpinner;
     private ImageButton backButton;
-    private Button editButton, deleteBtton;
+    private Button editButton, deleteButton;
     private int terminId;
     private String terminDatum;
     private DatePickerDialog datePickerDialog;
@@ -59,8 +62,8 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
         backButton.setOnClickListener(this);
         editButton = findViewById(R.id.EditButton_details);
         editButton.setOnClickListener(this);
-        deleteBtton = findViewById(R.id.DeleteButton_details);
-        deleteBtton.setOnClickListener(this);
+        deleteButton = findViewById(R.id.DeleteButton_details);
+        deleteButton.setOnClickListener(this);
 
         buttonDatePicker = findViewById(R.id.datepicker);
         initDatePicker();
@@ -69,7 +72,7 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
         calendar.set(Calendar.DAY_OF_MONTH, LocalDate.now().getDayOfMonth());
         calendar.set(Calendar.MONTH, LocalDate.now().getMonthValue() - 1);
         calendar.set(Calendar.YEAR, LocalDate.now().getYear());
-        //default ausgewähltes datum beim öffnen von datum für den datum spinner
+        //default ausgewähltes datum beim Öffnen von datum für den datum spinner
         datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
 
 
@@ -125,15 +128,18 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
             LocalDate datum = LocalDate.of(datePickerDialog.getDatePicker().getYear(),
                     datePickerDialog.getDatePicker().getMonth() + 1,
                     datePickerDialog.getDatePicker().getDayOfMonth());
-            Add.saveCounter = Add.saveCounter + 1;
 
-            Termin termin = new Termin(terminName_new, beschreibung_new, prio_new, datum,
-                    Add.saveCounter);
-            saveAppointment(LoginScreen.email, terminName_new, beschreibung_new, prio_new,
-                    datum, termin.getId());
-
-            getSpecificTerminliste(datum.getDayOfWeek().getValue()).add(termin);
-            onBackPressed();
+            getHighestIDFromDB(LoginScreen.email, maxID -> {
+                int saveCounter = maxID + 1;
+                Termin termin = new Termin(terminName_new, beschreibung_new, prio_new,
+                        datum, saveCounter);
+                Log.d("Weeklyplanner", String.valueOf(termin));
+                saveAppointment(LoginScreen.email, terminName_new, beschreibung_new,
+                        prio_new, datum, termin.getId());
+                getSpecificTerminliste(datum.getDayOfWeek().getValue()).add(termin);
+                SpecificDay.refresh_needed = true;
+                onBackPressed();
+            });
         } else if (id == R.id.DeleteButton_details) {
             // TODO NEXT RELEASE: POPUP ARE YOU SURE
             deleteCurrentAppointment();

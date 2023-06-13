@@ -25,6 +25,7 @@ import datenbank_listener.LoginListener;
 import datenbank_listener.MaxIDListener;
 import items.Termin;
 
+// TODO: Den Wert checked abspeichern + Wöchentlicher Reset von Terminen die abgehakt wurden
 public class DatabaseOp {
     private static final String TAG = "Firebase";
     private static final String COLLECTION_USERS = "users";
@@ -68,7 +69,6 @@ public class DatabaseOp {
                         && task.getResult() != null && !task.getResult().isEmpty()));
     }
 
-
     public void checkLogInData(String email, String password, LoginListener callback) {
         CollectionReference usersCollection = firebaseDB.collection(COLLECTION_USERS);
         Query query = usersCollection.whereEqualTo(FIELD_EMAIL, email)
@@ -86,8 +86,6 @@ public class DatabaseOp {
         });
     }
 
-    // TODO: Null Werte müssen abgefangen werden
-    // ? Eventuell durch AlertDialog Felder bei der Erstellung eines Termins
     public static void saveAppointment(String email, String terminName, String description,
                                        String prio, LocalDate date, int id) {
         CollectionReference appointmentsCollection = firebaseDB.collection(COLLECTION_USERS)

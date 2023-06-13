@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -34,11 +35,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static ArrayList<Termin> freitag_terminliste = new ArrayList<>();
     public static ArrayList<Termin> samstag_terminliste = new ArrayList<>();
     public static ArrayList<Termin> sonntag_terminliste = new ArrayList<>();
-
     protected int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
-
     private ImageButton filterButton;
-
 
     // REFRESH PAGE CODE
     @Override
@@ -48,10 +46,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void refreshMainActivity() {
+        LocalDate currentDate = LocalDate.now();
+        int currentDayOfWeek = currentDate.getDayOfWeek().getValue();
 
-        adapter = new Termin_RecyclerView_Adapter(this, terminListe[dayOfWeek - 1]);
+        ArrayList<Termin> currentDayTerminliste = terminListe[currentDayOfWeek];
+        ArrayList<Termin> filteredTerminliste = new ArrayList<>();
+
+        for (Termin termin : currentDayTerminliste) {
+            if (termin.getDatum().isEqual(currentDate)) {
+                filteredTerminliste.add(termin);
+            }
+        }
+
+        adapter = new Termin_RecyclerView_Adapter(this, filteredTerminliste);
         recyclerView.setAdapter(adapter);
     }
+
 
     @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
     @Override
@@ -80,6 +90,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         refreshMainActivity();
     }
+
 
 
     @Override
@@ -145,6 +156,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         adapter.setTerminliste(terminliste);
         adapter.notifyDataSetChanged();
     }
+
 
 
 }

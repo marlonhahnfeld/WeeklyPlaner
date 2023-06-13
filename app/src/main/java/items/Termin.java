@@ -1,21 +1,36 @@
 package items;
 
 import java.time.LocalDate;
+import java.time.temporal.WeekFields;
+import java.util.Locale;
 
 public class Termin {
     private String terminname;
     private String beschreibung;
     private String prio;
     private int id;
-    private LocalDate date;
-    private boolean marked;
+    private String tag;
+    private LocalDate datum;
+    private boolean checked;
 
-    public Termin(String terminname, String beschreibung, String prio, LocalDate date, int id) {
+    // TODO: checked benutzen
+    public Termin(String terminname, String beschreibung, String prio, LocalDate datum, int id) {
+
         this.terminname = terminname;
         this.prio = prio;
         this.id = id;
         this.beschreibung = beschreibung;
-        this.date = date;
+        //this.tag = tag;
+        this.datum = datum;
+    }
+
+    public LocalDate getDatum(){
+        return datum;
+    }
+
+    public int getWeek() {
+        WeekFields weekFields = WeekFields.of(Locale.getDefault());
+        return datum.get(weekFields.weekOfWeekBasedYear());
     }
 
     public String getTerminname() {
@@ -50,23 +65,26 @@ public class Termin {
         this.id = id;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public String getTag() {
+        return tag;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setTag(String tag) {
+        this.tag = tag;
     }
 
 
-    public boolean isChecked() {
-        return marked;
+    public boolean isChecked(){
+        return checked;
     }
 
-    public void setChecked(boolean checked) {
-        this.marked = checked;
+    public void setChecked(boolean checked){
+        this.checked = checked;
     }
 
+    public LocalDate getActualDatum() {
+        return datum;
+    }
 
     @Override
     public String toString() {
@@ -75,7 +93,7 @@ public class Termin {
                 ", beschreibung='" + beschreibung + '\'' +
                 ", prio='" + prio + '\'' +
                 ", id=" + id +
-                ", tag='" + date + '\'' +
+                ", tag='" + datum + '\'' +
                 '}';
     }
 }

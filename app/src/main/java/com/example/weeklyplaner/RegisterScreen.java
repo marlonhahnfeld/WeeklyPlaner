@@ -127,7 +127,6 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
                         builder.show();
                     }
                 });
-
             }
         }
     }
@@ -152,6 +151,7 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
 
     /**
      * Methode um den Input des Users zu überprüfen
+     * TODO: Überprüfungen vervollständigen
      *
      * @param email    die der User nutzen möchte
      * @param password die der User nutzen möchte
@@ -180,7 +180,6 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
             builder.setMessage(Html.fromHtml(emailFormat, Html.FROM_HTML_MODE_LEGACY));
             builder.setPositiveButton("OK", (dialog, which) -> dialog.dismiss()).show();
         }
-
 
         if (password.length() >= 8) {
             length = true;

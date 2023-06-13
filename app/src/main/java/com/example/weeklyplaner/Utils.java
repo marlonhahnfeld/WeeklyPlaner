@@ -3,7 +3,10 @@ package com.example.weeklyplaner;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.time.LocalDate;
+import java.time.temporal.WeekFields;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import items.Termin;
 
@@ -35,6 +38,27 @@ public class Utils extends AppCompatActivity {
                 System.err.println("Something went wrong"); break;
         }
         return null;
+    }
+
+    public static ArrayList<Termin> getSpecificTerminlisteInCurrentWeek(int wochenTag) {
+        ArrayList<Termin> terminliste = getSpecificTerminliste(wochenTag);
+        ArrayList<Termin> terminlisteInCurrentWeek = new ArrayList<>();
+
+        int currentWeek = getCurrentCalendarWeek();
+
+        for (Termin termin : terminliste) {
+            if (termin.getWeek() == currentWeek) {
+                terminlisteInCurrentWeek.add(termin);
+            }
+        }
+
+        return terminlisteInCurrentWeek;
+    }
+
+    private static int getCurrentCalendarWeek() {
+        LocalDate currentDate = LocalDate.now();
+        WeekFields weekFields = WeekFields.of(Locale.getDefault());
+        return currentDate.get(weekFields.weekOfWeekBasedYear());
     }
 
 
