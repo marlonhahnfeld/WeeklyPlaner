@@ -8,7 +8,7 @@
     tools:context=".MainActivity">
 
     <ImageButton
-        android:id="@+id/SortButton"
+        android:id="@+id/backButtonWeekActivity"
         android:layout_width="65dp"
         android:layout_height="50dp"
         android:layout_marginStart="16dp"
@@ -24,14 +24,14 @@
         android:id="@+id/Termin1"
         android:layout_width="171dp"
         android:layout_height="68dp"
-        android:layout_below="@id/HeutigerButton"
+        android:layout_below="@id/heutigerButton"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="18dp"
         android:backgroundTint="@color/black"
         android:text="@string/termin1" />
 
     <ImageButton
-        android:id="@+id/AddButton"
+        android:id="@+id/addButton"
         android:layout_width="77dp"
         android:layout_height="64dp"
         android:layout_alignParentBottom="true"
@@ -43,7 +43,7 @@
         app:tint="#000000"/>
 
     <Button
-        android:id="@+id/HeutigerButton"
+        android:id="@+id/heutigerButton"
         android:layout_width="253dp"
         android:layout_height="73dp"
         android:layout_alignParentBottom="false"

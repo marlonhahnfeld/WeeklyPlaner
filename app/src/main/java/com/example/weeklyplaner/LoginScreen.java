@@ -39,7 +39,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         setContentView(R.layout.activity_login_screen);
 
         logoView = findViewById(R.id.logoView);
-        titleTextView = findViewById(R.id.weeklyPlaner);
+        titleTextView = findViewById(R.id.textViewWeeklyPlaner);
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
         registerButton = findViewById(R.id.registerTextButton);
@@ -52,9 +52,9 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
 
         animateNonVisible2Visible(logoView, dauer);
         animateNonVisible2Visible(titleTextView, dauer);
-        animateNonVisible2Visible(findViewById(R.id.text_email), dauer);
+        animateNonVisible2Visible(findViewById(R.id.textViewEmail), dauer);
         animateNonVisible2Visible(editTextEmail, dauer);
-        animateNonVisible2Visible(findViewById(R.id.text_password), dauer);
+        animateNonVisible2Visible(findViewById(R.id.textViewPassword), dauer);
         animateNonVisible2Visible(editTextPassword, dauer);
         animateNonVisible2Visible(registerButton, dauer);
         animateNonVisible2Visible(loginButton, dauer);

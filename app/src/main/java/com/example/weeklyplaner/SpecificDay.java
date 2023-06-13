@@ -75,21 +75,21 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_specific_day);
 
-        BackButton = findViewById(R.id.BackButton);
+        BackButton = findViewById(R.id.backButtonSpecificDayActivity);
         BackButton.setOnClickListener(this);
 
-        filterButton = findViewById(R.id.SortButton);
+        filterButton = findViewById(R.id.backButtonWeekActivity);
         filterButton.setOnClickListener(this);
 
-        addButton = findViewById(R.id.AddButton);
+        addButton = findViewById(R.id.addButton);
         addButton.setOnClickListener(this);
 
-        heutigerButton = findViewById(R.id.HeutigerButton);
+        heutigerButton = findViewById(R.id.heutigerButton);
 
         String buttonText = getIntent().getStringExtra("button_text");
         this.heutigerButton.setText(buttonText);
 
-        specificDay_TerminListe_RecyclerView = findViewById(R.id.TerminlisteRecyclerView);
+        specificDay_TerminListe_RecyclerView = findViewById(R.id.terminlisteRecyclerView);
         Termin_RecyclerView_Adapter adapter;
         adapter = new Termin_RecyclerView_Adapter(this,
                 getSpecificTerminlisteInCurrentWeek(currentDay()));
@@ -109,12 +109,12 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
         Intent intent;
         int id = v.getId();
 
-        if (id == R.id.BackButton) {
+        if (id == R.id.backButtonSpecificDayActivity) {
             onBackPressed();
-        } else if (id == R.id.SortButton) {
+        } else if (id == R.id.backButtonWeekActivity) {
             intent = new Intent(this, Sort.class);
             showFilterPopupMenu(v);
-        } else if (id == R.id.AddButton) {
+        } else if (id == R.id.addButton) {
             intent = new Intent(this, Add.class);
             startActivity(intent);
         }

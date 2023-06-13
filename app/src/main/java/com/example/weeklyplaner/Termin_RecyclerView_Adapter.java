@@ -62,10 +62,10 @@ public class Termin_RecyclerView_Adapter extends
 
         public TerminViewHolder(@NonNull View itemView) {
             super(itemView);
-            TerminnameTextView = itemView.findViewById(R.id.TerminnameTextView);
-            TerminPrioTextView = itemView.findViewById(R.id.TerminPrioritätTextView);
+            TerminnameTextView = itemView.findViewById(R.id.textViewTerminNameRecyclerView);
+            TerminPrioTextView = itemView.findViewById(R.id.textViewPriority);
             checkbox = itemView.findViewById(R.id.checkbox);
-            cardView = itemView.findViewById(R.id.cardview);
+            cardView = itemView.findViewById(R.id.cardView);
 
             // Set click listener on the itemView
             itemView.setOnClickListener(this);
@@ -79,12 +79,12 @@ public class Termin_RecyclerView_Adapter extends
                     termin.setChecked(isChecked);
 
                     if (isChecked) {
-                        CardView c = itemView.findViewById(R.id.cardview);
+                        CardView c = itemView.findViewById(R.id.cardView);
                         c.setCardBackgroundColor(ContextCompat.getColor(context, R.color.gray));
                         TerminnameTextView.setTextColor(Color.DKGRAY);
                         TerminPrioTextView.setTextColor(Color.DKGRAY);
                     } else {
-                        CardView c = itemView.findViewById(R.id.cardview);
+                        CardView c = itemView.findViewById(R.id.cardView);
                         c.setCardBackgroundColor(ContextCompat.getColor(context,
                                 R.color.gray_Termin));
                         TerminnameTextView.setTextColor(Color.WHITE);

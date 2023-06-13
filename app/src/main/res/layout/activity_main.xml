@@ -9,7 +9,7 @@
 
 
     <Button
-        android:id="@+id/HeutigerButton"
+        android:id="@+id/heutigerButton"
         android:layout_width="253dp"
         android:layout_height="73dp"
         android:layout_alignParentBottom="false"
@@ -21,7 +21,7 @@
         android:text="@string/heute" />
 
     <Button
-        android:id="@+id/MoSoButton"
+        android:id="@+id/buttonMoSo"
         android:layout_width="125dp"
         android:layout_height="48dp"
         android:layout_alignParentStart="true"
@@ -32,7 +32,7 @@
         android:text="@string/mo_so" />
 
     <ImageButton
-        android:id="@+id/AddButton"
+        android:id="@+id/addButton"
         android:layout_width="77dp"
         android:layout_height="64dp"
         android:layout_alignParentBottom="true"
@@ -44,7 +44,7 @@
         app:tint="#000000"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/TerminlisteRecyclerView"
+        android:id="@+id/terminlisteRecyclerView"
         android:layout_width="395dp"
         android:layout_height="394dp"
         android:layout_alignParentStart="true"
@@ -55,7 +55,7 @@
         android:layout_marginBottom="169dp" />
 
     <ImageButton
-        android:id="@+id/SortButtonFilterForMainActivity"
+        android:id="@+id/sortButtonFilterMainActivity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"

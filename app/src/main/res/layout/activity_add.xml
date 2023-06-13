@@ -7,12 +7,11 @@
     tools:context=".MainActivity"
     android:id="@+id/AddActivityLayout">
 
-
     <EditText
-        android:id="@+id/Beschreibung_edit_text"
+        android:id="@+id/editTextBeschreibung"
         android:layout_width="270dp"
         android:layout_height="92dp"
-        android:layout_below="@id/Terminname"
+        android:layout_below="@id/textViewTerminName"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_centerInParent="true"
@@ -21,11 +20,11 @@
         android:background="#ffffff"
         android:elevation="20dp"
         android:gravity="start"
-        android:hint="  Beschreibung oder Todolist?\n  - Briefkasten checken \n  - Arzttermin 16:30 Uhr\n    .........."
+        android:hint="@string/possibleBeschreibung"
         android:padding="10dp" />
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/backButtonDetailsActivity"
         android:layout_width="65dp"
         android:layout_height="50dp"
         android:layout_alignParentStart="true"
@@ -38,7 +37,7 @@
         app:tint="#000000" />
 
     <TextView
-        android:id="@+id/Terminname"
+        android:id="@+id/textViewTerminName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -50,10 +49,10 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/Beschreibung"
+        android:id="@+id/textViewBeschreibung"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/Wann"
+        android:layout_below="@id/textViewWann"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="66dp"
@@ -63,7 +62,7 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/Wann"
+        android:id="@+id/textViewWann"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -75,24 +74,23 @@
         android:textStyle="bold" />
 
     <EditText
-        android:id="@+id/Terminname_edit_text"
+        android:id="@+id/editTextTerminName"
         android:layout_width="270dp"
         android:layout_height="35dp"
-        android:layout_below="@id/Terminname"
+        android:layout_below="@id/textViewTerminName"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="62dp"
         android:layout_marginTop="148dp"
-        android:hint="  wie heißt Ihr neuer Termin?"
+        android:hint="@string/wieLautetDerTerminName"
         android:background="#ffffff"
         android:elevation="10dp"
         android:gravity="start"
         android:padding="5dp" />
-    />
 
     <Spinner
-        android:id="@+id/PrioListe"
+        android:id="@+id/prioListe"
         android:layout_width="270dp"
         android:layout_height="35dp"
         android:layout_alignParentStart="true"
@@ -102,7 +100,7 @@
         android:layout_marginBottom="252dp" />
 
     <Button
-        android:id="@+id/SaveButton"
+        android:id="@+id/saveButton"
         android:layout_width="176dp"
         android:layout_height="58dp"
         android:layout_alignParentBottom="true"
@@ -112,19 +110,19 @@
 
 
     <Button
-        android:id="@+id/datepicker"
+        android:id="@+id/buttonDatepickerDetailsActivity"
         style="?android:spinnerItemStyle"
         android:layout_width="176dp"
         android:layout_height="58dp"
-        android:layout_above="@+id/SaveButton"
+        android:layout_above="@+id/saveButton"
 
         android:layout_alignParentEnd="true"
         android:layout_marginStart="39dp"
         android:layout_marginEnd="70dp"
         android:layout_marginBottom="493dp"
-        android:layout_toEndOf="@+id/Wann"
+        android:layout_toEndOf="@+id/textViewWann"
         android:onClick="openDatePicker"
-        android:text="Datum auswählen"
+        android:text="@string/chooseDatum"
         android:textSize="18sp" />
 
 

@@ -9,7 +9,7 @@
     tools:context=".LoginScreen">
 
     <TextView
-        android:id="@+id/weeklyPlaner"
+        android:id="@+id/textViewWeeklyPlaner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="99dp"
@@ -19,13 +19,13 @@
         android:text="@string/weeklyPlaner"
         android:textAlignment="center"
         android:textSize="35sp"
-        app:layout_constraintBottom_toTopOf="@+id/text_email"
+        app:layout_constraintBottom_toTopOf="@+id/textViewEmail"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logoView" />
 
     <TextView
-        android:id="@+id/text_password"
+        android:id="@+id/textViewPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="134dp"
@@ -51,15 +51,15 @@
         android:hint="@string/exampleEmail"
         android:inputType="textEmailAddress"
         android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@+id/text_password"
+        app:layout_constraintBottom_toTopOf="@+id/textViewPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_email"
+        app:layout_constraintTop_toBottomOf="@+id/textViewEmail"
         tools:ignore="TextContrastCheck,TouchTargetSizeCheck" />
 
     <TextView
-        android:id="@+id/text_email"
+        android:id="@+id/textViewEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="158dp"
@@ -71,7 +71,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/weeklyPlaner"
+        app:layout_constraintTop_toBottomOf="@+id/textViewWeeklyPlaner"
         tools:ignore="TextSizeCheck" />
 
     <EditText
@@ -89,7 +89,7 @@
         app:layout_constraintBottom_toTopOf="@+id/registerTextButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_password"
+        app:layout_constraintTop_toBottomOf="@+id/textViewPassword"
         tools:ignore="TextContrastCheck,DuplicateSpeakableTextCheck,TouchTargetSizeCheck" />
 
     <Button
@@ -132,7 +132,7 @@
         android:layout_marginTop="40dp"
         android:layout_marginEnd="115dp"
         android:contentDescription="@string/logo"
-        app:layout_constraintBottom_toTopOf="@+id/weeklyPlaner"
+        app:layout_constraintBottom_toTopOf="@+id/textViewWeeklyPlaner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

@@ -32,16 +32,16 @@ public class Week extends AppCompatActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_week);
 
-        BackButton = findViewById(R.id.SortButton);
+        BackButton = findViewById(R.id.backButtonWeekActivity);
         BackButton.setOnClickListener(this);
 
-        button_montag = findViewById(R.id.Montag);
-        button_dienstag = findViewById(R.id.Dienstag);
-        button_mittwoch = findViewById(R.id.Mittwoch);
-        button_donnerstag = findViewById(R.id.Donnerstag);
-        button_freitag = findViewById(R.id.Freitag);
-        button_samstag = findViewById(R.id.Samstag);
-        button_sonntag = findViewById(R.id.Sonntag);
+        button_montag = findViewById(R.id.montag);
+        button_dienstag = findViewById(R.id.dienstag);
+        button_mittwoch = findViewById(R.id.mittwoch);
+        button_donnerstag = findViewById(R.id.donnerstag);
+        button_freitag = findViewById(R.id.freitag);
+        button_samstag = findViewById(R.id.samstag);
+        button_sonntag = findViewById(R.id.sonntag);
 
         button_montag.setOnClickListener(this);
         button_dienstag.setOnClickListener(this);
@@ -55,8 +55,8 @@ public class Week extends AppCompatActivity implements View.OnClickListener {
     }
 
     private void highlightTodayButton() {
-        int[] buttonIds = {R.id.Montag, R.id.Dienstag, R.id.Mittwoch, R.id.Donnerstag,
-                R.id.Freitag, R.id.Samstag, R.id.Sonntag};
+        int[] buttonIds = {R.id.montag, R.id.dienstag, R.id.mittwoch, R.id.donnerstag,
+                R.id.freitag, R.id.samstag, R.id.sonntag};
         Button[] buttons = {button_montag, button_dienstag, button_mittwoch,
                 button_donnerstag, button_freitag, button_samstag, button_sonntag};
 
@@ -73,14 +73,14 @@ public class Week extends AppCompatActivity implements View.OnClickListener {
         Intent intent;
         int id = v.getId();
 
-        if (id == R.id.Montag || id == R.id.Dienstag || id == R.id.Mittwoch ||
-                id == R.id.Donnerstag || id == R.id.Freitag || id == R.id.Samstag ||
-                id == R.id.Sonntag) {
+        if (id == R.id.montag || id == R.id.dienstag || id == R.id.mittwoch ||
+                id == R.id.donnerstag || id == R.id.freitag || id == R.id.samstag ||
+                id == R.id.sonntag) {
             intent = new Intent(this, SpecificDay.class);
             Button clickedButton = findViewById(id);
             intent.putExtra("button_text", clickedButton.getText());
             startActivity(intent);
-        } else if (id == R.id.SortButton) {
+        } else if (id == R.id.backButtonWeekActivity) {
             onBackPressed();
         }
     }
