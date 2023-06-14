@@ -132,43 +132,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void sortAscendingByPriority() {
-        ArrayList<Termin> terminliste = terminListe[dayOfWeek - 1];
-        ArrayList<Termin> currentWeekTerminliste = new ArrayList<>();
-
-        for (Termin termin : terminliste) {
-            if (isInCurrentWeek(termin.getDatum())) {
-                currentWeekTerminliste.add(termin);
-            }
-        }
-
+        ArrayList<Termin> currentWeekTerminliste = Utils.getSpecificTerminlisteInCurrentWeek(dayOfWeek-1);
         TerminSorter.sortAscendingByPriority(currentWeekTerminliste);
-
         adapter.setTerminliste(currentWeekTerminliste);
         adapter.notifyDataSetChanged();
     }
 
     private void sortDescendingByPriority() {
-        ArrayList<Termin> terminliste = terminListe[dayOfWeek - 1];
-        ArrayList<Termin> currentWeekTerminliste = new ArrayList<>();
-
-        for (Termin termin : terminliste) {
-            if (isInCurrentWeek(termin.getDatum())) {
-                currentWeekTerminliste.add(termin);
-            }
-        }
-
+        ArrayList<Termin> currentWeekTerminliste = Utils.getSpecificTerminlisteInCurrentWeek(dayOfWeek-1);
         TerminSorter.sortDescendingByPriority(currentWeekTerminliste);
-
         adapter.setTerminliste(currentWeekTerminliste);
         adapter.notifyDataSetChanged();
     }
 
-    private boolean isInCurrentWeek(LocalDate date) {
-        LocalDate currentDate = LocalDate.now();
-        LocalDate startOfWeek = currentDate.minusDays(currentDate.getDayOfWeek().getValue() - 1);
-        LocalDate endOfWeek = startOfWeek.plusDays(6);
-        return !date.isBefore(startOfWeek) && !date.isAfter(endOfWeek);
-    }
 
 
 
