@@ -1,5 +1,7 @@
 package com.example.weeklyplaner;
 
+import static com.example.weeklyplaner.DatabaseOp.updateCheckedInDB;
+
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -23,6 +25,7 @@ public class Termin_RecyclerView_Adapter extends
     Context context;
     CardView cardView;
     ArrayList<Termin> terminliste;
+
 
     public Termin_RecyclerView_Adapter(Context context, ArrayList<Termin> terminliste) {
         this.context = context;
@@ -79,11 +82,13 @@ public class Termin_RecyclerView_Adapter extends
                     termin.setChecked(isChecked);
 
                     if (isChecked) {
+                        updateCheckedInDB(LoginScreen.email, termin.getId(), true);
                         CardView c = itemView.findViewById(R.id.cardView);
                         c.setCardBackgroundColor(ContextCompat.getColor(context, R.color.gray));
                         TerminnameTextView.setTextColor(Color.DKGRAY);
                         TerminPrioTextView.setTextColor(Color.DKGRAY);
                     } else {
+                        updateCheckedInDB(LoginScreen.email, termin.getId(), false);
                         CardView c = itemView.findViewById(R.id.cardView);
                         c.setCardBackgroundColor(ContextCompat.getColor(context,
                                 R.color.gray_Termin));

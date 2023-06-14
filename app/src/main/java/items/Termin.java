@@ -14,7 +14,8 @@ public class Termin {
     private boolean checked;
 
     // TODO: checked benutzen
-    public Termin(String terminname, String beschreibung, String prio, LocalDate datum, int id) {
+    public Termin(String terminname, String beschreibung, String prio, LocalDate datum, int id,
+                  boolean checked) {
 
         this.terminname = terminname;
         this.prio = prio;
@@ -22,6 +23,7 @@ public class Termin {
         this.beschreibung = beschreibung;
         //this.tag = tag;
         this.datum = datum;
+        this.checked = checked;
     }
 
     public LocalDate getDatum(){

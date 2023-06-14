@@ -72,4 +72,6 @@
     <string name="possibleBeschreibung">Eventuelle Beschreibung:\n- Briefkasten checken \n- Arzttermin 16:30 Uhr\n</string>
     <string name="wieLautetDerTerminName">Wie heißt Ihr neuer Termin?</string>
     <string name="chooseDatum">Datum auswählen</string>
+    <string name="notDone">Not Done:</string>
+    <string name="done">Done:</string>
 </resources>

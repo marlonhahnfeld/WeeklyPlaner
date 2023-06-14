@@ -7,88 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/yourWeek"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/backButtonWeekActivity"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:text="@string/yourWeek"
-        android:textAlignment="center"
-        android:textSize="50sp" />
-
-    <Button
-        android:id="@+id/montag"
-        android:layout_width="300dp"
-        android:layout_height="65dp"
-        android:layout_below="@+id/yourWeek"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"
-        android:backgroundTint="@color/black"
-        android:text="@string/montag"
-        android:textAlignment="viewStart" />
-
-    <Button
-        android:id="@+id/dienstag"
-        android:layout_width="300dp"
-        android:layout_height="65dp"
-        android:layout_below="@+id/montag"
-        android:layout_centerHorizontal="true"
-        android:backgroundTint="@color/black"
-        android:text="@string/dienstag"
-        android:textAlignment="viewStart" />
-
-    <Button
-        android:id="@+id/mittwoch"
-        android:layout_width="300dp"
-        android:layout_height="65dp"
-        android:layout_below="@+id/dienstag"
-        android:layout_centerHorizontal="true"
-        android:backgroundTint="@color/black"
-        android:text="@string/mittwoch"
-        android:textAlignment="viewStart" />
-
-    <Button
-        android:id="@+id/donnerstag"
-        android:layout_width="300dp"
-        android:layout_height="65dp"
-        android:layout_below="@+id/mittwoch"
-        android:layout_centerHorizontal="true"
-        android:backgroundTint="@color/black"
-        android:text="@string/donnerstag"
-        android:textAlignment="viewStart" />
-
-    <Button
-        android:id="@+id/freitag"
-        android:layout_width="300dp"
-        android:layout_height="65dp"
-        android:layout_below="@+id/donnerstag"
-        android:layout_centerHorizontal="true"
-        android:backgroundTint="@color/black"
-        android:text="@string/freitag"
-        android:textAlignment="viewStart" />
-
-    <Button
-        android:id="@+id/samstag"
-        android:layout_width="300dp"
-        android:layout_height="65dp"
-        android:layout_below="@+id/freitag"
-        android:layout_centerHorizontal="true"
-        android:backgroundTint="@color/black"
-        android:text="@string/samstag"
-        android:textAlignment="viewStart" />
-
-    <Button
-        android:id="@+id/sonntag"
-        android:layout_width="300dp"
-        android:layout_height="65dp"
-        android:layout_below="@+id/samstag"
-        android:layout_centerHorizontal="true"
-        android:backgroundTint="@color/black"
-        android:text="@string/sonntag"
-        android:textAlignment="viewStart" />
-
     <ImageButton
         android:id="@+id/backButtonWeekActivity"
         android:layout_width="65dp"
@@ -101,5 +19,311 @@
         android:contentDescription="@string/back"
         app:srcCompat="?attr/homeAsUpIndicator"
         app:tint="#000000" />
+
+    <TextView
+        android:id="@+id/yourWeek"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/backButtonWeekActivity"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="@string/yourWeek"
+        android:textAlignment="center"
+        android:textSize="50sp" />
+
+    <RelativeLayout
+        android:id="@+id/montagLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/yourWeek"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp">
+
+        <Button
+            android:id="@+id/montag"
+            android:layout_width="300dp"
+            android:layout_height="65dp"
+            android:layout_centerHorizontal="true"
+            android:backgroundTint="@color/black"
+            android:text="@string/montag"
+            android:textAlignment="viewStart" />
+
+        <TextView
+            android:id="@+id/doneMo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="100dp"
+            android:text="@string/done"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            tools:ignore="RelativeOverlap" />
+
+        <TextView
+            android:id="@+id/notDoneMo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="100dp"
+            android:text="@string/notDone"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            tools:ignore="RelativeOverlap" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/dienstagLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/montagLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="0dp">
+
+        <Button
+            android:id="@+id/dienstag"
+            android:layout_width="300dp"
+            android:layout_height="65dp"
+            android:layout_centerHorizontal="true"
+            android:backgroundTint="@color/black"
+            android:text="@string/dienstag"
+            android:textAlignment="viewStart" />
+
+        <TextView
+            android:id="@+id/doneDi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="100dp"
+            android:text="@string/done"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            tools:ignore="RelativeOverlap" />
+
+        <TextView
+            android:id="@+id/notDoneDi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="100dp"
+            android:text="@string/notDone"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            tools:ignore="RelativeOverlap" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/mittwochLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/dienstagLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="0dp">
+
+        <Button
+            android:id="@+id/mittwoch"
+            android:layout_width="300dp"
+            android:layout_height="65dp"
+            android:layout_centerHorizontal="true"
+            android:backgroundTint="@color/black"
+            android:text="@string/mittwoch"
+            android:textAlignment="viewStart" />
+
+        <TextView
+            android:id="@+id/doneMi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="100dp"
+            android:text="@string/done"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            tools:ignore="RelativeOverlap" />
+
+        <TextView
+            android:id="@+id/notDoneMi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="100dp"
+            android:text="@string/notDone"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            tools:ignore="RelativeOverlap" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/donnerstagLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/mittwochLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="0dp">
+
+        <Button
+            android:id="@+id/donnerstag"
+            android:layout_width="300dp"
+            android:layout_height="65dp"
+            android:layout_centerHorizontal="true"
+            android:backgroundTint="@color/black"
+            android:text="@string/donnerstag"
+            android:textAlignment="viewStart" />
+
+        <TextView
+            android:id="@+id/doneDo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="100dp"
+            android:text="@string/done"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            tools:ignore="RelativeOverlap" />
+
+        <TextView
+            android:id="@+id/notDoneDo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="100dp"
+            android:text="@string/notDone"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            tools:ignore="RelativeOverlap" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/freitagLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/donnerstagLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="0dp">
+
+        <Button
+            android:id="@+id/freitag"
+            android:layout_width="300dp"
+            android:layout_height="65dp"
+            android:layout_centerHorizontal="true"
+            android:backgroundTint="@color/black"
+            android:text="@string/freitag"
+            android:textAlignment="viewStart" />
+
+        <TextView
+            android:id="@+id/doneFr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="100dp"
+            android:text="@string/done"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            tools:ignore="RelativeOverlap" />
+
+        <TextView
+            android:id="@+id/notDoneFr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="100dp"
+            android:text="@string/notDone"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            tools:ignore="RelativeOverlap" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/samstagLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/freitagLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="0dp">
+
+        <Button
+            android:id="@+id/samstag"
+            android:layout_width="300dp"
+            android:layout_height="65dp"
+            android:layout_centerHorizontal="true"
+            android:backgroundTint="@color/black"
+            android:text="@string/samstag"
+            android:textAlignment="viewStart" />
+
+        <TextView
+            android:id="@+id/doneSa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="100dp"
+            android:text="@string/done"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            tools:ignore="RelativeOverlap" />
+
+        <TextView
+            android:id="@+id/notDoneSa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="100dp"
+            android:text="@string/notDone"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            tools:ignore="RelativeOverlap" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/sonntagLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/samstagLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="0dp">
+
+        <Button
+            android:id="@+id/sonntag"
+            android:layout_width="300dp"
+            android:layout_height="65dp"
+            android:layout_centerHorizontal="true"
+            android:backgroundTint="@color/black"
+            android:text="@string/sonntag"
+            android:textAlignment="viewStart" />
+
+        <TextView
+            android:id="@+id/doneSo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="100dp"
+            android:text="@string/done"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            tools:ignore="RelativeOverlap" />
+
+        <TextView
+            android:id="@+id/notDoneSo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="100dp"
+            android:text="@string/notDone"
+            android:textColor="@android:color/white"
+            android:textSize="14sp"
+            tools:ignore="RelativeOverlap" />
+    </RelativeLayout>
+
 
 </RelativeLayout>

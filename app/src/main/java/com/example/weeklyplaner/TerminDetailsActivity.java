@@ -131,10 +131,10 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
             getHighestIDFromDB(LoginScreen.email, maxID -> {
                 int saveCounter = maxID + 1;
                 Termin termin = new Termin(terminName_new, beschreibung_new, prio_new,
-                        datum, saveCounter);
+                        datum, saveCounter, false);
                 Log.d("Weeklyplanner", String.valueOf(termin));
                 saveAppointment(LoginScreen.email, terminName_new, beschreibung_new,
-                        prio_new, datum, termin.getId());
+                        prio_new, datum, termin.getId(), false);
                 getSpecificTerminliste(datum.getDayOfWeek().getValue()).add(termin);
                 SpecificDay.refresh_needed = true;
                 onBackPressed();

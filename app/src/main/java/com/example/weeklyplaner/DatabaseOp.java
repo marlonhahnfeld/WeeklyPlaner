@@ -5,6 +5,7 @@ import static com.example.weeklyplaner.Utils.getSpecificTerminliste;
 import android.util.Log;
 
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -37,6 +38,7 @@ public class DatabaseOp {
     private static final String FIELD_PRIO = "prio";
     private static final String FIELD_DATE = "date"; // Updated field name
     private static final String FIELD_ID = "id";
+    private static final String FIELD_CHECKED = "checked";
     private static FirebaseFirestore firebaseDB;
 
     public DatabaseOp() {
@@ -87,7 +89,7 @@ public class DatabaseOp {
     }
 
     public static void saveAppointment(String email, String terminName, String description,
-                                       String prio, LocalDate date, int id) {
+                                       String prio, LocalDate date, int id, boolean checked) {
         CollectionReference appointmentsCollection = firebaseDB.collection(COLLECTION_USERS)
                 .document(email).collection(COLLECTION_TERMINE);
 
@@ -97,6 +99,7 @@ public class DatabaseOp {
         appointment.put(FIELD_PRIO, prio);
         appointment.put(FIELD_DATE, Timestamp.from(date.atStartOfDay(ZoneOffset.UTC).toInstant()));
         appointment.put(FIELD_ID, id);
+        appointment.put(FIELD_CHECKED, checked);
 
         appointmentsCollection.add(appointment)
                 .addOnCompleteListener(task -> {
@@ -147,7 +150,8 @@ public class DatabaseOp {
                                     document.getString(FIELD_BESCHREIBUNG),
                                     document.getString(FIELD_PRIO),
                                     date,
-                                    id
+                                    id,
+                                    Boolean.TRUE.equals(document.getBoolean(FIELD_CHECKED))
                             );
                             Objects.requireNonNull(getSpecificTerminliste(date.getDayOfWeek()
                                     .getValue())).add(termin);
@@ -186,4 +190,31 @@ public class DatabaseOp {
                     }
                 });
     }
+
+    public static void updateCheckedInDB(String email, int id, boolean checked) {
+        CollectionReference appointmentsCollection = firebaseDB.collection(COLLECTION_USERS)
+                .document(email).collection(COLLECTION_TERMINE);
+
+        // Hier wird die Dokumentreferenz anhand der ID gefunden
+        appointmentsCollection.whereEqualTo("id", id)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            // Aktualisiere den Wert des 'checked'-Feldes im Dokument
+                            document.getReference().update(FIELD_CHECKED, checked)
+                                    .addOnSuccessListener(aVoid -> {
+                                        Log.d(TAG, "Checked value updated successfully");
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        Log.e(TAG, "Error updating checked value", e);
+                                    });
+                        }
+                    } else {
+                        Log.e(TAG, "Error getting documents: ", task.getException());
+                    }
+                });
+    }
+
+
 }

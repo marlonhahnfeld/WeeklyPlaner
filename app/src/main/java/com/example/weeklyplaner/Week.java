@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,6 +16,8 @@ import java.util.TimeZone;
 public class Week extends AppCompatActivity implements View.OnClickListener {
     private ImageButton BackButton;
     private Button button_montag;
+    private TextView doneMo;
+    private TextView notDoneMo;
     private Button button_dienstag;
     private Button button_mittwoch;
     private Button button_donnerstag;
@@ -24,7 +27,6 @@ public class Week extends AppCompatActivity implements View.OnClickListener {
 
     TimeZone german_timezone = TimeZone.getTimeZone("Europe/Berlin");
     Calendar calendar = Calendar.getInstance(german_timezone);
-
     int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
 
     @Override
@@ -36,6 +38,8 @@ public class Week extends AppCompatActivity implements View.OnClickListener {
         BackButton.setOnClickListener(this);
 
         button_montag = findViewById(R.id.montag);
+        doneMo = findViewById(R.id.doneMo);
+        notDoneMo = findViewById(R.id.notDoneMo);
         button_dienstag = findViewById(R.id.dienstag);
         button_mittwoch = findViewById(R.id.mittwoch);
         button_donnerstag = findViewById(R.id.donnerstag);

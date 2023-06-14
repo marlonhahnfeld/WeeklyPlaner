@@ -101,10 +101,11 @@ public class Add extends AppCompatActivity implements View.OnClickListener,
                 LocalDate datum = LocalDate.of(datePickerDialog.getDatePicker().getYear(),
                         datePickerDialog.getDatePicker().getMonth() + 1,
                         datePickerDialog.getDatePicker().getDayOfMonth());
-                Termin termin = new Termin(terminName, beschreibung, prio, datum, saveCounter);
+                Termin termin = new Termin(terminName, beschreibung, prio, datum, saveCounter,
+                        false);
                 Log.d("Weeklyplanner", String.valueOf(termin));
                 saveAppointment(LoginScreen.email, terminName, beschreibung, prio, datum,
-                        termin.getId());
+                        termin.getId(), false);
                 getSpecificTerminliste(datum.getDayOfWeek().getValue()).add(termin);
                 SpecificDay.refresh_needed = true;
                 onBackPressed();
