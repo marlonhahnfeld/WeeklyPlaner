@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Objects;
@@ -64,12 +65,12 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
         editButton.setOnClickListener(this);
         deleteButton = findViewById(R.id.deleteButton);
         deleteButton.setOnClickListener(this);
-
         buttonDatePicker = findViewById(R.id.buttonDatepickerDetailsActivity);
         initDatePicker();
         buttonDatePicker.setText(getTodaysDay());
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.DAY_OF_MONTH, LocalDate.now().getDayOfMonth());
+        calendar.set(Calendar.DAY_OF_MONTH, LocalDate.now().getDayOfMonth() -
+                (LocalDate.now().getDayOfWeek().getValue() - DayOfWeek.MONDAY.getValue()));
         calendar.set(Calendar.MONTH, LocalDate.now().getMonthValue() - 1);
         calendar.set(Calendar.YEAR, LocalDate.now().getYear());
         //default ausgewähltes datum beim Öffnen von datum für den datum spinner
