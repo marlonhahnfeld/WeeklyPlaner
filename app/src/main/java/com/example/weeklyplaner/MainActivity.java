@@ -132,30 +132,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void sortAscendingByPriority() {
-        ArrayList<Termin> terminliste = terminListe[dayOfWeek - 1];
-        TerminSorter.sortAscendingByPriority(terminliste);
-
-        for (Termin termin : terminliste) {
-            Log.d("SortAscending", "Termin: " + termin.getTerminname() + " Prio: " +
-                    termin.getPrio());
-        }
-
-        adapter.setTerminliste(terminliste);
+        ArrayList<Termin> currentWeekTerminliste = Utils.getSpecificTerminlisteInCurrentWeek(dayOfWeek-1);
+        TerminSorter.sortAscendingByPriority(currentWeekTerminliste);
+        adapter.setTerminliste(currentWeekTerminliste);
         adapter.notifyDataSetChanged();
     }
 
     private void sortDescendingByPriority() {
-        ArrayList<Termin> terminliste = terminListe[dayOfWeek - 1];
-        TerminSorter.sortDescendingByPriority(terminliste);
-
-        for (Termin termin : terminliste) {
-            Log.d("SortDescending", "Termin: " + termin.getTerminname() + " Prio: " +
-                    termin.getPrio());
-        }
-
-        adapter.setTerminliste(terminliste);
+        ArrayList<Termin> currentWeekTerminliste = Utils.getSpecificTerminlisteInCurrentWeek(dayOfWeek-1);
+        TerminSorter.sortDescendingByPriority(currentWeekTerminliste);
+        adapter.setTerminliste(currentWeekTerminliste);
         adapter.notifyDataSetChanged();
     }
+
 
 
 
