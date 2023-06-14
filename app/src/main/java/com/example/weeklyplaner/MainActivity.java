@@ -1,5 +1,8 @@
 package com.example.weeklyplaner;
 
+import static com.example.weeklyplaner.Utils.getSpecificTerminliste;
+import static com.example.weeklyplaner.Utils.getSpecificTerminlisteInCurrentWeek;
+
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -49,16 +52,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         LocalDate currentDate = LocalDate.now();
         int currentDayOfWeek = currentDate.getDayOfWeek().getValue();
 
-        ArrayList<Termin> currentDayTerminliste = terminListe[currentDayOfWeek];
-        ArrayList<Termin> filteredTerminliste = new ArrayList<>();
+        ArrayList<Termin> currentDayTerminliste = getSpecificTerminliste(currentDayOfWeek + 1);
 
-        for (Termin termin : currentDayTerminliste) {
-            if (termin.getDatum().isEqual(currentDate)) {
-                filteredTerminliste.add(termin);
-            }
-        }
-
-        adapter = new Termin_RecyclerView_Adapter(this, filteredTerminliste);
+        adapter = new Termin_RecyclerView_Adapter(this, currentDayTerminliste);
         recyclerView.setAdapter(adapter);
     }
 
@@ -132,14 +128,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void sortAscendingByPriority() {
-        ArrayList<Termin> currentWeekTerminliste = Utils.getSpecificTerminlisteInCurrentWeek(dayOfWeek-1);
+        ArrayList<Termin> currentWeekTerminliste = getSpecificTerminlisteInCurrentWeek(dayOfWeek-1);
         TerminSorter.sortAscendingByPriority(currentWeekTerminliste);
         adapter.setTerminliste(currentWeekTerminliste);
         adapter.notifyDataSetChanged();
     }
 
     private void sortDescendingByPriority() {
-        ArrayList<Termin> currentWeekTerminliste = Utils.getSpecificTerminlisteInCurrentWeek(dayOfWeek-1);
+        ArrayList<Termin> currentWeekTerminliste = getSpecificTerminlisteInCurrentWeek(dayOfWeek-1);
         TerminSorter.sortDescendingByPriority(currentWeekTerminliste);
         adapter.setTerminliste(currentWeekTerminliste);
         adapter.notifyDataSetChanged();
