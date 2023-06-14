@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 public class Sort extends AppCompatActivity implements View.OnClickListener {
     private ImageButton BackButton;
     private ImageButton addButton;
-
     private ImageButton filterButton;
 
     @Override
@@ -18,9 +17,9 @@ public class Sort extends AppCompatActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sort);
 
-        BackButton = findViewById(R.id.SortButton);
+        BackButton = findViewById(R.id.backButtonWeekActivity);
         BackButton.setOnClickListener(this);
-        addButton = findViewById(R.id.AddButton);
+        addButton = findViewById(R.id.addButton);
         addButton.setOnClickListener(this);
         filterButton = findViewById(R.id.SortButtonFilter);
         filterButton.setOnClickListener(this);
@@ -31,9 +30,9 @@ public class Sort extends AppCompatActivity implements View.OnClickListener {
         Intent intent;
         int id = v.getId();
 
-        if (id == R.id.SortButton) {
+        if (id == R.id.backButtonWeekActivity) {
             onBackPressed();
-        } else if (id == R.id.AddButton) {
+        } else if (id == R.id.addButton) {
             intent = new Intent(this, Add.class);
             startActivity(intent);
         }

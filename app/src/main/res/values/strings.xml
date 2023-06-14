@@ -68,4 +68,10 @@
     <string name="passwordEingeben">Bitte ein gültiges Passwort eingeben</string>
     <string name="counterText">0/8</string>
     <string name="helpPasswordView">Hinweise für die Erstellung eines Passworts</string>
+    <string name="yourWeek">Ihre Woche</string>
+    <string name="possibleBeschreibung">Eventuelle Beschreibung:\n- Briefkasten checken \n- Arzttermin 16:30 Uhr\n</string>
+    <string name="wieLautetDerTerminName">Wie heißt Ihr neuer Termin?</string>
+    <string name="chooseDatum">Datum auswählen</string>
+    <string name="notDone">Not Done:</string>
+    <string name="done">Done:</string>
 </resources>

@@ -69,15 +69,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        filterButton = findViewById(R.id.SortButtonFilterForMainActivity);
+        filterButton = findViewById(R.id.sortButtonFilterMainActivity);
         filterButton.setOnClickListener(this);
 
-        button_for_days = findViewById(R.id.MoSoButton);
+        button_for_days = findViewById(R.id.buttonMoSo);
         button_for_days.setOnClickListener(this);
 
-        addButton = findViewById(R.id.AddButton);
+        addButton = findViewById(R.id.addButton);
         addButton.setOnClickListener(this);
-        recyclerView = findViewById(R.id.TerminlisteRecyclerView);
+        recyclerView = findViewById(R.id.terminlisteRecyclerView);
 
         terminListe[0] = sonntag_terminliste;
         terminListe[1] = montag_terminliste;
@@ -98,13 +98,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent intent;
         int id = v.getId();
 
-        if (id == R.id.MoSoButton) {
+        if (id == R.id.buttonMoSo) {
             intent = new Intent(this, Week.class);
             startActivity(intent);
-        } else if (id == R.id.AddButton) {
+        } else if (id == R.id.addButton) {
             intent = new Intent(this, Add.class);
             startActivity(intent);
-        } else if (id == R.id.SortButtonFilterForMainActivity) {
+        } else if (id == R.id.sortButtonFilterMainActivity) {
             showFilterPopupMenu(v);
 
         }

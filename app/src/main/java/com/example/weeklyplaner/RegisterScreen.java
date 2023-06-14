@@ -43,7 +43,7 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
         editTextPassword2 = findViewById(R.id.editTextPassword2);
-        backButton = findViewById(R.id.backToLoginScreenButton);
+        backButton = findViewById(R.id.backButtonRegisterActivity);
         registerButton = findViewById(R.id.registerButton);
         helpPasswordButton = findViewById(R.id.helpPasswordButton);
 
@@ -82,7 +82,7 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
         editTextPassword.clearFocus();
         editTextPassword2.clearFocus();
 
-        if (id == R.id.backToLoginScreenButton) {
+        if (id == R.id.backButtonRegisterActivity) {
             onBackPressed();
         } else if (id == R.id.helpPasswordButton) {
             AlertDialog.Builder builder = new AlertDialog.Builder(RegisterScreen.this);

@@ -48,7 +48,7 @@ public class Add extends AppCompatActivity implements View.OnClickListener,
 
         databaseOp = new DatabaseOp();
 
-        buttonDatePicker = findViewById(R.id.datepicker);
+        buttonDatePicker = findViewById(R.id.buttonDatepickerDetailsActivity);
         initDatePicker();
         //buttonDatePicker.setText(getTodaysDay());
         Calendar calendar = Calendar.getInstance();
@@ -59,12 +59,12 @@ public class Add extends AppCompatActivity implements View.OnClickListener,
         //default ausgewähltes datum beim Öffnen von datum für den datum spinner
         datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
 
-        backButton = findViewById(R.id.imageButton);
+        backButton = findViewById(R.id.backButtonDetailsActivity);
         backButton.setOnClickListener(this);
-        saveButton = findViewById(R.id.SaveButton);
+        saveButton = findViewById(R.id.saveButton);
         saveButton.setOnClickListener(this);
 
-        prioListSpinner = findViewById(R.id.PrioListe);
+        prioListSpinner = findViewById(R.id.prioListe);
         ArrayAdapter<CharSequence> prioListSpinnerAdapter =
                 ArrayAdapter.createFromResource(this, R.array.numbers,
                         android.R.layout.simple_spinner_item);
@@ -87,12 +87,12 @@ public class Add extends AppCompatActivity implements View.OnClickListener,
     public void onClick(View v) {
         int id = v.getId();
 
-        if (id == R.id.imageButton) {
+        if (id == R.id.backButtonDetailsActivity) {
             onBackPressed();
-        } else if (id == R.id.SaveButton) {
-            EditText terminNameEditText = findViewById(R.id.Terminname_edit_text);
+        } else if (id == R.id.saveButton) {
+            EditText terminNameEditText = findViewById(R.id.editTextTerminName);
             String terminName = terminNameEditText.getText().toString();
-            EditText beschreibungEditText = findViewById(R.id.Beschreibung_edit_text);
+            EditText beschreibungEditText = findViewById(R.id.editTextBeschreibung);
             String beschreibung = beschreibungEditText.getText().toString();
             String prio = String.valueOf(prioListSpinner.getSelectedItem());
 
@@ -101,10 +101,11 @@ public class Add extends AppCompatActivity implements View.OnClickListener,
                 LocalDate datum = LocalDate.of(datePickerDialog.getDatePicker().getYear(),
                         datePickerDialog.getDatePicker().getMonth() + 1,
                         datePickerDialog.getDatePicker().getDayOfMonth());
-                Termin termin = new Termin(terminName, beschreibung, prio, datum, saveCounter);
+                Termin termin = new Termin(terminName, beschreibung, prio, datum, saveCounter,
+                        false);
                 Log.d("Weeklyplanner", String.valueOf(termin));
                 saveAppointment(LoginScreen.email, terminName, beschreibung, prio, datum,
-                        termin.getId());
+                        termin.getId(), false);
                 getSpecificTerminliste(datum.getDayOfWeek().getValue()).add(termin);
                 SpecificDay.refresh_needed = true;
                 onBackPressed();

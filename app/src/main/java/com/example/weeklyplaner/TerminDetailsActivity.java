@@ -58,14 +58,14 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
 
         databaseOp = new DatabaseOp();
 
-        backButton = findViewById(R.id.imageButton);
+        backButton = findViewById(R.id.backButtonDetailsActivity);
         backButton.setOnClickListener(this);
-        editButton = findViewById(R.id.EditButton_details);
+        editButton = findViewById(R.id.editButton);
         editButton.setOnClickListener(this);
-        deleteButton = findViewById(R.id.DeleteButton_details);
+        deleteButton = findViewById(R.id.deleteButton);
         deleteButton.setOnClickListener(this);
 
-        buttonDatePicker = findViewById(R.id.datepicker);
+        buttonDatePicker = findViewById(R.id.buttonDatepickerDetailsActivity);
         initDatePicker();
         buttonDatePicker.setText(getTodaysDay());
         Calendar calendar = Calendar.getInstance();
@@ -75,10 +75,9 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
         //default ausgewähltes datum beim Öffnen von datum für den datum spinner
         datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
 
-
         // Finde die TextViews in deinem Layout
-        terminNameTextView = findViewById(R.id.Terminname_edit_text_details);
-        terminBeschreibungTextView = findViewById(R.id.Beschreibung_edit_text_details);
+        terminNameTextView = findViewById(R.id.editTextTerminNameDetailsActivity);
+        terminBeschreibungTextView = findViewById(R.id.editTextBeschreibungDetailsActivity);
 
         // Erhalte die Ã¼bergebenen Daten aus dem Intent
         Intent intent = getIntent();
@@ -88,7 +87,7 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
         String terminPrio = intent.getStringExtra("termin_prio");
         terminDatum = intent.getStringExtra("termin_datum");
 
-        terminPrioSpinner = findViewById(R.id.PrioListe_details);
+        terminPrioSpinner = findViewById(R.id.prioListeDetailsActivity);
         ArrayAdapter<CharSequence> prioListSpinnerAdapter =
                 ArrayAdapter.createFromResource(this, R.array.numbers,
                         android.R.layout.simple_spinner_item);
@@ -116,13 +115,13 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        if (id == R.id.imageButton) {
+        if (id == R.id.backButtonDetailsActivity) {
             onBackPressed();
-        } else if (id == R.id.EditButton_details) {
+        } else if (id == R.id.editButton) {
             deleteCurrentAppointment();
-            EditText terminNameEditText = findViewById(R.id.Terminname_edit_text_details);
+            EditText terminNameEditText = findViewById(R.id.editTextTerminNameDetailsActivity);
             String terminName_new = terminNameEditText.getText().toString();
-            EditText beschreibungEditText = findViewById(R.id.Beschreibung_edit_text_details);
+            EditText beschreibungEditText = findViewById(R.id.editTextBeschreibungDetailsActivity);
             String beschreibung_new = beschreibungEditText.getText().toString();
             String prio_new = String.valueOf(terminPrioSpinner.getSelectedItem());
             LocalDate datum = LocalDate.of(datePickerDialog.getDatePicker().getYear(),
@@ -132,15 +131,15 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
             getHighestIDFromDB(LoginScreen.email, maxID -> {
                 int saveCounter = maxID + 1;
                 Termin termin = new Termin(terminName_new, beschreibung_new, prio_new,
-                        datum, saveCounter);
+                        datum, saveCounter, false);
                 Log.d("Weeklyplanner", String.valueOf(termin));
                 saveAppointment(LoginScreen.email, terminName_new, beschreibung_new,
-                        prio_new, datum, termin.getId());
+                        prio_new, datum, termin.getId(), false);
                 getSpecificTerminliste(datum.getDayOfWeek().getValue()).add(termin);
                 SpecificDay.refresh_needed = true;
                 onBackPressed();
             });
-        } else if (id == R.id.DeleteButton_details) {
+        } else if (id == R.id.deleteButton) {
             // TODO NEXT RELEASE: POPUP ARE YOU SURE
             deleteCurrentAppointment();
             onBackPressed();
