@@ -104,6 +104,8 @@ public class Week extends AppCompatActivity implements View.OnClickListener {
             if (dayOfWeek == (Calendar.MONDAY + i)) {
                 buttons[i].setBackgroundColor(Color.parseColor("#7b68ee"));
                 break;
+            } else {
+                buttons[i].setBackgroundColor(Color.GRAY);
             }
         }
     }
