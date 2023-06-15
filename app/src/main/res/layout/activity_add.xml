@@ -83,11 +83,12 @@
         android:layout_centerHorizontal="true"
         android:layout_marginStart="62dp"
         android:layout_marginTop="148dp"
-        android:hint="@string/wieLautetDerTerminName"
         android:background="#ffffff"
         android:elevation="10dp"
         android:gravity="start"
-        android:padding="5dp" />
+        android:hint="@string/wieLautetDerTerminName"
+        android:padding="5dp"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <Spinner
         android:id="@+id/prioListe"
@@ -97,7 +98,8 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="56dp"
-        android:layout_marginBottom="252dp" />
+        android:layout_marginBottom="252dp"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <Button
         android:id="@+id/saveButton"
