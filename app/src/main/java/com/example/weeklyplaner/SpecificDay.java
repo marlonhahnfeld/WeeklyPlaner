@@ -15,6 +15,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +32,7 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
     private Termin_RecyclerView_Adapter adapter_sort;
     public RecyclerView specificDay_TerminListe_RecyclerView;
 
-    public int currentDay(){
+    public int currentDay() {
         Intent intent = getIntent();
         switch (intent.getStringExtra("button_text")) {
             case "Montag":
@@ -47,8 +49,12 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
                 return 6;
             case "Sonntag":
                 return 7;
-            default:
+            case "offene Termine":
                 return -1;
+            case "Zukünftige Termine":
+                return -2;
+            default:
+                return -99;
         }
     }
 
@@ -65,8 +71,33 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
         RecyclerView.Adapter adapter = specificDay_TerminListe_RecyclerView.getAdapter();
         if (adapter instanceof Termin_RecyclerView_Adapter) {
             Termin_RecyclerView_Adapter terminAdapter = (Termin_RecyclerView_Adapter) adapter;
-            terminAdapter.setTerminliste(getSpecificTerminlisteInCurrentWeek(currentDay()));
-            terminAdapter.notifyDataSetChanged();
+
+            if (currentDay() != -1 || currentDay() != -2) {
+                terminAdapter.setTerminliste(getSpecificTerminlisteInCurrentWeek(currentDay()));
+                terminAdapter.notifyDataSetChanged();
+            } else {
+                switch (currentDay()) {
+                    case -1:
+                        // offene termine
+                        terminAdapter.setTerminliste(MainActivity.abgelaufene_terminliste);
+                        terminAdapter.notifyDataSetChanged();
+
+                    case -2:
+                        // zukünftige termine
+                        ArrayList<Termin>[] terminListe = MainActivity.terminListe;
+                        LocalDate currentDate = LocalDate.now();
+                        for (int i = 0; i < MainActivity.terminListe.length - 1; i++) {
+                            for (int j = 0; j < terminListe[i].size() - 1; j++) {
+                                if ((terminListe[i].get(j).getActualDatum().getDayOfMonth() >
+                                        (currentDate.getDayOfMonth() + (DayOfWeek.SUNDAY.getValue() - currentDate.getDayOfWeek().getValue())))) {
+                                    MainActivity.zukuenftige_terminliste.add(terminListe[i].get(j));
+                                }
+                            }
+                        }
+                        terminAdapter.setTerminliste(MainActivity.zukuenftige_terminliste);
+                        terminAdapter.notifyDataSetChanged();
+                }
+            }
         }
     }
 
@@ -91,14 +122,38 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
 
         specificDay_TerminListe_RecyclerView = findViewById(R.id.terminlisteRecyclerView);
         Termin_RecyclerView_Adapter adapter;
-        adapter = new Termin_RecyclerView_Adapter(this,
-                getSpecificTerminlisteInCurrentWeek(currentDay()));
-        specificDay_TerminListe_RecyclerView.setAdapter(adapter);
-        specificDay_TerminListe_RecyclerView
-                .setLayoutManager(new LinearLayoutManager(this));
 
-        adapter = getAdapterForCurrentDay();
-        specificDay_TerminListe_RecyclerView.setAdapter(adapter);
+        if (!(currentDay() == -1 || currentDay() == -2)) {
+            adapter = new Termin_RecyclerView_Adapter(this,
+                    getSpecificTerminlisteInCurrentWeek(currentDay()));
+            specificDay_TerminListe_RecyclerView.setAdapter(adapter);
+            specificDay_TerminListe_RecyclerView
+                    .setLayoutManager(new LinearLayoutManager(this));
+
+            adapter = getAdapterForCurrentDay();
+            specificDay_TerminListe_RecyclerView.setAdapter(adapter);
+        } else {
+            switch (currentDay()) {
+                case -1:
+                    adapter = new Termin_RecyclerView_Adapter(this,
+                            MainActivity.abgelaufene_terminliste);
+                    specificDay_TerminListe_RecyclerView.setAdapter(adapter);
+                    specificDay_TerminListe_RecyclerView
+                            .setLayoutManager(new LinearLayoutManager(this));
+
+                    adapter = getAdapterForCurrentDay();
+                    specificDay_TerminListe_RecyclerView.setAdapter(adapter);
+                case -2:
+                    adapter = new Termin_RecyclerView_Adapter(this,
+                            MainActivity.zukuenftige_terminliste);
+                    specificDay_TerminListe_RecyclerView.setAdapter(adapter);
+                    specificDay_TerminListe_RecyclerView
+                            .setLayoutManager(new LinearLayoutManager(this));
+
+                    adapter = getAdapterForCurrentDay();
+                    specificDay_TerminListe_RecyclerView.setAdapter(adapter);
+            }
+        }
 
         adapter_sort = getAdapterForCurrentDay();
         specificDay_TerminListe_RecyclerView.setAdapter(adapter_sort);
@@ -143,7 +198,17 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
     }
 
     private void sortAscendingByPriority() {
-        List<Termin> terminliste = getSpecificTerminlisteInCurrentWeek(currentDay());
+        List<Termin> terminliste = null;
+        if (!(currentDay() == -1 || currentDay() == -2)) {
+            terminliste = getSpecificTerminlisteInCurrentWeek(currentDay());
+        } else {
+            switch (currentDay()) {
+                case -1:
+                    terminliste = MainActivity.abgelaufene_terminliste;
+                case -2:
+                    terminliste = MainActivity.zukuenftige_terminliste;
+            }
+        }
         TerminSorter.sortAscendingByPriority(terminliste);
 
         for (Termin termin : terminliste) {
@@ -156,7 +221,14 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
     }
 
     private void sortDescendingByPriority() {
-        List<Termin> terminliste = getSpecificTerminlisteInCurrentWeek(currentDay());
+        List<Termin> terminliste = null;
+        if (!(currentDay() == -1 || currentDay() == -2)) {
+            terminliste = getSpecificTerminlisteInCurrentWeek(currentDay());
+        } else{
+            switch (currentDay()) {
+                case -1: terminliste = MainActivity.abgelaufene_terminliste;
+                case -2: terminliste = MainActivity.zukuenftige_terminliste;
+            }}
         TerminSorter.sortDescendingByPriority(terminliste);
 
         for (Termin termin : terminliste) {
@@ -169,7 +241,14 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
     }
 
     private Termin_RecyclerView_Adapter getAdapterForCurrentDay() {
-        List<Termin> terminliste = getSpecificTerminlisteInCurrentWeek(currentDay());
+        List<Termin> terminliste = null;
+        if (!(currentDay() == -1 || currentDay() == -2)) {
+            terminliste = getSpecificTerminlisteInCurrentWeek(currentDay());
+        } else{
+            switch (currentDay()) {
+                case -1: terminliste = MainActivity.abgelaufene_terminliste;
+                case -2: terminliste = MainActivity.zukuenftige_terminliste;
+            }}
         Termin_RecyclerView_Adapter adapter = new Termin_RecyclerView_Adapter((Context) this,
                 (ArrayList<Termin>) terminliste);
         specificDay_TerminListe_RecyclerView
