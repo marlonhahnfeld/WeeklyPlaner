@@ -51,9 +51,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void refreshMainActivity() {
         LocalDate currentDate = LocalDate.now();
         int currentDayOfWeek = currentDate.getDayOfWeek().getValue();
-
         ArrayList<Termin> currentDayTerminliste = getSpecificTerminliste(currentDayOfWeek + 1);
-
         adapter = new Termin_RecyclerView_Adapter(this, currentDayTerminliste);
         recyclerView.setAdapter(adapter);
     }
@@ -86,7 +84,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         refreshMainActivity();
     }
-
 
 
     @Override
@@ -128,20 +125,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void sortAscendingByPriority() {
-        ArrayList<Termin> currentWeekTerminliste = getSpecificTerminlisteInCurrentWeek(dayOfWeek-1);
+        ArrayList<Termin> currentWeekTerminliste = getSpecificTerminlisteInCurrentWeek(dayOfWeek - 1);
         TerminSorter.sortAscendingByPriority(currentWeekTerminliste);
         adapter.setTerminliste(currentWeekTerminliste);
         adapter.notifyDataSetChanged();
     }
 
     private void sortDescendingByPriority() {
-        ArrayList<Termin> currentWeekTerminliste = getSpecificTerminlisteInCurrentWeek(dayOfWeek-1);
+        ArrayList<Termin> currentWeekTerminliste = getSpecificTerminlisteInCurrentWeek(dayOfWeek - 1);
         TerminSorter.sortDescendingByPriority(currentWeekTerminliste);
         adapter.setTerminliste(currentWeekTerminliste);
         adapter.notifyDataSetChanged();
     }
-
-
 
 
 }
