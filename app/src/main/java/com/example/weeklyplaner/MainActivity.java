@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button button_for_days;
     private ImageButton addButton;
     private RecyclerView recyclerView;
-    protected static ArrayList<Termin>[] terminListe = new ArrayList[7];
+    protected static ArrayList<Termin>[] terminListe = new ArrayList[9];
     private Termin_RecyclerView_Adapter adapter;
     private Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Europe/Berlin"));
     public static ArrayList<Termin> montag_terminliste = new ArrayList<>();
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static ArrayList<Termin> zukuenftige_terminliste = new ArrayList<>();
     protected int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
 
-    public LocalDate currentDate = LocalDate.now();
+    public static LocalDate currentDate = LocalDate.now();
     private ImageButton filterButton;
 
     // REFRESH PAGE CODE
@@ -87,6 +87,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         terminListe[4] = donnerstag_terminliste;
         terminListe[5] = freitag_terminliste;
         terminListe[6] = samstag_terminliste;
+        terminListe[7] = abgelaufene_terminliste;
+        terminListe[8] = zukuenftige_terminliste;
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         refreshMainActivity();
@@ -98,13 +100,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // TODO alle abgelaufene Termine auf einmal abhaken können bzw die gesamte List abhaken
 
         int currentDayOfWeek = currentDate.getDayOfWeek().getValue();
-        if (currentDayOfWeek == 1) {
+        if (currentDayOfWeek == 4) {
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
             builder.setCancelable(true);
             builder.setTitle("Eine neue Woche hat begonnen!");
             String abgelaufeneTermine = "";
 
-            for (int i = 0; i < terminListe.length-1; i++) {
+            for (int i = 0; i < terminListe.length-3; i++) {
                 for (int j = 0; j < terminListe[i].size()-1; j++) {
                     if ((!terminListe[i].get(j).isChecked()) && (terminListe[i].get(j).getActualDatum().getDayOfMonth() <
                             (currentDate.getDayOfMonth() - (currentDate.getDayOfWeek().getValue()-1)))){
@@ -130,6 +132,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // TODO zukünftige Termine anzeigen -> Independent List für alle vorausliegenden Termine wie für abgelaufene List erstellen
         // TODO intelligente Positionierung die nicht heraussticht aber klar erkannt wird falls man fehlerhaften Termin hat
         //  und bearbeiten möchte (automatisch nach Prio sortiert?)
+        ArrayList<Termin>[] terminListe = MainActivity.terminListe;
+        LocalDate currentDate = LocalDate.now();
+        for (int i = 0; i < terminListe.length - 3; i++) {
+            for (int j = 0; j < terminListe[i].size() - 1; j++) {
+                if ((terminListe[i].get(j).getActualDatum().getDayOfMonth() >
+                        (currentDate.getDayOfMonth() + (DayOfWeek.SUNDAY.getValue() - currentDate.getDayOfWeek().getValue())))) {
+                    MainActivity.zukuenftige_terminliste.add(terminListe[i].get(j));
+                }
+            }
+        }
     }
 
 

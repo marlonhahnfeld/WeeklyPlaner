@@ -23,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Objects;
 
@@ -136,7 +137,16 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
                 Log.d("Weeklyplanner", String.valueOf(termin));
                 saveAppointment(LoginScreen.email, terminName_new, beschreibung_new,
                         prio_new, datum, termin.getId(), false);
-                getSpecificTerminliste(datum.getDayOfWeek().getValue()).add(termin);
+                Intent intent = getIntent();
+                int termin_montastag = intent.getIntExtra("termin_montastag", -1);
+                if (termin_montastag < (MainActivity.currentDate.getDayOfMonth() - (MainActivity.currentDate.getDayOfWeek().getValue()-1))){
+                    getSpecificTerminliste(8).add(termin);
+                } else if (termin_montastag > (MainActivity.currentDate.getDayOfMonth() + (DayOfWeek.SUNDAY.getValue() - MainActivity.currentDate.getDayOfWeek().getValue()))){
+                    getSpecificTerminliste(9).add(termin);
+                }
+                else {
+                    getSpecificTerminliste(datum.getDayOfWeek().getValue()).add(termin);
+                }
                 SpecificDay.refresh_needed = true;
                 onBackPressed();
             });
@@ -148,9 +158,19 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
     }
 
     public void deleteCurrentAppointment() {
+        Intent intent = getIntent();
+        int termin_montastag = intent.getIntExtra("termin_montastag", -1);
         LocalDate date = LocalDate.parse(terminDatum);
-        terminTag = date.getDayOfWeek().getValue();
-        for (Termin termin : Objects.requireNonNull(getSpecificTerminliste(terminTag))) {
+        if (termin_montastag < (MainActivity.currentDate.getDayOfMonth() - (MainActivity.currentDate.getDayOfWeek().getValue()-1))){
+            terminTag = 8;
+        } else if (termin_montastag > (MainActivity.currentDate.getDayOfMonth() + (DayOfWeek.SUNDAY.getValue() - MainActivity.currentDate.getDayOfWeek().getValue()))){
+            terminTag = 9;
+        }
+        else {
+            terminTag = date.getDayOfWeek().getValue();
+        }
+        ArrayList<Termin> termine =  getSpecificTerminliste(terminTag);
+        for (Termin termin : getSpecificTerminliste(terminTag)) {
             if (termin.getId() == terminId) {
                 deleteAppointment(termin.getId(), LoginScreen.email);
                 getSpecificTerminliste(terminTag).remove(termin);
