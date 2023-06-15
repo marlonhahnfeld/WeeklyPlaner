@@ -11,5 +11,6 @@
     <color name="blue">#0022FF</color>
     <color name="light_purple">#FCF1FF</color>
     <color name="purple">#E17FFB</color>
+    <color name="light_gray">#8FFFFFFF</color>
 
 </resources>

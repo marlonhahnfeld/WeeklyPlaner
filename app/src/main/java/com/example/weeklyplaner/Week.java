@@ -105,7 +105,7 @@ public class Week extends AppCompatActivity implements View.OnClickListener {
                 buttons[i].setBackgroundColor(Color.parseColor("#7b68ee"));
                 break;
             } else {
-                buttons[i].setBackgroundColor(Color.GRAY);
+                buttons[i].setBackgroundColor(Color.LTGRAY);
             }
         }
     }
@@ -114,7 +114,6 @@ public class Week extends AppCompatActivity implements View.OnClickListener {
     public void onClick(View v) {
         Intent intent;
         int id = v.getId();
-
         if (id == R.id.montag || id == R.id.dienstag || id == R.id.mittwoch ||
                 id == R.id.donnerstag || id == R.id.freitag || id == R.id.samstag ||
                 id == R.id.sonntag) {

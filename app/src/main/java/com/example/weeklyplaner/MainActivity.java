@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ImageButton filterButton;
 
     // REFRESH PAGE CODE
+    // REFRESH PAGE CODE
     @Override
     protected void onResume() {
         super.onResume();
@@ -49,11 +50,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void refreshMainActivity() {
-        LocalDate currentDate = LocalDate.now();
-        int currentDayOfWeek = currentDate.getDayOfWeek().getValue();
-        ArrayList<Termin> currentDayTerminliste = getSpecificTerminliste(currentDayOfWeek + 1);
-        adapter = new Termin_RecyclerView_Adapter(this, currentDayTerminliste);
+        ArrayList<Termin> currentWeekTerminliste =
+                getSpecificTerminlisteInCurrentWeek(dayOfWeek - 1);
+        adapter = new Termin_RecyclerView_Adapter(this, currentWeekTerminliste);
+        adapter.setTerminliste(currentWeekTerminliste);
         recyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 
 
