@@ -7,18 +7,40 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <RelativeLayout
+        android:id="@+id/cardViewLayout"
+        android:layout_width="match_parent"
+        android:layout_height="250dp">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginTop="-45dp"
+            android:layout_marginBottom="5dp"
+            android:elevation="10dp"
+            app:cardCornerRadius="50dp">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/cloudbackground_purple" />
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
+
     <ImageButton
         android:id="@+id/backButtonWeekActivity"
         android:layout_width="65dp"
         android:layout_height="50dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#00F8F5F5"
         android:contentDescription="@string/back"
         app:srcCompat="?attr/homeAsUpIndicator"
-        android:backgroundTint="#00F8F5F5"
-        app:tint="#000000"/>
+        app:tint="@color/white" />
 
     <Button
         android:id="@+id/Termin1"
@@ -37,38 +59,34 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="87dp"
+        android:backgroundTint="#00F8F5F5"
         android:contentDescription="@string/add"
         app:srcCompat="@android:drawable/ic_menu_add"
-        android:backgroundTint="#00F8F5F5"
-        app:tint="#000000"/>
+        app:tint="#000000" />
 
-    <Button
+    <TextView
         android:id="@+id/heutigerButton"
-        android:layout_width="253dp"
-        android:layout_height="73dp"
-        android:layout_alignParentBottom="false"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="87dp"
-        android:layout_marginEnd="79dp"
-        android:background="#000000"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="100dp"
         android:fadingEdge="none"
-        android:text="@string/heute" />
-
+        android:fontFamily="@font/gothammedium1"
+        android:text="@string/heute"
+        android:textColor="@color/white"
+        android:textSize="48sp" />
 
     <ImageButton
         android:id="@+id/SortButtonFilter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
-        android:layout_marginEnd="16dp"
+        android:layout_alignParentEnd="true"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:backgroundTint="#00F8F5F5"
         android:contentDescription="@string/sort"
         app:srcCompat="@android:drawable/ic_menu_sort_by_size"
-        app:tint="#000000" />
-
-
-
-
+        app:tint="@color/white" />
 </RelativeLayout>

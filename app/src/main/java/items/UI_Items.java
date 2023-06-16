@@ -2,6 +2,7 @@ package items;
 
 import android.animation.ObjectAnimator;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
 
 public class UI_Items {
 
@@ -17,5 +18,6 @@ public class UI_Items {
         animation.setDuration(duration);
         animation.start();
     }
+
 
 }

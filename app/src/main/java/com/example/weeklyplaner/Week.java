@@ -2,6 +2,7 @@ package com.example.weeklyplaner;
 
 import static com.example.weeklyplaner.Utils.getSpecificTerminlisteInCurrentWeek;
 
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -43,17 +44,10 @@ public class Week extends AppCompatActivity implements View.OnClickListener {
 
         for (int i = 0; i < 7; i++) {
             buttons[i] = findViewById(buttonIds[i]);
+            buttons[i].setOnClickListener(this);
             doneTextViews[i] = findViewById(doneIds[i]);
             notDoneTextViews[i] = findViewById(notDoneIds[i]);
         }
-
-        buttons[0].setOnClickListener(this);
-        buttons[1].setOnClickListener(this);
-        buttons[2].setOnClickListener(this);
-        buttons[3].setOnClickListener(this);
-        buttons[4].setOnClickListener(this);
-        buttons[5].setOnClickListener(this);
-        buttons[6].setOnClickListener(this);
 
         for (int i = 0; i < 7; i++) {
             String doneText;
@@ -65,7 +59,53 @@ public class Week extends AppCompatActivity implements View.OnClickListener {
             notDoneTextViews[i].setText(notDoneText);
         }
 
+        for (int i = 0; i < 7; i++) {
+            animateButtonFromRight(buttons[i], doneTextViews[i], notDoneTextViews[i], i);
+        }
+
+        animateButtonFromRight(findViewById(R.id.openAppointments));
+
         highlightTodayButton();
+    }
+
+    /**
+     * Methode um die Buttons mit ihrem Text aus dem Array von rechts einfliegen zu lassen
+     *
+     * @param button      der Button der animiert eingeflogen werden soll
+     * @param doneText    die Anzahl der erledigten Tasks die mit dem Button zsm. kommen
+     * @param notDoneText die Anzahl der nicht erledigten Tasks die mit dem Button zsm. kommen
+     * @param delay       der Wert der Verzögerung, sodass eine Treppe entstehen kann
+     */
+    private void animateButtonFromRight(View button, TextView doneText, TextView notDoneText,
+                                        int delay) {
+        int screenWidth = getResources().getDisplayMetrics().widthPixels;
+        button.setTranslationX(screenWidth);
+        doneText.setTranslationX(screenWidth);
+        notDoneText.setTranslationX(screenWidth);
+
+        ObjectAnimator buttonAnimator =
+                ObjectAnimator.ofFloat(button, "translationX", 0f);
+        ObjectAnimator doneTextAnimator =
+                ObjectAnimator.ofFloat(doneText, "translationX", 0f);
+        ObjectAnimator notDoneTextAnimator =
+                ObjectAnimator.ofFloat(notDoneText, "translationX", 0f);
+
+        int animationDuration = 500 + (delay * 100);
+        buttonAnimator.setDuration(animationDuration);
+        doneTextAnimator.setDuration(animationDuration);
+        notDoneTextAnimator.setDuration(animationDuration);
+
+        buttonAnimator.start();
+        doneTextAnimator.start();
+        notDoneTextAnimator.start();
+    }
+
+    private void animateButtonFromRight(View button) {
+        button.setTranslationX(getResources().getDisplayMetrics().widthPixels);
+        ObjectAnimator animator =
+                ObjectAnimator.ofFloat(button, "translationX", 0f);
+        animator.setDuration(1200);
+        animator.start();
     }
 
     @Override

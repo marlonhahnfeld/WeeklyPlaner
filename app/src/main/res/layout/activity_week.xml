@@ -26,7 +26,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                android:src="@drawable/cloudbackground_purple" />
+                android:src="@drawable/cloudbackground_purple"
+                android:contentDescription="@string/background" />
         </androidx.cardview.widget.CardView>
     </RelativeLayout>
 
@@ -41,7 +42,8 @@
         android:backgroundTint="#00F8F5F5"
         android:contentDescription="@string/back"
         app:srcCompat="?attr/homeAsUpIndicator"
-        app:tint="@color/white" />
+        app:tint="@color/white"
+        tools:ignore="ImageContrastCheck" />
 
     <TextView
         android:id="@+id/yourWeek"
@@ -53,7 +55,8 @@
         android:text="@string/yourWeek"
         android:textAlignment="center"
         android:textColor="@color/white"
-        android:textSize="50sp" />
+        android:textSize="50sp"
+        tools:ignore="TextContrastCheck" />
 
     <RelativeLayout
         android:id="@+id/montagLayout"

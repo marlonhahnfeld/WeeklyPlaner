@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,12 +26,12 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
     private ImageButton BackButton;
     private ImageButton filterButton;
     private ImageButton addButton;
-    public Button heutigerButton;
+    public TextView heutigerButton;
     static boolean refresh_needed = false;
     private Termin_RecyclerView_Adapter adapter_sort;
     public RecyclerView specificDay_TerminListe_RecyclerView;
 
-    public int currentDay(){
+    public int currentDay() {
         Intent intent = getIntent();
         switch (intent.getStringExtra("button_text")) {
             case "Montag":
@@ -78,7 +79,7 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
         BackButton = findViewById(R.id.backButtonSpecificDayActivity);
         BackButton.setOnClickListener(this);
 
-        filterButton = findViewById(R.id.backButtonWeekActivity);
+        filterButton = findViewById(R.id.filterButton);
         filterButton.setOnClickListener(this);
 
         addButton = findViewById(R.id.addButton);
