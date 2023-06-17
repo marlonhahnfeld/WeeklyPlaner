@@ -114,9 +114,6 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
 
         if (id == R.id.backButtonSpecificDayActivity) {
             onBackPressed();
-        } else if (id == R.id.backButtonWeekActivity) {
-            intent = new Intent(this, Sort.class);
-            showFilterPopupMenu(v);
         } else if (id == R.id.addButton) {
             intent = new Intent(this, Add.class);
             startActivity(intent);
