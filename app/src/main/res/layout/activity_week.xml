@@ -11,7 +11,9 @@
     <RelativeLayout
         android:id="@+id/cardViewLayout"
         android:layout_width="match_parent"
-        android:layout_height="250dp">
+        android:layout_height="250dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -25,9 +27,9 @@
                 android:id="@+id/imageView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:contentDescription="@string/background"
                 android:scaleType="centerCrop"
-                android:src="@drawable/cloudbackground_purple"
-                android:contentDescription="@string/background" />
+                android:src="@drawable/cloudbackground_purple" />
         </androidx.cardview.widget.CardView>
     </RelativeLayout>
 
@@ -81,24 +83,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="25dp"
             android:layout_marginEnd="100dp"
             android:fontFamily="@font/gothammedium1"
             android:textColor="@android:color/white"
             android:textSize="14sp"
             tools:ignore="RelativeOverlap" />
 
-        <TextView
-            android:id="@+id/notDoneMo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="35dp"
-            android:layout_marginEnd="100dp"
-            android:fontFamily="@font/gothammedium1"
-            android:textColor="@android:color/white"
-            android:textSize="14sp"
-            tools:ignore="RelativeOverlap" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -131,17 +122,6 @@
             android:textSize="14sp"
             tools:ignore="RelativeOverlap" />
 
-        <TextView
-            android:id="@+id/notDoneDi"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="35dp"
-            android:layout_marginEnd="100dp"
-            android:fontFamily="@font/gothammedium1"
-            android:textColor="@android:color/white"
-            android:textSize="14sp"
-            tools:ignore="RelativeOverlap" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -174,17 +154,6 @@
             android:textSize="14sp"
             tools:ignore="RelativeOverlap" />
 
-        <TextView
-            android:id="@+id/notDoneMi"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="35dp"
-            android:layout_marginEnd="100dp"
-            android:fontFamily="@font/gothammedium1"
-            android:textColor="@android:color/white"
-            android:textSize="14sp"
-            tools:ignore="RelativeOverlap" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -211,18 +180,6 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="15dp"
-            android:layout_marginEnd="100dp"
-            android:fontFamily="@font/gothammedium1"
-            android:textColor="@android:color/white"
-            android:textSize="14sp"
-            tools:ignore="RelativeOverlap" />
-
-        <TextView
-            android:id="@+id/notDoneDo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="35dp"
             android:layout_marginEnd="100dp"
             android:fontFamily="@font/gothammedium1"
             android:textColor="@android:color/white"
@@ -259,18 +216,6 @@
             android:textColor="@android:color/white"
             android:textSize="14sp"
             tools:ignore="RelativeOverlap" />
-
-        <TextView
-            android:id="@+id/notDoneFr"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="35dp"
-            android:layout_marginEnd="100dp"
-            android:fontFamily="@font/gothammedium1"
-            android:textColor="@android:color/white"
-            android:textSize="14sp"
-            tools:ignore="RelativeOverlap" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -302,18 +247,6 @@
             android:textColor="@android:color/white"
             android:textSize="14sp"
             tools:ignore="RelativeOverlap" />
-
-        <TextView
-            android:id="@+id/notDoneSa"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="35dp"
-            android:layout_marginEnd="100dp"
-            android:fontFamily="@font/gothammedium1"
-            android:textColor="@android:color/white"
-            android:textSize="14sp"
-            tools:ignore="RelativeOverlap" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -340,18 +273,6 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="15dp"
-            android:layout_marginEnd="100dp"
-            android:fontFamily="@font/gothammedium1"
-            android:textColor="@android:color/white"
-            android:textSize="14sp"
-            tools:ignore="RelativeOverlap" />
-
-        <TextView
-            android:id="@+id/notDoneSo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="35dp"
             android:layout_marginEnd="100dp"
             android:fontFamily="@font/gothammedium1"
             android:textColor="@android:color/white"

@@ -2,14 +2,14 @@ package com.example.weeklyplaner;
 
 import static com.example.weeklyplaner.Utils.getSpecificTerminlisteInCurrentWeek;
 
-import android.content.Context;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,6 +26,8 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
     private ImageButton BackButton;
     private ImageButton filterButton;
     private ImageButton addButton;
+    @SuppressLint("StaticFieldLeak")
+    public static ProgressBar progressBar;
     public TextView heutigerButton;
     static boolean refresh_needed = false;
     private Termin_RecyclerView_Adapter adapter_sort;
@@ -56,7 +58,6 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
     @Override
     protected void onResume() {
         super.onResume();
-
         // Refresh the activity here
         refreshSpecificDay();
     }
@@ -86,6 +87,8 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
         addButton.setOnClickListener(this);
 
         heutigerButton = findViewById(R.id.heutigerButton);
+
+        progressBar = findViewById(R.id.progressBar);
 
         String buttonText = getIntent().getStringExtra("button_text");
         this.heutigerButton.setText(buttonText);
@@ -120,7 +123,6 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
             startActivity(intent);
         }
     }
-
 
     private static final int FILTER_OPTION_1_ID = R.id.filter_option_1;
     private static final int FILTER_OPTION_2_ID = R.id.filter_option_2;
@@ -171,7 +173,7 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
 
     private Termin_RecyclerView_Adapter getAdapterForCurrentDay() {
         List<Termin> terminliste = getSpecificTerminlisteInCurrentWeek(currentDay());
-        Termin_RecyclerView_Adapter adapter = new Termin_RecyclerView_Adapter((Context) this,
+        Termin_RecyclerView_Adapter adapter = new Termin_RecyclerView_Adapter(this,
                 (ArrayList<Termin>) terminliste);
         specificDay_TerminListe_RecyclerView
                 .setLayoutManager(new LinearLayoutManager(this));

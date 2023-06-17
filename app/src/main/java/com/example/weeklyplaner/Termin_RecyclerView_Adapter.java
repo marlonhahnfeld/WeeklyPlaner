@@ -67,10 +67,6 @@ public class Termin_RecyclerView_Adapter extends
         return terminliste.size();
     }
 
-    public static int howManyItemsIn(int day) {
-        return getSpecificTerminlisteInCurrentWeek(day).size();
-    }
-
     public static int howManyDone(int day) {
         int done = 0;
         for (Termin t : getSpecificTerminlisteInCurrentWeek(day)) {
@@ -79,6 +75,22 @@ public class Termin_RecyclerView_Adapter extends
             }
         }
         return done;
+    }
+
+    public void updateProgress() {
+        int counter = 0;
+        if (terminliste.size() == 0) {
+            SpecificDay.progressBar.setProgress(0);
+        } else {
+            for (Termin t : terminliste) {
+                if (t.isChecked()) {
+                    counter++;
+                }
+            }
+
+            int progress = (int) (((float) counter / terminliste.size()) * 100);
+            SpecificDay.progressBar.setProgress(progress, true);
+        }
     }
 
     public class TerminViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -105,12 +117,14 @@ public class Termin_RecyclerView_Adapter extends
 
                     if (isChecked) {
                         updateCheckedInDB(LoginScreen.email, termin.getId(), true);
+                        updateProgress();
                         CardView c = itemView.findViewById(R.id.cardView);
                         c.setCardBackgroundColor(ContextCompat.getColor(context, R.color.gray));
                         TerminnameTextView.setTextColor(Color.DKGRAY);
                         TerminPrioTextView.setTextColor(Color.DKGRAY);
                     } else {
                         updateCheckedInDB(LoginScreen.email, termin.getId(), false);
+                        updateProgress();
                         CardView c = itemView.findViewById(R.id.cardView);
                         c.setCardBackgroundColor(ContextCompat.getColor(context,
                                 R.color.gray_Termin));
