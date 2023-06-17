@@ -141,7 +141,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ArrayList<Termin>[] terminListe = MainActivity.terminListe;
         LocalDate currentDate = LocalDate.now();
         // 19.06.2023, 19.07.2023, 19.07.2024, 5.07.2023, 5.05.2024, 30.04.2024
-        // 19.06.2023, 19.07.2023, 19.07.2024, 5.07.2023, 5.05.2024, 30.04.2024 funktionieren
+        // 19.06.2023, 19.07.2023, 19.07.2024, 5.07.2023, 5.05.2024, 30.04.2024 funktionieren jetzt
         for (int i = 0; i < terminListe.length - 2; i++) {
             for (int j = 0; j < terminListe[i].size(); j++) {
                 if (    /* Fall 1: Tag größer  */  ((((terminListe[i].get(j).getActualDatum().getDayOfMonth() > (currentDate.getDayOfMonth() + (DayOfWeek.SUNDAY.getValue() - currentDate.getDayOfWeek().getValue()))))&& ((((terminListe[i].get(j).getActualDatum().getMonth().getValue()) >= currentDate.getMonth().getValue()) && (terminListe[i].get(j).getActualDatum().getYear() >= currentDate.getYear()))|| terminListe[i].get(j).getActualDatum().getYear() > currentDate.getYear())) ||
