@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 getSpecificTerminlisteInCurrentWeek(dayOfWeek - 1);
         adapter = new Termin_RecyclerView_Adapter(this, currentWeekTerminliste, progressBar);
         adapter.setTerminliste(currentWeekTerminliste);
+        adapter.updateProgress();
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }

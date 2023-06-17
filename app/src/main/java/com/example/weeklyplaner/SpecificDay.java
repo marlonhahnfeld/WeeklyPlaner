@@ -107,10 +107,6 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
         specificDay_TerminListe_RecyclerView.setAdapter(adapter_sort);
     }
 
-    public ProgressBar getProgressBar() {
-        return progressBar;
-    }
-
     @Override
     public void onClick(View v) {
         Intent intent;
