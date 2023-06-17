@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -33,11 +34,12 @@ public class Termin_RecyclerView_Adapter extends
     Context context;
     CardView cardView;
     ArrayList<Termin> terminliste;
+    private ProgressBar progressBar;
 
-
-    public Termin_RecyclerView_Adapter(Context context, ArrayList<Termin> terminliste) {
+    public Termin_RecyclerView_Adapter(Context context, ArrayList<Termin> terminliste, ProgressBar progressBar) {
         this.context = context;
         this.terminliste = terminliste;
+        this.progressBar = progressBar;
     }
 
     @NonNull
@@ -77,10 +79,11 @@ public class Termin_RecyclerView_Adapter extends
         return done;
     }
 
+    // Aktualisierung der Methode updateProgress()
     public void updateProgress() {
         int counter = 0;
         if (terminliste.size() == 0) {
-            SpecificDay.progressBar.setProgress(0);
+            progressBar.setProgress(0);
         } else {
             for (Termin t : terminliste) {
                 if (t.isChecked()) {
@@ -89,9 +92,10 @@ public class Termin_RecyclerView_Adapter extends
             }
 
             int progress = (int) (((float) counter / terminliste.size()) * 100);
-            SpecificDay.progressBar.setProgress(progress, true);
+            progressBar.setProgress(progress, true);
         }
     }
+
 
     public class TerminViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView TerminnameTextView, TerminPrioTextView;

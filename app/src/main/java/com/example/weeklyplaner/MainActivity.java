@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
+import android.widget.ProgressBar;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button button_for_days;
     private ImageButton addButton;
     private RecyclerView recyclerView;
+    private ProgressBar progressBar;
     private static ArrayList<Termin>[] terminListe = new ArrayList[7];
     private Termin_RecyclerView_Adapter adapter;
     private Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Europe/Berlin"));
@@ -49,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void refreshMainActivity() {
         ArrayList<Termin> currentWeekTerminliste =
                 getSpecificTerminlisteInCurrentWeek(dayOfWeek - 1);
-        adapter = new Termin_RecyclerView_Adapter(this, currentWeekTerminliste);
+        adapter = new Termin_RecyclerView_Adapter(this, currentWeekTerminliste, progressBar);
         adapter.setTerminliste(currentWeekTerminliste);
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
@@ -71,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         addButton = findViewById(R.id.addButton);
         addButton.setOnClickListener(this);
         recyclerView = findViewById(R.id.terminlisteRecyclerView);
+        progressBar = findViewById(R.id.progressBar);
 
         terminListe[0] = sonntag_terminliste;
         terminListe[1] = montag_terminliste;
@@ -124,14 +127,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void sortAscendingByPriority() {
-        ArrayList<Termin> currentWeekTerminliste = getSpecificTerminlisteInCurrentWeek(dayOfWeek - 1);
+        ArrayList<Termin> currentWeekTerminliste =
+                getSpecificTerminlisteInCurrentWeek(dayOfWeek - 1);
         TerminSorter.sortAscendingByPriority(currentWeekTerminliste);
         adapter.setTerminliste(currentWeekTerminliste);
         adapter.notifyDataSetChanged();
     }
 
     private void sortDescendingByPriority() {
-        ArrayList<Termin> currentWeekTerminliste = getSpecificTerminlisteInCurrentWeek(dayOfWeek - 1);
+        ArrayList<Termin> currentWeekTerminliste =
+                getSpecificTerminlisteInCurrentWeek(dayOfWeek - 1);
         TerminSorter.sortDescendingByPriority(currentWeekTerminliste);
         adapter.setTerminliste(currentWeekTerminliste);
         adapter.notifyDataSetChanged();

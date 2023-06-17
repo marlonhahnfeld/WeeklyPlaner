@@ -26,8 +26,7 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
     private ImageButton BackButton;
     private ImageButton filterButton;
     private ImageButton addButton;
-    @SuppressLint("StaticFieldLeak")
-    public static ProgressBar progressBar;
+    public ProgressBar progressBar;
     public TextView heutigerButton;
     static boolean refresh_needed = false;
     private Termin_RecyclerView_Adapter adapter_sort;
@@ -96,7 +95,7 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
         specificDay_TerminListe_RecyclerView = findViewById(R.id.terminlisteRecyclerView);
         Termin_RecyclerView_Adapter adapter;
         adapter = new Termin_RecyclerView_Adapter(this,
-                getSpecificTerminlisteInCurrentWeek(currentDay()));
+                getSpecificTerminlisteInCurrentWeek(currentDay()), progressBar);
         specificDay_TerminListe_RecyclerView.setAdapter(adapter);
         specificDay_TerminListe_RecyclerView
                 .setLayoutManager(new LinearLayoutManager(this));
@@ -106,6 +105,10 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
 
         adapter_sort = getAdapterForCurrentDay();
         specificDay_TerminListe_RecyclerView.setAdapter(adapter_sort);
+    }
+
+    public ProgressBar getProgressBar() {
+        return progressBar;
     }
 
     @Override
@@ -174,7 +177,7 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
     private Termin_RecyclerView_Adapter getAdapterForCurrentDay() {
         List<Termin> terminliste = getSpecificTerminlisteInCurrentWeek(currentDay());
         Termin_RecyclerView_Adapter adapter = new Termin_RecyclerView_Adapter(this,
-                (ArrayList<Termin>) terminliste);
+                (ArrayList<Termin>) terminliste, progressBar);
         specificDay_TerminListe_RecyclerView
                 .setLayoutManager(new LinearLayoutManager(this));
         return adapter;
