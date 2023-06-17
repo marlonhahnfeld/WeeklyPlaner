@@ -35,7 +35,8 @@ public class Utils extends AppCompatActivity {
                 return (MainActivity.sonntag_terminliste);
             // Weitere Cases für andere Termin-IDs
             default:
-                System.err.println("Something went wrong"); break;
+                System.err.println("Something went wrong");
+                break;
         }
         return null;
     }
@@ -60,4 +61,5 @@ public class Utils extends AppCompatActivity {
         WeekFields weekFields = WeekFields.of(Locale.getDefault());
         return currentDate.get(weekFields.weekOfWeekBasedYear());
     }
+
 }

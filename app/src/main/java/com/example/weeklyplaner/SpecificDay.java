@@ -120,6 +120,8 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
         } else if (id == R.id.addButton) {
             intent = new Intent(this, Add.class);
             startActivity(intent);
+        } else if (id == R.id.filterButton) {
+            showFilterPopupMenu(v);
         }
     }
 

@@ -5,13 +5,15 @@
     android:id="@+id/MainActivityLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/gray_Termin"
     tools:context=".MainActivity">
 
     <RelativeLayout
         android:id="@+id/cardViewLayout"
         android:layout_width="match_parent"
-        android:layout_height="300dp">
+        android:layout_height="300dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -19,14 +21,16 @@
             android:layout_marginTop="-40dp"
             android:layout_marginBottom="5dp"
             android:elevation="10dp"
-            app:cardCornerRadius="50dp">
+            app:cardCornerRadius="50dp"
+            tools:ignore="VisualLintBounds">
 
             <ImageView
                 android:id="@+id/imageView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
-                android:src="@drawable/cloudbackground_purple" />
+                android:src="@drawable/cloudbackground_purple"
+                android:contentDescription="@string/background" />
         </androidx.cardview.widget.CardView>
     </RelativeLayout>
 
@@ -52,7 +56,8 @@
         android:fontFamily="@font/gothammedium1"
         android:text="@string/heute"
         android:textColor="@color/white"
-        android:textSize="48sp" />
+        android:textSize="48sp"
+        tools:ignore="RelativeOverlap,TextContrastCheck" />
 
     <Button
         android:id="@+id/buttonMoSo"
@@ -100,5 +105,6 @@
         android:backgroundTint="#00F8F5F5"
         android:contentDescription="@string/sort"
         app:srcCompat="@android:drawable/ic_menu_sort_by_size"
-        app:tint="@color/white" />
+        app:tint="@color/white"
+        tools:ignore="ImageContrastCheck" />
 </RelativeLayout>

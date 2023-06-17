@@ -5,6 +5,7 @@
     android:id="@+id/WeekActivityLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/gray_Termin"
     tools:context=".MainActivity">
 
     <!-- TODO: Button für zukünftige Termine muss angelegt werden -->
@@ -17,7 +18,7 @@
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="250dp"
             android:layout_marginTop="-45dp"
             android:layout_marginBottom="5dp"
             android:elevation="10dp"
@@ -52,13 +53,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="100dp"
         android:fontFamily="@font/gothammedium1"
         android:text="@string/yourWeek"
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="50sp"
         tools:ignore="TextContrastCheck" />
+
+    <TextView
+        android:id="@+id/weekDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="150dp"/>
 
     <RelativeLayout
         android:id="@+id/montagLayout"
@@ -115,7 +125,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="25dp"
             android:layout_marginEnd="100dp"
             android:fontFamily="@font/gothammedium1"
             android:textColor="@android:color/white"
@@ -147,7 +157,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="25dp"
             android:layout_marginEnd="100dp"
             android:fontFamily="@font/gothammedium1"
             android:textColor="@android:color/white"
@@ -179,7 +189,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="25dp"
             android:layout_marginEnd="100dp"
             android:fontFamily="@font/gothammedium1"
             android:textColor="@android:color/white"
@@ -210,7 +220,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="25dp"
             android:layout_marginEnd="100dp"
             android:fontFamily="@font/gothammedium1"
             android:textColor="@android:color/white"
@@ -241,7 +251,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="25dp"
             android:layout_marginEnd="100dp"
             android:fontFamily="@font/gothammedium1"
             android:textColor="@android:color/white"
@@ -272,7 +282,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="25dp"
             android:layout_marginEnd="100dp"
             android:fontFamily="@font/gothammedium1"
             android:textColor="@android:color/white"

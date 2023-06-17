@@ -12,5 +12,6 @@
     <color name="light_purple">#FCF1FF</color>
     <color name="purple">#E17FFB</color>
     <color name="light_gray">#8FFFFFFF</color>
+    <color name="test">#8FDB0000</color>
 
 </resources>

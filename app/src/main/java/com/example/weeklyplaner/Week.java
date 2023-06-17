@@ -13,26 +13,32 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 import java.util.TimeZone;
 
-import items.Termin;
-
 public class Week extends AppCompatActivity implements View.OnClickListener {
-    private ImageButton BackButton;
-    TimeZone german_timezone = TimeZone.getTimeZone("Europe/Berlin");
-    Calendar calendar = Calendar.getInstance(german_timezone);
-    int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+    private ImageButton backButton;
+    private TextView weekDate;
+    private TimeZone german_timezone = TimeZone.getTimeZone("Europe/Berlin");
+    private Calendar calendar = Calendar.getInstance(german_timezone);
+    private int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
     public static Button[] buttons = new Button[7];
     public static TextView[] doneTextViews = new TextView[7];
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_week);
 
-        BackButton = findViewById(R.id.backButtonWeekActivity);
-        BackButton.setOnClickListener(this);
+        weekDate = findViewById(R.id.weekDate);
+        backButton = findViewById(R.id.backButtonWeekActivity);
+        backButton.setOnClickListener(this);
+
+        weekDate.setText(updateWeekDateText());
 
         int[] buttonIds = {R.id.montag, R.id.dienstag, R.id.mittwoch, R.id.donnerstag,
                 R.id.freitag, R.id.samstag, R.id.sonntag};
@@ -53,6 +59,18 @@ public class Week extends AppCompatActivity implements View.OnClickListener {
         animateButtonFromRight(findViewById(R.id.openAppointments));
 
         highlightTodayButton();
+    }
+
+    private String updateWeekDateText() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.", Locale.getDefault());
+
+        calendar.set(Calendar.DAY_OF_WEEK, calendar.getFirstDayOfWeek());
+        Date firstDate = calendar.getTime();
+
+        calendar.add(Calendar.DAY_OF_WEEK, 7);
+        Date lastDate = calendar.getTime();
+
+        return dateFormat.format(firstDate) + " - " + dateFormat.format(lastDate);
     }
 
     /**
