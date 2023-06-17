@@ -142,6 +142,7 @@ public class Termin_RecyclerView_Adapter extends
             intent.putExtra("termin_id", termin.getId());
             intent.putExtra("termin_datum", termin.getDatum().toString());
             intent.putExtra("termin_tag", termin.getActualDatum().getDayOfWeek().getValue());
+            intent.putExtra("termin_montastag", termin.getActualDatum().getDayOfMonth());
             context.startActivity(intent);
         }
     }

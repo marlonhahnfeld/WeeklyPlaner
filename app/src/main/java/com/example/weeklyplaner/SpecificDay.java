@@ -15,6 +15,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +32,7 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
     private Termin_RecyclerView_Adapter adapter_sort;
     public RecyclerView specificDay_TerminListe_RecyclerView;
 
-    public int currentDay(){
+    public int currentDay() {
         Intent intent = getIntent();
         switch (intent.getStringExtra("button_text")) {
             case "Montag":
@@ -47,8 +49,12 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
                 return 6;
             case "Sonntag":
                 return 7;
+            case "offene Termine":
+                return 8;
+            case "Zukünftige Termine":
+                return 9;
             default:
-                return -1;
+                return -99;
         }
     }
 
@@ -91,17 +97,20 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
 
         specificDay_TerminListe_RecyclerView = findViewById(R.id.terminlisteRecyclerView);
         Termin_RecyclerView_Adapter adapter;
+
         adapter = new Termin_RecyclerView_Adapter(this,
                 getSpecificTerminlisteInCurrentWeek(currentDay()));
         specificDay_TerminListe_RecyclerView.setAdapter(adapter);
         specificDay_TerminListe_RecyclerView
                 .setLayoutManager(new LinearLayoutManager(this));
 
-        adapter = getAdapterForCurrentDay();
-        specificDay_TerminListe_RecyclerView.setAdapter(adapter);
+            adapter = getAdapterForCurrentDay();
+            specificDay_TerminListe_RecyclerView.setAdapter(adapter);
+
 
         adapter_sort = getAdapterForCurrentDay();
         specificDay_TerminListe_RecyclerView.setAdapter(adapter_sort);
+
     }
 
     @Override

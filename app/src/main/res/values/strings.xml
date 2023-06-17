@@ -74,4 +74,7 @@
     <string name="chooseDatum">Datum auswählen</string>
     <string name="notDone">Not Done:</string>
     <string name="done">Done:</string>
+    <string name="openAppointments">offene Termine</string>
+    <string name="futureappointments">Zukünftige Termine</string>
+    <string name="futureAppointments">Zukünftige Termine</string>
 </resources>
