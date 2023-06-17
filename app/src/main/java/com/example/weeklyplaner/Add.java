@@ -106,7 +106,14 @@ public class Add extends AppCompatActivity implements View.OnClickListener,
                 Log.d("Weeklyplanner", String.valueOf(termin));
                 saveAppointment(LoginScreen.email, terminName, beschreibung, prio, datum,
                         termin.getId(), false);
-                getSpecificTerminliste(datum.getDayOfWeek().getValue()).add(termin);
+                if ((datum.getDayOfMonth() <
+                        (MainActivity.currentDate.getDayOfMonth() + (DayOfWeek.SUNDAY.getValue() - MainActivity.currentDate.getDayOfWeek().getValue())))){
+                    getSpecificTerminliste(8).add(termin);
+                } else if((datum.getDayOfMonth() >
+                        (MainActivity.currentDate.getDayOfMonth() + (DayOfWeek.SUNDAY.getValue() - MainActivity.currentDate.getDayOfWeek().getValue())))){
+                    getSpecificTerminliste(9).add(termin);
+                } else{
+                    getSpecificTerminliste(datum.getDayOfWeek().getValue()).add(termin);}
                 SpecificDay.refresh_needed = true;
                 onBackPressed();
             });
