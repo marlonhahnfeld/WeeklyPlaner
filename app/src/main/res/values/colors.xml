@@ -13,5 +13,6 @@
     <color name="purple">#E17FFB</color>
     <color name="light_gray">#8FFFFFFF</color>
     <color name="test">#8FDB0000</color>
+    <color name="light_blue">#98F5FF</color>
 
 </resources>

@@ -83,6 +83,7 @@
         android:text="@string/terminname"
         android:textSize="20sp"
         android:textStyle="bold"
+        android:textColor="@color/white"
         app:drawableStartCompat="@drawable/ic_name" />
 
     <TextView
@@ -97,6 +98,7 @@
         android:text="@string/beschreibung"
         android:textSize="20sp"
         android:textStyle="bold"
+        android:textColor="@color/white"
         app:drawableStartCompat="@drawable/ic_description" />
 
     <TextView
@@ -110,7 +112,8 @@
         android:text="@string/wann"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:drawableStartCompat="@drawable/ic_calender" />
+        android:textColor="@color/white"
+        app:drawableStartCompat="@drawable/baseline_calendar_month_24" />
 
     <EditText
         android:id="@+id/editTextTerminName"
@@ -138,6 +141,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginStart="56dp"
         android:layout_marginBottom="150dp"
+        android:textColor="@color/white"
         tools:ignore="TouchTargetSizeCheck" />
 
     <Button
