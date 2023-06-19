@@ -78,17 +78,17 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/cardViewLayout"
         android:layout_marginLeft="5dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="-15dp"
         android:layout_marginRight="5dp"
         android:progress="0" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/terminlisteRecyclerView"
         android:layout_width="395dp"
-        android:layout_height="400dp"
+        android:layout_height="450dp"
         android:layout_below="@id/progressBar"
         android:layout_centerInParent="true"
-        android:layout_marginTop="50dp" />
+        android:layout_marginTop="40dp" />
 
     <ImageButton
         android:id="@+id/addButton"
@@ -96,10 +96,9 @@
         android:layout_height="65dp"
         android:layout_below="@id/terminlisteRecyclerView"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp"
         android:backgroundTint="#00F8F5F5"
         android:contentDescription="@string/add"
         app:srcCompat="@android:drawable/ic_menu_add"
-        app:tint="#000000" />
+        app:tint="@color/white" />
 
 </RelativeLayout>

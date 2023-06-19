@@ -12,6 +12,7 @@ import static com.example.weeklyplaner.Utils.getSpecificTerminlisteInCurrentWeek
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -124,6 +125,8 @@ public class Termin_RecyclerView_Adapter extends
                         updateProgress();
                         CardView c = itemView.findViewById(R.id.cardView);
                         c.setCardBackgroundColor(ContextCompat.getColor(context, R.color.gray));
+                        checkbox.setButtonTintList(ColorStateList.valueOf(
+                                ContextCompat.getColor(context, R.color.green)));
                         TerminnameTextView.setTextColor(Color.DKGRAY);
                         TerminPrioTextView.setTextColor(Color.DKGRAY);
                     } else {
@@ -131,9 +134,11 @@ public class Termin_RecyclerView_Adapter extends
                         updateProgress();
                         CardView c = itemView.findViewById(R.id.cardView);
                         c.setCardBackgroundColor(ContextCompat.getColor(context,
-                                R.color.gray_Termin));
-                        TerminnameTextView.setTextColor(Color.WHITE);
-                        TerminPrioTextView.setTextColor(Color.WHITE);
+                                R.color.light_blue));
+                        checkbox.setButtonTintList(ColorStateList.valueOf(
+                                ContextCompat.getColor(context, R.color.black)));
+                        TerminnameTextView.setTextColor(Color.BLACK);
+                        TerminPrioTextView.setTextColor(Color.BLACK);
                     }
                 }
             });
