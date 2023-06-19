@@ -64,10 +64,10 @@ public class Week extends AppCompatActivity implements View.OnClickListener {
     private String updateWeekDateText() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.", Locale.getDefault());
 
-        calendar.set(Calendar.DAY_OF_WEEK, calendar.getFirstDayOfWeek());
+        calendar.set(Calendar.DAY_OF_WEEK, calendar.getFirstDayOfWeek() + 1);
         Date firstDate = calendar.getTime();
 
-        calendar.add(Calendar.DAY_OF_WEEK, 7);
+        calendar.add(Calendar.DAY_OF_WEEK, 6);
         Date lastDate = calendar.getTime();
 
         return dateFormat.format(firstDate) + " - " + dateFormat.format(lastDate);

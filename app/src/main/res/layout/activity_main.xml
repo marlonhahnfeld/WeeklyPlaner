@@ -33,16 +33,34 @@
         </androidx.cardview.widget.CardView>
     </RelativeLayout>
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="@android:style/Widget.ProgressBar.Horizontal"
-        android:layout_width="400dp"
+    <RelativeLayout
+        android:id="@+id/processLayout"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/cardViewLayout"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="-15dp"
-        android:layout_marginRight="5dp"
-        android:progress="0" />
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:id="@+id/textViewYourActivities"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:text="Your Activities"
+            android:textColor="@color/white"
+            android:paddingStart="150dp"/>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_below="@id/textViewYourActivities"
+            android:layout_width="350dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:progress="20"
+            android:progressTint="@color/green" />
+
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/heutigerButton"
@@ -73,7 +91,7 @@
         android:id="@+id/terminlisteRecyclerView"
         android:layout_width="395dp"
         android:layout_height="450dp"
-        android:layout_below="@id/progressBar"
+        android:layout_below="@id/processLayout"
         android:layout_centerInParent="true"
         android:layout_marginTop="40dp" />
 
