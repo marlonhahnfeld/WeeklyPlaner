@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ImageButton filterButton;
 
     // REFRESH PAGE CODE
-    // REFRESH PAGE CODE
     @Override
     protected void onResume() {
         super.onResume();
