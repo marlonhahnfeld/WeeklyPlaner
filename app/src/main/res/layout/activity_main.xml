@@ -38,28 +38,35 @@
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/cardViewLayout"
-        android:layout_centerHorizontal="true">
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="-25dp">
 
         <TextView
             android:id="@+id/textViewYourActivities"
-            android:layout_width="350dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Your Activities"
+            android:layout_marginStart="125dp"
+            android:text="@string/yourActivity"
             android:textColor="@color/white"
-            android:paddingStart="150dp"/>
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/textViewTasksDone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewYourActivities"
+            android:layout_marginStart="130dp"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
 
         <ProgressBar
             android:id="@+id/progressBar"
-            style="@android:style/Widget.ProgressBar.Horizontal"
-            android:layout_below="@id/textViewYourActivities"
-            android:layout_width="350dp"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:progress="20"
-            android:progressTint="@color/green" />
-
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_marginStart="45dp"
+            android:indeterminateOnly="false"
+            android:progress="0"
+            android:progressDrawable="@drawable/circular_progress" />
     </RelativeLayout>
 
     <TextView

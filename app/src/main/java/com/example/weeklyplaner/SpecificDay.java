@@ -25,7 +25,8 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
     private ImageButton BackButton;
     private ImageButton filterButton;
     private ImageButton addButton;
-    public ProgressBar progressBar;
+    private ProgressBar progressBar;
+    private TextView tasksDone;
     public TextView heutigerButton;
     static boolean refresh_needed = false;
     private Termin_RecyclerView_Adapter adapter_sort;
@@ -66,6 +67,8 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
         if (adapter instanceof Termin_RecyclerView_Adapter) {
             Termin_RecyclerView_Adapter terminAdapter = (Termin_RecyclerView_Adapter) adapter;
             terminAdapter.setTerminliste(getSpecificTerminlisteInCurrentWeek(currentDay()));
+            terminAdapter.updateProgress();
+            terminAdapter.updateTasksDone();
             terminAdapter.notifyDataSetChanged();
         }
     }
@@ -85,8 +88,8 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
         addButton.setOnClickListener(this);
 
         heutigerButton = findViewById(R.id.heutigerButton);
-
         progressBar = findViewById(R.id.progressBar);
+        tasksDone = findViewById(R.id.textViewTasksDone);
 
         String buttonText = getIntent().getStringExtra("button_text");
         this.heutigerButton.setText(buttonText);
@@ -94,7 +97,8 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
         specificDay_TerminListe_RecyclerView = findViewById(R.id.terminlisteRecyclerView);
         Termin_RecyclerView_Adapter adapter;
         adapter = new Termin_RecyclerView_Adapter(this,
-                getSpecificTerminlisteInCurrentWeek(currentDay()), progressBar);
+                getSpecificTerminlisteInCurrentWeek(currentDay()),
+                progressBar, tasksDone);
         specificDay_TerminListe_RecyclerView.setAdapter(adapter);
         specificDay_TerminListe_RecyclerView
                 .setLayoutManager(new LinearLayoutManager(this));
@@ -104,6 +108,7 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
 
         adapter_sort = getAdapterForCurrentDay();
         specificDay_TerminListe_RecyclerView.setAdapter(adapter_sort);
+        refreshSpecificDay();
     }
 
     @Override
@@ -171,7 +176,7 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
     private Termin_RecyclerView_Adapter getAdapterForCurrentDay() {
         List<Termin> terminliste = getSpecificTerminlisteInCurrentWeek(currentDay());
         Termin_RecyclerView_Adapter adapter = new Termin_RecyclerView_Adapter(this,
-                (ArrayList<Termin>) terminliste, progressBar);
+                (ArrayList<Termin>) terminliste, progressBar, tasksDone);
         specificDay_TerminListe_RecyclerView
                 .setLayoutManager(new LinearLayoutManager(this));
         return adapter;

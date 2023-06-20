@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/SpecificDayActivityLayout"
-    android:background="@color/gray_Termin"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/gray_Termin"
     tools:context=".MainActivity">
 
     <RelativeLayout
@@ -55,7 +55,8 @@
                 android:backgroundTint="#00F8F5F5"
                 android:contentDescription="@string/sort"
                 app:srcCompat="@android:drawable/ic_menu_sort_by_size"
-                app:tint="@color/white" />
+                app:tint="@color/white"
+                tools:ignore="TouchTargetSizeCheck" />
         </androidx.cardview.widget.CardView>
     </RelativeLayout>
 
@@ -71,24 +72,47 @@
         android:textColor="@color/white"
         android:textSize="48sp" />
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="@android:style/Widget.ProgressBar.Horizontal"
-        android:layout_centerHorizontal="true"
+    <RelativeLayout
+        android:id="@+id/processLayout"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/cardViewLayout"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="-15dp"
-        android:layout_marginRight="5dp"
-        android:progressTint="@color/green"
-        android:progress="0" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="-25dp">
+
+        <TextView
+            android:id="@+id/textViewYourActivities"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="125dp"
+            android:text="@string/yourActivity"
+            android:textColor="@color/white"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/textViewTasksDone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewYourActivities"
+            android:layout_marginStart="130dp"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_marginStart="45dp"
+            android:indeterminateOnly="false"
+            android:progress="0"
+            android:progressDrawable="@drawable/circular_progress" />
+    </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/terminlisteRecyclerView"
         android:layout_width="395dp"
         android:layout_height="450dp"
-        android:layout_below="@id/progressBar"
+        android:layout_below="@id/processLayout"
         android:layout_centerInParent="true"
         android:layout_marginTop="40dp" />
 

@@ -76,4 +76,5 @@
     <string name="done">Done:</string>
     <string name="openAppointments">Offene Termine</string>
     <string name="background">Background</string>
+    <string name="yourActivity">Your Activity</string>
 </resources>

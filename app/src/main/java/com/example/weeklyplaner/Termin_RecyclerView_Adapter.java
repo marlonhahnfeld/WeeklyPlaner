@@ -36,11 +36,14 @@ public class Termin_RecyclerView_Adapter extends
     CardView cardView;
     ArrayList<Termin> terminliste;
     private ProgressBar progressBar;
+    private TextView tasksDone;
 
-    public Termin_RecyclerView_Adapter(Context context, ArrayList<Termin> terminliste, ProgressBar progressBar) {
+    public Termin_RecyclerView_Adapter(Context context, ArrayList<Termin> terminliste,
+                                       ProgressBar progressBar, TextView tasksDone) {
         this.context = context;
         this.terminliste = terminliste;
         this.progressBar = progressBar;
+        this.tasksDone = tasksDone;
     }
 
     @NonNull
@@ -97,6 +100,23 @@ public class Termin_RecyclerView_Adapter extends
         }
     }
 
+    public void updateTasksDone() {
+        if (terminliste.size() == 0) {
+            String text = "No Appointments";
+            tasksDone.setText(text);
+            return;
+        }
+        int doneCounter = 0;
+        for (Termin t : terminliste) {
+            if (t.isChecked()) {
+                doneCounter++;
+            }
+        }
+        int itemsCounter = getItemCount();
+        String text = doneCounter + " of " + terminliste.size() + " completed";
+        tasksDone.setText(text);
+    }
+
 
     public class TerminViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView TerminnameTextView, TerminPrioTextView;
@@ -123,6 +143,7 @@ public class Termin_RecyclerView_Adapter extends
                     if (isChecked) {
                         updateCheckedInDB(LoginScreen.email, termin.getId(), true);
                         updateProgress();
+                        updateTasksDone();
                         CardView c = itemView.findViewById(R.id.cardView);
                         c.setCardBackgroundColor(ContextCompat.getColor(context, R.color.gray));
                         checkbox.setButtonTintList(ColorStateList.valueOf(
@@ -132,6 +153,7 @@ public class Termin_RecyclerView_Adapter extends
                     } else {
                         updateCheckedInDB(LoginScreen.email, termin.getId(), false);
                         updateProgress();
+                        updateTasksDone();
                         CardView c = itemView.findViewById(R.id.cardView);
                         c.setCardBackgroundColor(ContextCompat.getColor(context,
                                 R.color.light_blue));
