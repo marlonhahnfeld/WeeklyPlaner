@@ -90,7 +90,7 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
         terminPrioSpinner = findViewById(R.id.prioListeDetailsActivity);
         ArrayAdapter<CharSequence> prioListSpinnerAdapter =
                 ArrayAdapter.createFromResource(this, R.array.numbers,
-                        android.R.layout.simple_spinner_item);
+                        R.layout.selected_item);
         prioListSpinnerAdapter
                 .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         terminPrioSpinner.setAdapter(prioListSpinnerAdapter);
@@ -104,8 +104,6 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        String text = parent.getItemAtPosition(position).toString();
-        Toast.makeText(parent.getContext(), text, Toast.LENGTH_SHORT).show();
     }
 
     @Override
