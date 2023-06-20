@@ -89,7 +89,7 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
         addButton = findViewById(R.id.addButton);
         addButton.setOnClickListener(this);
 
-        heutigerButton = findViewById(R.id.heutigerButton);
+        heutigerButton = findViewById(R.id.textViewAdd);
         progressBar = findViewById(R.id.progressBar);
         tasksDone = findViewById(R.id.textViewTasksDone);
         percentView = findViewById(R.id.textViewPercent);

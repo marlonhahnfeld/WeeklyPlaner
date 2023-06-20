@@ -35,7 +35,6 @@ public class Add extends AppCompatActivity implements View.OnClickListener,
     private ImageButton backButton;
     private Button saveButton;
     private Spinner prioListSpinner;
-    public static int saveCounter;
     private DatePickerDialog datePickerDialog;
     private Button buttonDatePicker;
     private static DatabaseOp databaseOp;
@@ -59,15 +58,15 @@ public class Add extends AppCompatActivity implements View.OnClickListener,
         //default ausgewähltes datum beim Öffnen von datum für den datum spinner
         datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
 
-        backButton = findViewById(R.id.backButtonDetailsActivity);
+        backButton = findViewById(R.id.backButtonAddActivity);
         backButton.setOnClickListener(this);
-        saveButton = findViewById(R.id.saveButton);
+        saveButton = findViewById(R.id.buttonSave);
         saveButton.setOnClickListener(this);
 
-        prioListSpinner = findViewById(R.id.prioListe);
+        prioListSpinner = findViewById(R.id.spinnerPrioListe);
         ArrayAdapter<CharSequence> prioListSpinnerAdapter =
                 ArrayAdapter.createFromResource(this, R.array.numbers,
-                        android.R.layout.simple_spinner_item);
+                        R.layout.selected_item);
         prioListSpinnerAdapter
                 .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         prioListSpinner.setAdapter(prioListSpinnerAdapter);
@@ -76,8 +75,7 @@ public class Add extends AppCompatActivity implements View.OnClickListener,
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        String text = parent.getItemAtPosition(position).toString();
-        Toast.makeText(parent.getContext(), text, Toast.LENGTH_SHORT).show();
+
     }
 
     @Override
@@ -87,9 +85,9 @@ public class Add extends AppCompatActivity implements View.OnClickListener,
     public void onClick(View v) {
         int id = v.getId();
 
-        if (id == R.id.backButtonDetailsActivity) {
+        if (id == R.id.backButtonAddActivity) {
             onBackPressed();
-        } else if (id == R.id.saveButton) {
+        } else if (id == R.id.buttonSave) {
             EditText terminNameEditText = findViewById(R.id.editTextTerminName);
             String terminName = terminNameEditText.getText().toString();
             EditText beschreibungEditText = findViewById(R.id.editTextBeschreibung);

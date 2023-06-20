@@ -58,7 +58,7 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
 
         databaseOp = new DatabaseOp();
 
-        backButton = findViewById(R.id.backButtonDetailsActivity);
+        backButton = findViewById(R.id.backButtonAddActivity);
         backButton.setOnClickListener(this);
         editButton = findViewById(R.id.editButton);
         editButton.setOnClickListener(this);
@@ -115,7 +115,7 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        if (id == R.id.backButtonDetailsActivity) {
+        if (id == R.id.backButtonAddActivity) {
             onBackPressed();
         } else if (id == R.id.editButton) {
             deleteCurrentAppointment();
