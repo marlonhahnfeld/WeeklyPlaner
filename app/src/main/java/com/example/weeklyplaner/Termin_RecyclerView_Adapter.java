@@ -37,13 +37,16 @@ public class Termin_RecyclerView_Adapter extends
     ArrayList<Termin> terminliste;
     private ProgressBar progressBar;
     private TextView tasksDone;
+    private TextView percentView;
 
     public Termin_RecyclerView_Adapter(Context context, ArrayList<Termin> terminliste,
-                                       ProgressBar progressBar, TextView tasksDone) {
+                                       ProgressBar progressBar, TextView tasksDone,
+                                       TextView percentView) {
         this.context = context;
         this.terminliste = terminliste;
         this.progressBar = progressBar;
         this.tasksDone = tasksDone;
+        this.percentView = percentView;
     }
 
     @NonNull
@@ -83,7 +86,6 @@ public class Termin_RecyclerView_Adapter extends
         return done;
     }
 
-    // Aktualisierung der Methode updateProgress()
     public void updateProgress() {
         int counter = 0;
         if (terminliste.size() == 0) {
@@ -112,11 +114,21 @@ public class Termin_RecyclerView_Adapter extends
                 doneCounter++;
             }
         }
-        int itemsCounter = getItemCount();
         String text = doneCounter + " of " + terminliste.size() + " completed";
         tasksDone.setText(text);
     }
 
+    public void updateProgressInPercent() {
+        int doneCounter = 0;
+        for (Termin t : terminliste) {
+            if (t.isChecked()) {
+                doneCounter++;
+            }
+        }
+        float percentage = ((float) doneCounter / terminliste.size()) * 100;
+        String text = (int) percentage + "%";
+        percentView.setText(text);
+    }
 
     public class TerminViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView TerminnameTextView, TerminPrioTextView;
@@ -144,6 +156,7 @@ public class Termin_RecyclerView_Adapter extends
                         updateCheckedInDB(LoginScreen.email, termin.getId(), true);
                         updateProgress();
                         updateTasksDone();
+                        updateProgressInPercent();
                         CardView c = itemView.findViewById(R.id.cardView);
                         c.setCardBackgroundColor(ContextCompat.getColor(context, R.color.gray));
                         checkbox.setButtonTintList(ColorStateList.valueOf(
@@ -154,6 +167,7 @@ public class Termin_RecyclerView_Adapter extends
                         updateCheckedInDB(LoginScreen.email, termin.getId(), false);
                         updateProgress();
                         updateTasksDone();
+                        updateProgressInPercent();
                         CardView c = itemView.findViewById(R.id.cardView);
                         c.setCardBackgroundColor(ContextCompat.getColor(context,
                                 R.color.light_blue));

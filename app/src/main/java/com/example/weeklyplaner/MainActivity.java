@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private RecyclerView recyclerView;
     private ProgressBar progressBar;
     private TextView tasksDone;
+    private TextView percentView;
     private static ArrayList<Termin>[] terminListe = new ArrayList[7];
     private Termin_RecyclerView_Adapter adapter;
     private Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Europe/Berlin"));
@@ -53,10 +54,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ArrayList<Termin> currentWeekTerminliste =
                 getSpecificTerminlisteInCurrentWeek(dayOfWeek - 1);
         adapter = new Termin_RecyclerView_Adapter(this, currentWeekTerminliste,
-                progressBar, tasksDone);
+                progressBar, tasksDone, percentView);
         adapter.setTerminliste(currentWeekTerminliste);
         adapter.updateProgress();
         adapter.updateTasksDone();
+        adapter.updateProgressInPercent();
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
@@ -79,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         recyclerView = findViewById(R.id.terminlisteRecyclerView);
         progressBar = findViewById(R.id.progressBar);
         tasksDone = findViewById(R.id.textViewTasksDone);
+        percentView = findViewById(R.id.textViewPercent);
 
         terminListe[0] = sonntag_terminliste;
         terminListe[1] = montag_terminliste;
