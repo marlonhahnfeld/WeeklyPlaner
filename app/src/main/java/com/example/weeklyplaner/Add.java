@@ -24,6 +24,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import items.Termin;
@@ -77,13 +78,17 @@ public class Add extends AppCompatActivity implements View.OnClickListener,
     }
 
     @Override
-    public void onNothingSelected(AdapterView<?> parent) {}
+    public void onNothingSelected(AdapterView<?> parent) {
+    }
+
 
     @Override
     public void onClick(View v) {
-        int id = v.getId();
 
-        if (id == R.id.backButtonAddActivity) {
+        int id = v.getId();
+        ArrayList<Termin>[] terminListe = MainActivity.terminListe;
+        LocalDate currentDate = LocalDate.now();
+        if (id == R.id.backButtonDetailsActivity) {
             onBackPressed();
         } else if (id == R.id.buttonSave) {
             EditText terminNameEditText = findViewById(R.id.editTextTerminName);
@@ -102,7 +107,18 @@ public class Add extends AppCompatActivity implements View.OnClickListener,
                 Log.d("Weeklyplanner", String.valueOf(termin));
                 saveAppointment(LoginScreen.email, terminName, beschreibung, prio, datum,
                         termin.getId(), false);
-                getSpecificTerminliste(datum.getDayOfWeek().getValue()).add(termin);
+                if (/* Fall 1: Tag kleiner  */  ((((datum.getDayOfMonth() < (currentDate.getDayOfMonth() - (currentDate.getDayOfWeek().getValue() - 1)))) && ((((datum.getMonth().getValue()) <= currentDate.getMonth().getValue()) && (datum.getYear() <= currentDate.getYear())) || datum.getYear() < currentDate.getYear())) ||
+                        /* Fall 2: Monat kleiner */  ((datum.getMonth().getValue() < currentDate.getMonth().getValue()) && (datum.getYear() <= currentDate.getYear())) ||
+                        /* Fall 3: Jahr kleiner */  (datum.getYear() < currentDate.getYear()))) {
+                    getSpecificTerminliste(8).add(termin);
+                } else if ((    /* Fall 1: Tag größer  */  ((((datum.getDayOfMonth() > (currentDate.getDayOfMonth() + (DayOfWeek.SUNDAY.getValue() - currentDate.getDayOfWeek().getValue())))) && ((((datum.getMonth().getValue()) >= currentDate.getMonth().getValue()) && (datum.getYear() >= currentDate.getYear())) || datum.getYear() > currentDate.getYear())) ||
+                        /* Fall 2: Monat größer */  ((datum.getMonth().getValue() > currentDate.getMonth().getValue()) && (datum.getYear() >= currentDate.getYear())) ||
+                        /* Fall 3: Jahr größer */  (datum.getYear() > currentDate.getYear()))
+                )) {
+                    getSpecificTerminliste(9).add(termin);
+                } else {
+                    getSpecificTerminliste(datum.getDayOfWeek().getValue()).add(termin);
+                }
                 SpecificDay.refresh_needed = true;
                 onBackPressed();
             });

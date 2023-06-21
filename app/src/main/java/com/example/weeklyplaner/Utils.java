@@ -32,6 +32,11 @@ public class Utils extends AppCompatActivity {
                 return (MainActivity.samstag_terminliste);
             case 7:
                 return (MainActivity.sonntag_terminliste);
+            case 8:
+                return (MainActivity.abgelaufene_terminliste);
+            case 9:
+                return (MainActivity.zukuenftige_terminliste);
+            // Weitere Cases für andere Termin-IDs
             default:
                 System.err.println("Something went wrong");
                 return null;
@@ -40,6 +45,9 @@ public class Utils extends AppCompatActivity {
 
     public static ArrayList<Termin> getSpecificTerminlisteInCurrentWeek(int wochenTag) {
         ArrayList<Termin> terminliste = getSpecificTerminliste(wochenTag);
+        if (wochenTag > 7){
+            return terminliste;
+        }
         ArrayList<Termin> terminlisteInCurrentWeek = new ArrayList<>();
 
         int currentWeek = getCurrentCalendarWeek();

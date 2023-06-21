@@ -29,6 +29,9 @@ public class Week extends AppCompatActivity implements View.OnClickListener {
     public static TextView[] doneTextViews = new TextView[7];
 
 
+    private Button openAppointments_button;
+    private Button futureAppointments_button;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +42,14 @@ public class Week extends AppCompatActivity implements View.OnClickListener {
         backButton.setOnClickListener(this);
 
         weekDate.setText(updateWeekDateText());
+
+        openAppointments_button = findViewById(R.id.openAppointments);
+        openAppointments_button.setOnClickListener(this);
+
+        futureAppointments_button = findViewById(R.id.futureAppointments);
+        futureAppointments_button.setOnClickListener(this);
+
+
 
         int[] buttonIds = {R.id.montag, R.id.dienstag, R.id.mittwoch, R.id.donnerstag,
                 R.id.freitag, R.id.samstag, R.id.sonntag};
@@ -148,6 +159,14 @@ public class Week extends AppCompatActivity implements View.OnClickListener {
             startActivity(intent);
         } else if (id == R.id.backButtonWeekActivity) {
             onBackPressed();
+        } else if (id == R.id.openAppointments) {
+            intent = new Intent(this, SpecificDay.class);
+            intent.putExtra("button_text", openAppointments_button.getText());
+            startActivity(intent);
+        } else if (id == R.id.futureAppointments) {
+            intent = new Intent(this, SpecificDay.class);
+            intent.putExtra("button_text", futureAppointments_button.getText());
+            startActivity(intent);
         }
     }
 }
