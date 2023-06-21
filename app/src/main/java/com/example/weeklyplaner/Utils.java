@@ -1,6 +1,5 @@
 package com.example.weeklyplaner;
 
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.time.LocalDate;

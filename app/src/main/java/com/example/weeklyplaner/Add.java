@@ -19,7 +19,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -29,7 +28,6 @@ import java.util.Calendar;
 
 import items.Termin;
 
-// TODO: NULL Werte abfangen
 public class Add extends AppCompatActivity implements View.OnClickListener,
         AdapterView.OnItemSelectedListener {
     private ImageButton backButton;

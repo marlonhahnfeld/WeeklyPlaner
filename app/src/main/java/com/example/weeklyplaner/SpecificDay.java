@@ -20,7 +20,6 @@ import java.util.List;
 
 import items.Termin;
 
-// TODO: UI -> Siehe Zeichnung
 public class SpecificDay extends AppCompatActivity implements View.OnClickListener {
     private ImageButton BackButton;
     private ImageButton filterButton;

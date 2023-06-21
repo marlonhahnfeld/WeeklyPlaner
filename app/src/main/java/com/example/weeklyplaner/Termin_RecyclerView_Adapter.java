@@ -1,13 +1,6 @@
 package com.example.weeklyplaner;
 
 import static com.example.weeklyplaner.DatabaseOp.updateCheckedInDB;
-import static com.example.weeklyplaner.MainActivity.dienstag_terminliste;
-import static com.example.weeklyplaner.MainActivity.donnerstag_terminliste;
-import static com.example.weeklyplaner.MainActivity.freitag_terminliste;
-import static com.example.weeklyplaner.MainActivity.mittwoch_terminliste;
-import static com.example.weeklyplaner.MainActivity.montag_terminliste;
-import static com.example.weeklyplaner.MainActivity.samstag_terminliste;
-import static com.example.weeklyplaner.MainActivity.sonntag_terminliste;
 import static com.example.weeklyplaner.Utils.getSpecificTerminlisteInCurrentWeek;
 
 import android.content.Context;
