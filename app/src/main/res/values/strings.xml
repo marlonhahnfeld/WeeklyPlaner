@@ -77,7 +77,7 @@
     <string name="openAppointments">Offene Termine</string>
     <string name="background">Background</string>
     <string name="yourActivity">Your Activity</string>
-    <string name="chooseDate">Wählen Sie ein Datum &amp; die Prio</string>
+    <string name="chooseDate">Datum &amp; Prio</string>
     <string name="edit">EDIT</string>
-    <string name="futureappointments">Zukünftige Termine</string>
+    <string name="futureAppointments">Zukünftige Termine</string>
 </resources>

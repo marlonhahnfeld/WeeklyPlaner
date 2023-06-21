@@ -51,7 +51,7 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
                 return 6;
             case "Sonntag":
                 return 7;
-            case "offene Termine":
+            case "Offene Termine":
                 return 8;
             case "Zukünftige Termine":
                 return 9;
@@ -112,8 +112,8 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
         specificDay_TerminListe_RecyclerView
                 .setLayoutManager(new LinearLayoutManager(this));
 
-            adapter = getAdapterForCurrentDay();
-            specificDay_TerminListe_RecyclerView.setAdapter(adapter);
+        adapter = getAdapterForCurrentDay();
+        specificDay_TerminListe_RecyclerView.setAdapter(adapter);
 
 
         adapter_sort = getAdapterForCurrentDay();

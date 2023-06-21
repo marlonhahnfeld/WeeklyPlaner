@@ -113,39 +113,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // TODO alle abgelaufene Termine auf einmal abhaken können bzw die gesamte List abhaken
 
         int currentDayOfWeek = currentDate.getDayOfWeek().getValue();
-        if (currentDayOfWeek == 1) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-            builder.setCancelable(true);
-            builder.setTitle("Eine neue Woche hat begonnen!");
-            String abgelaufeneTermine = "";
 
-            // 15.06.2023, 16.05.2023, 15.05.2022, 30.06.2022, 30.05.2023, 30.12.2022
-            /// 19.06.2023, 19.07.2023, 19.07.2024, 5.07.2023, 5.05.2024, 30.04.2024 funktionieren
-            for (int i = 0; i < terminListe.length-2; i++) {
-                for (int j = 0; j < terminListe[i].size(); j++) {
-                    if ((!terminListe[i].get(j).isChecked()) &&
-                  /* Fall 1: Tag kleiner  */  ((((terminListe[i].get(j).getActualDatum().getDayOfMonth() < (currentDate.getDayOfMonth() - (currentDate.getDayOfWeek().getValue()-1))))&& ((((terminListe[i].get(j).getActualDatum().getMonth().getValue()) <= currentDate.getMonth().getValue()) && (terminListe[i].get(j).getActualDatum().getYear() <= currentDate.getYear()))|| terminListe[i].get(j).getActualDatum().getYear() < currentDate.getYear())) ||
-                 /* Fall 2: Monat kleiner */  ((terminListe[i].get(j).getActualDatum().getMonth().getValue() < currentDate.getMonth().getValue()) &&(terminListe[i].get(j).getActualDatum().getYear() <= currentDate.getYear())) ||
-                  /* Fall 3: Jahr kleiner */  (terminListe[i].get(j).getActualDatum().getYear() < currentDate.getYear()))
-                    ){
-                        abgelaufeneTermine += terminListe[i].get(j).getTerminname()+"\n";
-                        abgelaufene_terminliste.add(terminListe[i].get(j));
-                        // (< getday && (<=getmonth && <=getyear || <getyear)) || (<getMonth && <=getyear) || (<getyear)
-                    }
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder.setCancelable(true);
+        builder.setTitle("Eine neue Woche hat begonnen!");
+        String abgelaufeneTermine = "";
+
+        // 15.06.2023, 16.05.2023, 15.05.2022, 30.06.2022, 30.05.2023, 30.12.2022
+        /// 19.06.2023, 19.07.2023, 19.07.2024, 5.07.2023, 5.05.2024, 30.04.2024 funktionieren
+        for (int i = 0; i < terminListe.length - 2; i++) {
+            for (int j = 0; j < terminListe[i].size(); j++) {
+                if ((!terminListe[i].get(j).isChecked()) &&
+                        /* Fall 1: Tag kleiner  */  ((((terminListe[i].get(j).getActualDatum().getDayOfMonth() < (currentDate.getDayOfMonth() - (currentDate.getDayOfWeek().getValue() - 1)))) && ((((terminListe[i].get(j).getActualDatum().getMonth().getValue()) <= currentDate.getMonth().getValue()) && (terminListe[i].get(j).getActualDatum().getYear() <= currentDate.getYear())) || terminListe[i].get(j).getActualDatum().getYear() < currentDate.getYear())) ||
+                        /* Fall 2: Monat kleiner */  ((terminListe[i].get(j).getActualDatum().getMonth().getValue() < currentDate.getMonth().getValue()) && (terminListe[i].get(j).getActualDatum().getYear() <= currentDate.getYear())) ||
+                        /* Fall 3: Jahr kleiner */  (terminListe[i].get(j).getActualDatum().getYear() < currentDate.getYear()))
+                ) {
+                    abgelaufeneTermine += terminListe[i].get(j).getTerminname() + "\n";
+                    abgelaufene_terminliste.add(terminListe[i].get(j));
+                    // (< getday && (<=getmonth && <=getyear || <getyear)) || (<getMonth && <=getyear) || (<getyear)
                 }
-
             }
-            builder.setMessage("du hast folgende Termine aus der letzten Woche verpasst: \n"+
-                    abgelaufeneTermine);
-            builder.setPositiveButton("OK", new DialogInterface.OnClickListener(){
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i){
-                    dialogInterface.cancel();
-                }
-            });
-            if (!(abgelaufene_terminliste.size() == 0)){
-                builder.show();}
+
         }
+        builder.setMessage("du hast folgende Termine aus der letzten Woche verpasst: \n" +
+                abgelaufeneTermine);
+        builder.setPositiveButton("OK", (dialogInterface, i) -> dialogInterface.cancel());
+        if (!(abgelaufene_terminliste.size() == 0) && currentDayOfWeek == 3) {
+            builder.show();
+        }
+
         // ------------------------------------------------------------------------------------
         // Zukunftsplanung TODO
         // TODO zukünftige Termine anzeigen -> Independent List für alle vorausliegenden Termine wie für abgelaufene List erstellen
@@ -157,8 +153,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // 19.06.2023, 19.07.2023, 19.07.2024, 5.07.2023, 5.05.2024, 30.04.2024 funktionieren jetzt
         for (int i = 0; i < terminListe.length - 2; i++) {
             for (int j = 0; j < terminListe[i].size(); j++) {
-                if (    /* Fall 1: Tag größer  */  ((((terminListe[i].get(j).getActualDatum().getDayOfMonth() > (currentDate.getDayOfMonth() + (DayOfWeek.SUNDAY.getValue() - currentDate.getDayOfWeek().getValue()))))&& ((((terminListe[i].get(j).getActualDatum().getMonth().getValue()) >= currentDate.getMonth().getValue()) && (terminListe[i].get(j).getActualDatum().getYear() >= currentDate.getYear()))|| terminListe[i].get(j).getActualDatum().getYear() > currentDate.getYear())) ||
-                        /* Fall 2: Monat größer */  ((terminListe[i].get(j).getActualDatum().getMonth().getValue() > currentDate.getMonth().getValue()) &&(terminListe[i].get(j).getActualDatum().getYear() >= currentDate.getYear())) ||
+                if (    /* Fall 1: Tag größer  */  ((((terminListe[i].get(j).getActualDatum().getDayOfMonth() > (currentDate.getDayOfMonth() + (DayOfWeek.SUNDAY.getValue() - currentDate.getDayOfWeek().getValue())))) && ((((terminListe[i].get(j).getActualDatum().getMonth().getValue()) >= currentDate.getMonth().getValue()) && (terminListe[i].get(j).getActualDatum().getYear() >= currentDate.getYear())) || terminListe[i].get(j).getActualDatum().getYear() > currentDate.getYear())) ||
+                        /* Fall 2: Monat größer */  ((terminListe[i].get(j).getActualDatum().getMonth().getValue() > currentDate.getMonth().getValue()) && (terminListe[i].get(j).getActualDatum().getYear() >= currentDate.getYear())) ||
                         /* Fall 3: Jahr größer */  (terminListe[i].get(j).getActualDatum().getYear() > currentDate.getYear()))
                 ) {
                     MainActivity.zukuenftige_terminliste.add(terminListe[i].get(j));

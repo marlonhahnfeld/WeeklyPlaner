@@ -50,7 +50,6 @@ public class Week extends AppCompatActivity implements View.OnClickListener {
         futureAppointments_button.setOnClickListener(this);
 
 
-
         int[] buttonIds = {R.id.montag, R.id.dienstag, R.id.mittwoch, R.id.donnerstag,
                 R.id.freitag, R.id.samstag, R.id.sonntag};
         int[] doneIds = {R.id.doneMo, R.id.doneDi, R.id.doneMi, R.id.doneDo,
@@ -68,6 +67,7 @@ public class Week extends AppCompatActivity implements View.OnClickListener {
         }
 
         animateButtonFromRight(findViewById(R.id.openAppointments));
+        animateButtonFromRight(findViewById(R.id.futureAppointments));
 
         highlightTodayButton();
     }

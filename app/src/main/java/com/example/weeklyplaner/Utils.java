@@ -52,9 +52,11 @@ public class Utils extends AppCompatActivity {
 
         int currentWeek = getCurrentCalendarWeek();
 
-        for (Termin termin : terminliste) {
-            if (termin.getWeek() == currentWeek) {
-                terminlisteInCurrentWeek.add(termin);
+        if (terminliste != null) {
+            for (Termin termin : terminliste) {
+                if (termin.getWeek() == currentWeek) {
+                    terminlisteInCurrentWeek.add(termin);
+                }
             }
         }
 

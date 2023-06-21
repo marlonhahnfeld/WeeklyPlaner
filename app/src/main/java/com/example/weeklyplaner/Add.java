@@ -88,7 +88,7 @@ public class Add extends AppCompatActivity implements View.OnClickListener,
         int id = v.getId();
         ArrayList<Termin>[] terminListe = MainActivity.terminListe;
         LocalDate currentDate = LocalDate.now();
-        if (id == R.id.backButtonDetailsActivity) {
+        if (id == R.id.backButtonAddActivity) {
             onBackPressed();
         } else if (id == R.id.buttonSave) {
             EditText terminNameEditText = findViewById(R.id.editTextTerminName);
