@@ -2,14 +2,14 @@ package com.example.weeklyplaner;
 
 import static com.example.weeklyplaner.Utils.getSpecificTerminlisteInCurrentWeek;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -22,12 +22,14 @@ import java.util.List;
 
 import items.Termin;
 
-// TODO: UI -> Siehe Zeichnung
 public class SpecificDay extends AppCompatActivity implements View.OnClickListener {
     private ImageButton BackButton;
     private ImageButton filterButton;
     private ImageButton addButton;
-    public Button heutigerButton;
+    private ProgressBar progressBar;
+    private TextView tasksDone;
+    private TextView percentView;
+    public TextView heutigerButton;
     static boolean refresh_needed = false;
     private Termin_RecyclerView_Adapter adapter_sort;
     public RecyclerView specificDay_TerminListe_RecyclerView;
@@ -61,7 +63,6 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
     @Override
     protected void onResume() {
         super.onResume();
-
         // Refresh the activity here
         refreshSpecificDay();
     }
@@ -72,6 +73,9 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
         if (adapter instanceof Termin_RecyclerView_Adapter) {
             Termin_RecyclerView_Adapter terminAdapter = (Termin_RecyclerView_Adapter) adapter;
             terminAdapter.setTerminliste(getSpecificTerminlisteInCurrentWeek(currentDay()));
+            terminAdapter.updateProgress();
+            terminAdapter.updateTasksDone();
+            terminAdapter.updateProgressInPercent();
             terminAdapter.notifyDataSetChanged();
         }
     }
@@ -84,13 +88,16 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
         BackButton = findViewById(R.id.backButtonSpecificDayActivity);
         BackButton.setOnClickListener(this);
 
-        filterButton = findViewById(R.id.backButtonWeekActivity);
+        filterButton = findViewById(R.id.filterButton);
         filterButton.setOnClickListener(this);
 
         addButton = findViewById(R.id.addButton);
         addButton.setOnClickListener(this);
 
-        heutigerButton = findViewById(R.id.heutigerButton);
+        heutigerButton = findViewById(R.id.textViewEdit);
+        progressBar = findViewById(R.id.progressBar);
+        tasksDone = findViewById(R.id.textViewTasksDone);
+        percentView = findViewById(R.id.textViewPercent);
 
         String buttonText = getIntent().getStringExtra("button_text");
         this.heutigerButton.setText(buttonText);
@@ -99,7 +106,8 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
         Termin_RecyclerView_Adapter adapter;
 
         adapter = new Termin_RecyclerView_Adapter(this,
-                getSpecificTerminlisteInCurrentWeek(currentDay()));
+                getSpecificTerminlisteInCurrentWeek(currentDay()),
+                progressBar, tasksDone, percentView);
         specificDay_TerminListe_RecyclerView.setAdapter(adapter);
         specificDay_TerminListe_RecyclerView
                 .setLayoutManager(new LinearLayoutManager(this));
@@ -110,7 +118,7 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
 
         adapter_sort = getAdapterForCurrentDay();
         specificDay_TerminListe_RecyclerView.setAdapter(adapter_sort);
-
+        refreshSpecificDay();
     }
 
     @Override
@@ -120,15 +128,13 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
 
         if (id == R.id.backButtonSpecificDayActivity) {
             onBackPressed();
-        } else if (id == R.id.backButtonWeekActivity) {
-            intent = new Intent(this, Sort.class);
-            showFilterPopupMenu(v);
         } else if (id == R.id.addButton) {
             intent = new Intent(this, Add.class);
             startActivity(intent);
+        } else if (id == R.id.filterButton) {
+            showFilterPopupMenu(v);
         }
     }
-
 
     private static final int FILTER_OPTION_1_ID = R.id.filter_option_1;
     private static final int FILTER_OPTION_2_ID = R.id.filter_option_2;
@@ -179,8 +185,8 @@ public class SpecificDay extends AppCompatActivity implements View.OnClickListen
 
     private Termin_RecyclerView_Adapter getAdapterForCurrentDay() {
         List<Termin> terminliste = getSpecificTerminlisteInCurrentWeek(currentDay());
-        Termin_RecyclerView_Adapter adapter = new Termin_RecyclerView_Adapter((Context) this,
-                (ArrayList<Termin>) terminliste);
+        Termin_RecyclerView_Adapter adapter = new Termin_RecyclerView_Adapter(this,
+                (ArrayList<Termin>) terminliste, progressBar, tasksDone, percentView);
         specificDay_TerminListe_RecyclerView
                 .setLayoutManager(new LinearLayoutManager(this));
         return adapter;

@@ -5,7 +5,6 @@ import static com.example.weeklyplaner.Utils.getSpecificTerminliste;
 import android.util.Log;
 
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -26,7 +25,6 @@ import datenbank_listener.LoginListener;
 import datenbank_listener.MaxIDListener;
 import items.Termin;
 
-// TODO: Den Wert checked abspeichern + Wöchentlicher Reset von Terminen die abgehakt wurden
 public class DatabaseOp {
     private static final String TAG = "Firebase";
     private static final String COLLECTION_USERS = "users";

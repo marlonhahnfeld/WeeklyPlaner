@@ -1,22 +1,17 @@
 package com.example.weeklyplaner;
 
 import static com.example.weeklyplaner.DatabaseOp.updateCheckedInDB;
-import static com.example.weeklyplaner.MainActivity.dienstag_terminliste;
-import static com.example.weeklyplaner.MainActivity.donnerstag_terminliste;
-import static com.example.weeklyplaner.MainActivity.freitag_terminliste;
-import static com.example.weeklyplaner.MainActivity.mittwoch_terminliste;
-import static com.example.weeklyplaner.MainActivity.montag_terminliste;
-import static com.example.weeklyplaner.MainActivity.samstag_terminliste;
-import static com.example.weeklyplaner.MainActivity.sonntag_terminliste;
 import static com.example.weeklyplaner.Utils.getSpecificTerminlisteInCurrentWeek;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -33,11 +28,18 @@ public class Termin_RecyclerView_Adapter extends
     Context context;
     CardView cardView;
     ArrayList<Termin> terminliste;
+    private ProgressBar progressBar;
+    private TextView tasksDone;
+    private TextView percentView;
 
-
-    public Termin_RecyclerView_Adapter(Context context, ArrayList<Termin> terminliste) {
+    public Termin_RecyclerView_Adapter(Context context, ArrayList<Termin> terminliste,
+                                       ProgressBar progressBar, TextView tasksDone,
+                                       TextView percentView) {
         this.context = context;
         this.terminliste = terminliste;
+        this.progressBar = progressBar;
+        this.tasksDone = tasksDone;
+        this.percentView = percentView;
     }
 
     @NonNull
@@ -67,10 +69,6 @@ public class Termin_RecyclerView_Adapter extends
         return terminliste.size();
     }
 
-    public static int howManyItemsIn(int day) {
-        return getSpecificTerminlisteInCurrentWeek(day).size();
-    }
-
     public static int howManyDone(int day) {
         int done = 0;
         for (Termin t : getSpecificTerminlisteInCurrentWeek(day)) {
@@ -79,6 +77,50 @@ public class Termin_RecyclerView_Adapter extends
             }
         }
         return done;
+    }
+
+    public void updateProgress() {
+        int counter = 0;
+        if (terminliste.size() == 0) {
+            progressBar.setProgress(0);
+        } else {
+            for (Termin t : terminliste) {
+                if (t.isChecked()) {
+                    counter++;
+                }
+            }
+
+            int progress = (int) (((float) counter / terminliste.size()) * 100);
+            progressBar.setProgress(progress, true);
+        }
+    }
+
+    public void updateTasksDone() {
+        if (terminliste.size() == 0) {
+            String text = "No Appointments";
+            tasksDone.setText(text);
+            return;
+        }
+        int doneCounter = 0;
+        for (Termin t : terminliste) {
+            if (t.isChecked()) {
+                doneCounter++;
+            }
+        }
+        String text = doneCounter + " of " + terminliste.size() + " completed";
+        tasksDone.setText(text);
+    }
+
+    public void updateProgressInPercent() {
+        int doneCounter = 0;
+        for (Termin t : terminliste) {
+            if (t.isChecked()) {
+                doneCounter++;
+            }
+        }
+        float percentage = ((float) doneCounter / terminliste.size()) * 100;
+        String text = (int) percentage + "%";
+        percentView.setText(text);
     }
 
     public class TerminViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -105,17 +147,27 @@ public class Termin_RecyclerView_Adapter extends
 
                     if (isChecked) {
                         updateCheckedInDB(LoginScreen.email, termin.getId(), true);
+                        updateProgress();
+                        updateTasksDone();
+                        updateProgressInPercent();
                         CardView c = itemView.findViewById(R.id.cardView);
                         c.setCardBackgroundColor(ContextCompat.getColor(context, R.color.gray));
+                        checkbox.setButtonTintList(ColorStateList.valueOf(
+                                ContextCompat.getColor(context, R.color.green)));
                         TerminnameTextView.setTextColor(Color.DKGRAY);
                         TerminPrioTextView.setTextColor(Color.DKGRAY);
                     } else {
                         updateCheckedInDB(LoginScreen.email, termin.getId(), false);
+                        updateProgress();
+                        updateTasksDone();
+                        updateProgressInPercent();
                         CardView c = itemView.findViewById(R.id.cardView);
                         c.setCardBackgroundColor(ContextCompat.getColor(context,
-                                R.color.gray_Termin));
-                        TerminnameTextView.setTextColor(Color.WHITE);
-                        TerminPrioTextView.setTextColor(Color.WHITE);
+                                R.color.light_blue));
+                        checkbox.setButtonTintList(ColorStateList.valueOf(
+                                ContextCompat.getColor(context, R.color.black)));
+                        TerminnameTextView.setTextColor(Color.BLACK);
+                        TerminPrioTextView.setTextColor(Color.BLACK);
                     }
                 }
             });

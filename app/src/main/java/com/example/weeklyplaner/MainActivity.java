@@ -1,17 +1,17 @@
 package com.example.weeklyplaner;
 
-import static com.example.weeklyplaner.Utils.getSpecificTerminliste;
 import static com.example.weeklyplaner.Utils.getSpecificTerminlisteInCurrentWeek;
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -31,6 +32,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button button_for_days;
     private ImageButton addButton;
     private RecyclerView recyclerView;
+    private ProgressBar progressBar;
+    private TextView tasksDone;
+    private TextView percentView;
+
     protected static ArrayList<Termin>[] terminListe = new ArrayList[9];
     private Termin_RecyclerView_Adapter adapter;
     private Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Europe/Berlin"));
@@ -56,9 +61,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void refreshMainActivity() {
-        ArrayList<Termin> currentWeekTerminliste = getSpecificTerminlisteInCurrentWeek(dayOfWeek - 1);
-        adapter = new Termin_RecyclerView_Adapter(this, currentWeekTerminliste);
+        ArrayList<Termin> currentWeekTerminliste =
+                getSpecificTerminlisteInCurrentWeek(dayOfWeek - 1);
+        adapter = new Termin_RecyclerView_Adapter(this, currentWeekTerminliste,
+                progressBar, tasksDone, percentView);
         adapter.setTerminliste(currentWeekTerminliste);
+        adapter.updateProgress();
+        adapter.updateTasksDone();
+        adapter.updateProgressInPercent();
         recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
@@ -79,6 +89,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         addButton = findViewById(R.id.addButton);
         addButton.setOnClickListener(this);
         recyclerView = findViewById(R.id.terminlisteRecyclerView);
+        progressBar = findViewById(R.id.progressBar);
+        tasksDone = findViewById(R.id.textViewTasksDone);
+        percentView = findViewById(R.id.textViewPercent);
 
         terminListe[0] = sonntag_terminliste;
         terminListe[1] = montag_terminliste;
@@ -194,14 +207,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void sortAscendingByPriority() {
-        ArrayList<Termin> currentWeekTerminliste = getSpecificTerminlisteInCurrentWeek(dayOfWeek - 1);
+        ArrayList<Termin> currentWeekTerminliste =
+                getSpecificTerminlisteInCurrentWeek(dayOfWeek - 1);
         TerminSorter.sortAscendingByPriority(currentWeekTerminliste);
         adapter.setTerminliste(currentWeekTerminliste);
         adapter.notifyDataSetChanged();
     }
 
     private void sortDescendingByPriority() {
-        ArrayList<Termin> currentWeekTerminliste = getSpecificTerminlisteInCurrentWeek(dayOfWeek - 1);
+        ArrayList<Termin> currentWeekTerminliste =
+                getSpecificTerminlisteInCurrentWeek(dayOfWeek - 1);
         TerminSorter.sortDescendingByPriority(currentWeekTerminliste);
         adapter.setTerminliste(currentWeekTerminliste);
         adapter.notifyDataSetChanged();

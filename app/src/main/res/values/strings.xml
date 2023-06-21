@@ -60,7 +60,7 @@
     <string name="terminprio">Priorität</string>
     <string name="prio_absteigend">Priorität absteigend</string>
     <string name="prio_aufsteigend">Priorität aufsteigend</string>
-  <string name="Edit">Edit</string>
+    <string name="Edit">Edit</string>
     <string name="Delete">Delete</string>
     <string name="willkommen">Herzlich Willkommen</string>
     <string name="weeklyPlaner">WeeklyPlaner</string>
@@ -74,7 +74,10 @@
     <string name="chooseDatum">Datum auswählen</string>
     <string name="notDone">Not Done:</string>
     <string name="done">Done:</string>
-    <string name="openAppointments">offene Termine</string>
+    <string name="openAppointments">Offene Termine</string>
+    <string name="background">Background</string>
+    <string name="yourActivity">Your Activity</string>
+    <string name="chooseDate">Wählen Sie ein Datum &amp; die Prio</string>
+    <string name="edit">EDIT</string>
     <string name="futureappointments">Zukünftige Termine</string>
-    <string name="futureAppointments">Zukünftige Termine</string>
 </resources>

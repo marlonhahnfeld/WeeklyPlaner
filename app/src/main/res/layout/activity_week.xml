@@ -5,9 +5,34 @@
     android:id="@+id/WeekActivityLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/gray_Termin"
     tools:context=".MainActivity">
 
+    <!-- TODO: Button für zukünftige Termine muss angelegt werden -->
+    <RelativeLayout
+        android:id="@+id/cardViewLayout"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
 
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_marginTop="-45dp"
+            android:layout_marginBottom="5dp"
+            android:elevation="10dp"
+            app:cardCornerRadius="50dp">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/background"
+                android:scaleType="centerCrop"
+                android:src="@drawable/cloudbackground_purple" />
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
 
     <ImageButton
         android:id="@+id/backButtonWeekActivity"
@@ -20,26 +45,38 @@
         android:backgroundTint="#00F8F5F5"
         android:contentDescription="@string/back"
         app:srcCompat="?attr/homeAsUpIndicator"
-        app:tint="#000000" />
+        app:tint="@color/white"
+        tools:ignore="ImageContrastCheck" />
 
     <TextView
         android:id="@+id/yourWeek"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/backButtonWeekActivity"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="100dp"
+        android:fontFamily="@font/gothammedium1"
         android:text="@string/yourWeek"
         android:textAlignment="center"
-        android:textSize="50sp" />
+        android:textColor="@color/white"
+        android:textSize="50sp"
+        tools:ignore="TextContrastCheck" />
+
+    <TextView
+        android:id="@+id/weekDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="150dp"/>
 
     <RelativeLayout
         android:id="@+id/montagLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/yourWeek"
+        android:layout_below="@+id/cardViewLayout"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp">
+        android:layout_marginTop="0dp">
 
         <Button
             android:id="@+id/montag"
@@ -48,29 +85,21 @@
             android:layout_centerHorizontal="true"
             android:backgroundTint="@color/black"
             android:text="@string/montag"
-            android:textAlignment="viewStart" />
+            android:textAlignment="viewStart"
+            android:textSize="22sp" />
 
         <TextView
             android:id="@+id/doneMo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="25dp"
             android:layout_marginEnd="100dp"
+            android:fontFamily="@font/gothammedium1"
             android:textColor="@android:color/white"
             android:textSize="14sp"
             tools:ignore="RelativeOverlap" />
 
-        <TextView
-            android:id="@+id/notDoneMo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="100dp"
-            android:textColor="@android:color/white"
-            android:textSize="14sp"
-            tools:ignore="RelativeOverlap" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -79,7 +108,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/montagLayout"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="0dp">
+        android:layout_marginTop="5dp">
 
         <Button
             android:id="@+id/dienstag"
@@ -88,29 +117,21 @@
             android:layout_centerHorizontal="true"
             android:backgroundTint="@color/black"
             android:text="@string/dienstag"
-            android:textAlignment="viewStart" />
+            android:textAlignment="viewStart"
+            android:textSize="22sp" />
 
         <TextView
             android:id="@+id/doneDi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="25dp"
             android:layout_marginEnd="100dp"
+            android:fontFamily="@font/gothammedium1"
             android:textColor="@android:color/white"
             android:textSize="14sp"
             tools:ignore="RelativeOverlap" />
 
-        <TextView
-            android:id="@+id/notDoneDi"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="100dp"
-            android:textColor="@android:color/white"
-            android:textSize="14sp"
-            tools:ignore="RelativeOverlap" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -119,7 +140,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/dienstagLayout"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="0dp">
+        android:layout_marginTop="5dp">
 
         <Button
             android:id="@+id/mittwoch"
@@ -128,29 +149,21 @@
             android:layout_centerHorizontal="true"
             android:backgroundTint="@color/black"
             android:text="@string/mittwoch"
-            android:textAlignment="viewStart" />
+            android:textAlignment="viewStart"
+            android:textSize="22sp" />
 
         <TextView
             android:id="@+id/doneMi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="25dp"
             android:layout_marginEnd="100dp"
+            android:fontFamily="@font/gothammedium1"
             android:textColor="@android:color/white"
             android:textSize="14sp"
             tools:ignore="RelativeOverlap" />
 
-        <TextView
-            android:id="@+id/notDoneMi"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="100dp"
-            android:textColor="@android:color/white"
-            android:textSize="14sp"
-            tools:ignore="RelativeOverlap" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -159,7 +172,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/mittwochLayout"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="0dp">
+        android:layout_marginTop="5dp">
 
         <Button
             android:id="@+id/donnerstag"
@@ -168,26 +181,17 @@
             android:layout_centerHorizontal="true"
             android:backgroundTint="@color/black"
             android:text="@string/donnerstag"
-            android:textAlignment="viewStart" />
+            android:textAlignment="viewStart"
+            android:textSize="22sp" />
 
         <TextView
             android:id="@+id/doneDo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="25dp"
             android:layout_marginEnd="100dp"
-            android:textColor="@android:color/white"
-            android:textSize="14sp"
-            tools:ignore="RelativeOverlap" />
-
-        <TextView
-            android:id="@+id/notDoneDo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="100dp"
+            android:fontFamily="@font/gothammedium1"
             android:textColor="@android:color/white"
             android:textSize="14sp"
             tools:ignore="RelativeOverlap" />
@@ -199,7 +203,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/donnerstagLayout"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="0dp">
+        android:layout_marginTop="5dp">
 
         <Button
             android:id="@+id/freitag"
@@ -208,26 +212,17 @@
             android:layout_centerHorizontal="true"
             android:backgroundTint="@color/black"
             android:text="@string/freitag"
-            android:textAlignment="viewStart" />
+            android:textAlignment="viewStart"
+            android:textSize="22sp" />
 
         <TextView
             android:id="@+id/doneFr"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="25dp"
             android:layout_marginEnd="100dp"
-            android:textColor="@android:color/white"
-            android:textSize="14sp"
-            tools:ignore="RelativeOverlap" />
-
-        <TextView
-            android:id="@+id/notDoneFr"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="100dp"
+            android:fontFamily="@font/gothammedium1"
             android:textColor="@android:color/white"
             android:textSize="14sp"
             tools:ignore="RelativeOverlap" />
@@ -239,7 +234,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/freitagLayout"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="0dp">
+        android:layout_marginTop="5dp">
 
         <Button
             android:id="@+id/samstag"
@@ -248,26 +243,17 @@
             android:layout_centerHorizontal="true"
             android:backgroundTint="@color/black"
             android:text="@string/samstag"
-            android:textAlignment="viewStart" />
+            android:textAlignment="viewStart"
+            android:textSize="22sp" />
 
         <TextView
             android:id="@+id/doneSa"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="25dp"
             android:layout_marginEnd="100dp"
-            android:textColor="@android:color/white"
-            android:textSize="14sp"
-            tools:ignore="RelativeOverlap" />
-
-        <TextView
-            android:id="@+id/notDoneSa"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="100dp"
+            android:fontFamily="@font/gothammedium1"
             android:textColor="@android:color/white"
             android:textSize="14sp"
             tools:ignore="RelativeOverlap" />
@@ -279,7 +265,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/samstagLayout"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="0dp">
+        android:layout_marginTop="5dp">
 
         <Button
             android:id="@+id/sonntag"
@@ -288,26 +274,17 @@
             android:layout_centerHorizontal="true"
             android:backgroundTint="@color/black"
             android:text="@string/sonntag"
-            android:textAlignment="viewStart" />
+            android:textAlignment="viewStart"
+            android:textSize="22sp" />
 
         <TextView
             android:id="@+id/doneSo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="25dp"
             android:layout_marginEnd="100dp"
-            android:textColor="@android:color/white"
-            android:textSize="14sp"
-            tools:ignore="RelativeOverlap" />
-
-        <TextView
-            android:id="@+id/notDoneSo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="100dp"
+            android:fontFamily="@font/gothammedium1"
             android:textColor="@android:color/white"
             android:textSize="14sp"
             tools:ignore="RelativeOverlap" />
@@ -356,6 +333,7 @@
         android:backgroundTint="@color/black"
         android:text="@string/futureAppointments"
          />
+
 
 
 </RelativeLayout>

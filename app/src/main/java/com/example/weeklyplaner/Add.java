@@ -19,7 +19,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -30,13 +29,11 @@ import java.util.Calendar;
 
 import items.Termin;
 
-// TODO: NULL Werte abfangen
 public class Add extends AppCompatActivity implements View.OnClickListener,
         AdapterView.OnItemSelectedListener {
     private ImageButton backButton;
     private Button saveButton;
     private Spinner prioListSpinner;
-    public static int saveCounter;
     private DatePickerDialog datePickerDialog;
     private Button buttonDatePicker;
     private static DatabaseOp databaseOp;
@@ -60,15 +57,15 @@ public class Add extends AppCompatActivity implements View.OnClickListener,
         //default ausgewähltes datum beim Öffnen von datum für den datum spinner
         datePickerDialog.getDatePicker().setMinDate(calendar.getTimeInMillis());
 
-        backButton = findViewById(R.id.backButtonDetailsActivity);
+        backButton = findViewById(R.id.backButtonAddActivity);
         backButton.setOnClickListener(this);
-        saveButton = findViewById(R.id.saveButton);
+        saveButton = findViewById(R.id.buttonSave);
         saveButton.setOnClickListener(this);
 
-        prioListSpinner = findViewById(R.id.prioListe);
+        prioListSpinner = findViewById(R.id.spinnerPrioListe);
         ArrayAdapter<CharSequence> prioListSpinnerAdapter =
                 ArrayAdapter.createFromResource(this, R.array.numbers,
-                        android.R.layout.simple_spinner_item);
+                        R.layout.selected_item);
         prioListSpinnerAdapter
                 .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         prioListSpinner.setAdapter(prioListSpinnerAdapter);
@@ -77,8 +74,7 @@ public class Add extends AppCompatActivity implements View.OnClickListener,
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        String text = parent.getItemAtPosition(position).toString();
-        Toast.makeText(parent.getContext(), text, Toast.LENGTH_SHORT).show();
+
     }
 
     @Override
@@ -94,7 +90,7 @@ public class Add extends AppCompatActivity implements View.OnClickListener,
         LocalDate currentDate = LocalDate.now();
         if (id == R.id.backButtonDetailsActivity) {
             onBackPressed();
-        } else if (id == R.id.saveButton) {
+        } else if (id == R.id.buttonSave) {
             EditText terminNameEditText = findViewById(R.id.editTextTerminName);
             String terminName = terminNameEditText.getText().toString();
             EditText beschreibungEditText = findViewById(R.id.editTextBeschreibung);

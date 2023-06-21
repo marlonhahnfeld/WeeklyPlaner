@@ -5,68 +5,149 @@
     android:id="@+id/SpecificDayActivityLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/gray_Termin"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/heutigerButton"
-        android:layout_width="253dp"
-        android:layout_height="73dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="87dp"
-        android:layout_marginEnd="79dp"
-        android:background="#000000"
-        android:text="@string/montag1" />
+    <RelativeLayout
+        android:id="@+id/cardViewLayout"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
 
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_marginTop="-45dp"
+            android:layout_marginBottom="5dp"
+            android:elevation="10dp"
+            app:cardCornerRadius="50dp">
 
-    <ImageButton
-        android:id="@+id/backButtonSpecificDayActivity"
-        android:layout_width="80dp"
-        android:layout_height="50dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:backgroundTint="#00F8F5F5"
-        android:contentDescription="@string/back"
-        app:srcCompat="?attr/homeAsUpIndicator"
-        app:tint="#000000" />
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/cloudbackground_purple" />
 
-    <ImageButton
-        android:id="@+id/addButton"
-        android:layout_width="77dp"
-        android:layout_height="64dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="87dp"
-        android:contentDescription="@string/add"
-        app:srcCompat="@android:drawable/ic_menu_add"
-        android:backgroundTint="#00F8F5F5"
-        app:tint="#000000"/>
+            <ImageButton
+                android:id="@+id/backButtonSpecificDayActivity"
+                android:layout_width="80dp"
+                android:layout_height="50dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="50dp"
+                android:backgroundTint="#00F8F5F5"
+                android:contentDescription="@string/back"
+                app:srcCompat="?attr/homeAsUpIndicator"
+                app:tint="@color/white" />
 
-    <ImageButton
-        android:id="@+id/backButtonWeekActivity"
+            <ImageButton
+                android:id="@+id/filterButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="330dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginEnd="22dp"
+                android:backgroundTint="#00F8F5F5"
+                android:contentDescription="@string/sort"
+                app:srcCompat="@android:drawable/ic_menu_sort_by_size"
+                app:tint="@color/white"
+                tools:ignore="TouchTargetSizeCheck" />
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/textViewEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginStart="333dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="22dp"
-        android:backgroundTint="#00F8F5F5"
-        android:contentDescription="@string/sort"
-        app:srcCompat="@android:drawable/ic_menu_sort_by_size"
-        app:tint="#000000" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="100dp"
+        android:fontFamily="@font/gothammedium1"
+        android:text="@string/montag1"
+        android:textColor="@color/white"
+        android:textSize="48sp" />
+
+    <RelativeLayout
+        android:id="@+id/processLayout"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/cardViewLayout"
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:id="@+id/textViewYourActivities"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="125dp"
+            android:text="@string/yourActivity"
+            android:textColor="@color/white"
+            android:textSize="30sp" />
+
+        <TextView
+            android:id="@+id/textViewTasksDone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewYourActivities"
+            android:layout_marginStart="130dp"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_marginStart="25dp"
+                android:indeterminateOnly="false"
+                android:progress="100"
+                android:progressDrawable="@drawable/circular_progress"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <TextView
+                android:id="@+id/textViewPercent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:text="100%"
+                android:textColor="@color/white"
+                app:layout_constraintTop_toTopOf="@id/progressBar"
+                app:layout_constraintStart_toStartOf="@id/progressBar"
+                app:layout_constraintEnd_toEndOf="@id/progressBar"
+                app:layout_constraintBottom_toBottomOf="@id/progressBar"
+                android:gravity="center"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </RelativeLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/terminlisteRecyclerView"
         android:layout_width="395dp"
-        android:layout_height="394dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
+        android:layout_height="425dp"
+        android:layout_below="@id/processLayout"
         android:layout_centerInParent="true"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="169dp" />
+        android:layout_marginTop="15dp" />
+
+    <ImageButton
+        android:id="@+id/addButton"
+        android:layout_width="75dp"
+        android:layout_height="65dp"
+        android:layout_below="@id/terminlisteRecyclerView"
+        android:layout_centerHorizontal="true"
+        android:backgroundTint="#00F8F5F5"
+        android:contentDescription="@string/add"
+        app:srcCompat="@android:drawable/ic_menu_add"
+        app:tint="@color/white" />
 
 </RelativeLayout>

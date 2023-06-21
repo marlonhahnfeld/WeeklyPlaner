@@ -17,7 +17,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -29,7 +28,6 @@ import java.util.Objects;
 
 import items.Termin;
 
-// TODO: Bei Edit soll Termin Möglichkeit haben beim Datum an Anfang der Woche zu kommen
 public class TerminDetailsActivity extends AppCompatActivity implements View.OnClickListener,
         AdapterView.OnItemSelectedListener {
     private EditText terminNameTextView;
@@ -60,7 +58,7 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
 
         databaseOp = new DatabaseOp();
 
-        backButton = findViewById(R.id.backButtonDetailsActivity);
+        backButton = findViewById(R.id.backButtonAddActivity);
         backButton.setOnClickListener(this);
         editButton = findViewById(R.id.editButton);
         editButton.setOnClickListener(this);
@@ -92,7 +90,7 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
         terminPrioSpinner = findViewById(R.id.prioListeDetailsActivity);
         ArrayAdapter<CharSequence> prioListSpinnerAdapter =
                 ArrayAdapter.createFromResource(this, R.array.numbers,
-                        android.R.layout.simple_spinner_item);
+                        R.layout.selected_item);
         prioListSpinnerAdapter
                 .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         terminPrioSpinner.setAdapter(prioListSpinnerAdapter);
@@ -106,8 +104,6 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        String text = parent.getItemAtPosition(position).toString();
-        Toast.makeText(parent.getContext(), text, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -117,7 +113,7 @@ public class TerminDetailsActivity extends AppCompatActivity implements View.OnC
     @Override
     public void onClick(View v) {
         int id = v.getId();
-        if (id == R.id.backButtonDetailsActivity) {
+        if (id == R.id.backButtonAddActivity) {
             onBackPressed();
         } else if (id == R.id.editButton) {
             deleteCurrentAppointment();

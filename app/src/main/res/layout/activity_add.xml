@@ -2,29 +2,40 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/AddActivityLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    android:id="@+id/AddActivityLayout">
+    android:background="@color/gray_Termin"
+    tools:context=".MainActivity">
 
-    <EditText
-        android:id="@+id/editTextBeschreibung"
-        android:layout_width="270dp"
-        android:layout_height="92dp"
-        android:layout_below="@id/textViewTerminName"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="369dp"
-        android:layout_marginEnd="61dp"
-        android:background="#ffffff"
-        android:elevation="20dp"
-        android:gravity="start"
-        android:hint="@string/possibleBeschreibung"
-        android:padding="10dp" />
+    <RelativeLayout
+        android:id="@+id/cardViewLayout"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_marginTop="-45dp"
+            android:layout_marginBottom="5dp"
+            android:elevation="10dp"
+            app:cardCornerRadius="50dp"
+            tools:ignore="VisualLintBounds">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/background"
+                android:scaleType="centerCrop"
+                android:src="@drawable/cloudbackground_purple" />
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
 
     <ImageButton
-        android:id="@+id/backButtonDetailsActivity"
+        android:id="@+id/backButtonAddActivity"
         android:layout_width="65dp"
         android:layout_height="50dp"
         android:layout_alignParentStart="true"
@@ -34,96 +45,124 @@
         android:backgroundTint="#00F8F5F5"
         android:contentDescription="@string/back"
         app:srcCompat="?attr/homeAsUpIndicator"
-        app:tint="#000000" />
+        app:tint="@color/white" />
+
+    <TextView
+        android:id="@+id/textViewEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="100dp"
+        android:fontFamily="@font/gothammedium1"
+        android:text="@string/add"
+        android:textColor="@color/white"
+        android:textSize="48sp"
+        tools:ignore="RelativeOverlap,TextContrastCheck" />
 
     <TextView
         android:id="@+id/textViewTerminName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="66dp"
-        android:layout_marginTop="108dp"
+        android:layout_below="@id/cardViewLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
         android:text="@string/terminname"
+        android:textColor="@color/white"
         android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        app:drawableStartCompat="@drawable/ic_name" />
 
-    <TextView
-        android:id="@+id/textViewBeschreibung"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/textViewWann"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="66dp"
-        android:layout_marginTop="325dp"
-        android:text="@string/beschreibung"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+    <EditText
+        android:id="@+id/editTextTerminName"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/textViewTerminName"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/rounded_edittext"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:hint="@string/wieLautetDerTerminName"
+        android:inputType="text"
+        android:padding="5dp"
+        android:textAlignment="center"
+        tools:ignore="Autofill,TextContrastCheck,TouchTargetSizeCheck" />
 
     <TextView
         android:id="@+id/textViewWann"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="64dp"
-        android:layout_marginTop="212dp"
-        android:text="@string/wann"
+        android:layout_below="@+id/editTextTerminName"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="50dp"
+        android:text="@string/chooseDate"
+        android:textColor="@color/white"
         android:textSize="20sp"
-        android:textStyle="bold" />
-
-    <EditText
-        android:id="@+id/editTextTerminName"
-        android:layout_width="270dp"
-        android:layout_height="35dp"
-        android:layout_below="@id/textViewTerminName"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="62dp"
-        android:layout_marginTop="148dp"
-        android:hint="@string/wieLautetDerTerminName"
-        android:background="#ffffff"
-        android:elevation="10dp"
-        android:gravity="start"
-        android:padding="5dp" />
-
-    <Spinner
-        android:id="@+id/prioListe"
-        android:layout_width="270dp"
-        android:layout_height="35dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="56dp"
-        android:layout_marginBottom="252dp" />
-
-    <Button
-        android:id="@+id/saveButton"
-        android:layout_width="176dp"
-        android:layout_height="58dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerInParent="true"
-        android:layout_marginBottom="18dp"
-        android:text="@string/speichern" />
-
+        android:textStyle="bold"
+        app:drawableStartCompat="@drawable/ic_calender_white" />
 
     <Button
         android:id="@+id/buttonDatepickerDetailsActivity"
         style="?android:spinnerItemStyle"
-        android:layout_width="176dp"
-        android:layout_height="58dp"
-        android:layout_above="@+id/saveButton"
-
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="39dp"
-        android:layout_marginEnd="70dp"
-        android:layout_marginBottom="493dp"
-        android:layout_toEndOf="@+id/textViewWann"
+        android:layout_width="175dp"
+        android:layout_height="45dp"
+        android:layout_below="@+id/textViewWann"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="15dp"
         android:onClick="openDatePicker"
         android:text="@string/chooseDatum"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        tools:ignore="TextSizeCheck" />
 
+    <Spinner
+        android:id="@+id/spinnerPrioListe"
+        android:layout_width="175dp"
+        android:layout_height="35dp"
+        android:layout_below="@+id/textViewWann"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="25dp"
+        android:backgroundTint="@color/white"
+        tools:ignore="TouchTargetSizeCheck" />
+
+    <TextView
+        android:id="@+id/textViewBeschreibung"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/buttonDatepickerDetailsActivity"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:text="@string/beschreibung"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:drawableStartCompat="@drawable/ic_description"
+        tools:ignore="RelativeOverlap" />
+
+    <EditText
+        android:id="@+id/editTextBeschreibung"
+        android:layout_width="310dp"
+        android:layout_height="120dp"
+        android:layout_below="@id/textViewBeschreibung"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="15dp"
+        android:background="@color/white"
+        android:elevation="20dp"
+        android:gravity="start"
+        android:hint="@string/possibleBeschreibung"
+        android:inputType="text"
+        android:padding="10dp"
+        tools:ignore="Autofill,TextContrastCheck" />
+
+    <Button
+        android:id="@+id/buttonSave"
+        android:layout_width="230dp"
+        android:layout_height="58dp"
+        android:layout_below="@id/editTextBeschreibung"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:text="@string/speichern" />
 
 </RelativeLayout>

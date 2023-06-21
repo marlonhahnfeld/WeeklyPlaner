@@ -1,6 +1,5 @@
 package com.example.weeklyplaner;
 
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.time.LocalDate;
@@ -39,9 +38,9 @@ public class Utils extends AppCompatActivity {
                 return (MainActivity.zukuenftige_terminliste);
             // Weitere Cases für andere Termin-IDs
             default:
-                System.err.println("Something went wrong"); break;
+                System.err.println("Something went wrong");
+                return null;
         }
-        return null;
     }
 
     public static ArrayList<Termin> getSpecificTerminlisteInCurrentWeek(int wochenTag) {
@@ -67,4 +66,5 @@ public class Utils extends AppCompatActivity {
         WeekFields weekFields = WeekFields.of(Locale.getDefault());
         return currentDate.get(weekFields.weekOfWeekBasedYear());
     }
+
 }
