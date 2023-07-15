@@ -25,6 +25,7 @@ import datenbank_listener.LoginListener;
 import datenbank_listener.MaxIDListener;
 import items.Termin;
 
+// TODO: Password Security in der DB einführen
 public class DatabaseOp {
     private static final String TAG = "Firebase";
     private static final String COLLECTION_USERS = "users";

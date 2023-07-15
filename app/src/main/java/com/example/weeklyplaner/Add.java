@@ -84,7 +84,6 @@ public class Add extends AppCompatActivity implements View.OnClickListener,
 
     @Override
     public void onClick(View v) {
-
         int id = v.getId();
         ArrayList<Termin>[] terminListe = MainActivity.terminListe;
         LocalDate currentDate = LocalDate.now();
@@ -107,6 +106,7 @@ public class Add extends AppCompatActivity implements View.OnClickListener,
                 Log.d("Weeklyplanner", String.valueOf(termin));
                 saveAppointment(LoginScreen.email, terminName, beschreibung, prio, datum,
                         termin.getId(), false);
+                // ? Statt einzelne Felder ganzes Feld vergleichen => termin < currentDate
                 if (/* Fall 1: Tag kleiner  */  ((((datum.getDayOfMonth() < (currentDate.getDayOfMonth() - (currentDate.getDayOfWeek().getValue() - 1)))) && ((((datum.getMonth().getValue()) <= currentDate.getMonth().getValue()) && (datum.getYear() <= currentDate.getYear())) || datum.getYear() < currentDate.getYear())) ||
                         /* Fall 2: Monat kleiner */  ((datum.getMonth().getValue() < currentDate.getMonth().getValue()) && (datum.getYear() <= currentDate.getYear())) ||
                         /* Fall 3: Jahr kleiner */  (datum.getYear() < currentDate.getYear()))) {

@@ -24,6 +24,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+// TODO: UI nochmal überprüfen -> Maße, Abstände etc.
 public class RegisterScreen extends AppCompatActivity implements View.OnClickListener {
     private ImageButton backButton;
     private ImageButton helpPasswordButton;
@@ -59,7 +60,7 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
                         .equals(editTextPassword2.getText().toString())) {
                     editTextPassword2.setTextColor(Color.RED);
                 } else {
-                    editTextPassword2.setTextColor(Color.GREEN);
+                    editTextPassword2.setTextColor(Color.BLACK);
                 }
             }
 
@@ -185,6 +186,10 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
             length = true;
         }
 
+        if (containsUpperCaseLetter(password) && containsLowerCaseLetter(password)) {
+            containsUpperAndLower = true;
+        }
+
         if (!passwordsMatch) {
             editTextPassword.setTextColor(Color.RED);
             editTextPassword2.setTextColor(Color.RED);
@@ -193,7 +198,7 @@ public class RegisterScreen extends AppCompatActivity implements View.OnClickLis
             editTextPassword2.setTextColor(Color.BLACK);
         }
 
-        return emailMatchFound && passwordsMatch && length;
+        return emailMatchFound && passwordsMatch && length && containsUpperAndLower;
     }
 
     /**
